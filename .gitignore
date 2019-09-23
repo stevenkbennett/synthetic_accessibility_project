@@ -1,1 +1,3 @@
 *.code-workspace
+.vscode
+stages/stage2_evolutionary_algorithm/create_image/databases
