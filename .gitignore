@@ -1,3 +1,11 @@
 *.code-workspace
 .vscode
 stages/stage2_evolutionary_algorithm/create_image/databases
+stages/stage2_evolutionary_algorithm/create_image/utilities
+stk_ea
+.DS_Store
+*__pycache__
+
+# EA output files.
+*output
+*stk_ea_runs

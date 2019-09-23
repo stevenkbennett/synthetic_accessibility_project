@@ -3,7 +3,6 @@
 # #####################################################################
 
 import itertools as it
-from utilities.scscore.scscore import SCScore
 import stk
 import logging
 from pathlib import Path
@@ -14,16 +13,12 @@ from rdkit.Chem import AllChem as rdkit
 from functools import wraps
 
 current_path = Path.cwd()
+base_stage_path = current_path.parents[1]
 
-if Path('rds') in current_path.parents:
-    logging.info('Running on CX1.')
-    sys.path.append('/rds/general/user/sb2518/home/WORK/GA/GA_Work')
-    path = Path('/rds/general/user/sb2518/home/WORK/GA/GA_Work')
-else:
-    logging.info('Running locally.')
-    sys.path.append('/Volumes/RDS/home/WORK/GA/GA_Work')
-    path = Path('/Volumes/RDS/home/WORK/GA/GA_Work')
+logging.info('Loading input file.')
+sys.path.append(str(current_path.parents[1]))
 
+from utilities.scscore.scscore import SCScore
 
 # #####################################################################
 # Run GA serially.
@@ -41,18 +36,22 @@ logging_level = logging.INFO
 # Initial population.
 # #####################################################################
 
-population_size = 25
+population_size = 5
 
-building_blocks_path = path.joinpath(
-    'databases/all_precursors_filtered_old_ga_paper')
+building_blocks_path = base_stage_path.joinpath(
+    'databases',
+    'all_precursors_filtered'
+)
 
 aldehydes = building_blocks_path.glob('**/aldehyde*.mol')
 amines = building_blocks_path.glob('**/amine*.mol')
 
-# For testing purposes.
+# Just for testing purposes.
 aldehydes = list(aldehydes)[:20]
 amines = list(amines)[:20]
 
+print(base_stage_path)
+# Initialize building block structures.
 aldehyde_building_blocks = [
     stk.BuildingBlock.init_from_file(
         str(building_block),
@@ -67,9 +66,10 @@ amine_building_blocks = [
 
 
 topology_graph = [
-    stk.cage.FourPlusSix(num_processes=processes)
+    stk.cage.FourPlusSix()
 ]
 
+# Create initial population.
 population = stk.EAPopulation.init_diverse(
     building_blocks=[aldehyde_building_blocks, amine_building_blocks],
     topology_graphs=topology_graph,
@@ -83,14 +83,15 @@ population = stk.EAPopulation.init_diverse(
 
 # Settings for stochastic sampling.
 generation_selector = stk.StochasticUniversalSampling(
-    num_batches=population_size)
+    num_batches=population_size
+)
 
 # #####################################################################
 # Selector for selecting parents.
 # #####################################################################
 
 # Settings for deterministic sampling.
-crossover_selector = stk.TournamentSelection(num_batches=10)
+crossover_selector = stk.Tournament(num_batches=10)
 
 # #####################################################################
 # Selector for selecting molecules for mutation.
@@ -100,7 +101,6 @@ mutation_selector = stk.Roulette(
     num_batches=5,
     duplicates=True,
     batch_size=1,
-    use_weights=True
 )
 
 
@@ -118,11 +118,13 @@ crosser = stk.GeneticRecombination(
 mutator = stk.RandomMutation(
     stk.RandomBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine'
+        key=lambda mol: mol.func_groups[0].\
+        fg_type.name == 'primary_amine'
     ),
     stk.SimilarBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
+        key=lambda mol: mol.func_groups[0].\
+        fg_type.name == 'primary_amine',
         duplicate_building_blocks=False
     ),
     stk.RandomBuildingBlock(
@@ -150,11 +152,11 @@ optimizer = stk.CageOptimizerSequence(
         macromodel_path=macromodel_path,
         restricted=True
     ),
-    stk.MacroModelMD(
-        macromodel_path=macromodel_path, 
-        temperature=700,
-        eq_time=100,
-    )
+    # stk.MacroModelMD(
+    #     macromodel_path=macromodel_path,
+    #     temperature=700,
+    #     eq_time=100,
+    # )
 )
 
 
@@ -289,7 +291,10 @@ fitness_normalizer = stk.NormalizerSequence(
 # Exit condition.
 # #####################################################################
 
-terminator = stk.NumGenerations(50)
+terminator = stk.FitnessPlateau(
+    num_generations=3,
+    top_members=1
+)
 
 # #####################################################################
 # Make plotters.
