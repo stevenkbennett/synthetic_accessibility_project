@@ -30,13 +30,13 @@ processes = 4
 # Set logging level.
 # #####################################################################
 
-logging_level = logging.INFO
+logging_level = logging.WARNING
 
 # #####################################################################
 # Initial population.
 # #####################################################################
 
-population_size = 5
+population_size = 25
 
 building_blocks_path = base_stage_path.joinpath(
     'databases',
@@ -46,11 +46,6 @@ building_blocks_path = base_stage_path.joinpath(
 aldehydes = building_blocks_path.glob('**/aldehyde*.mol')
 amines = building_blocks_path.glob('**/amine*.mol')
 
-# Just for testing purposes.
-aldehydes = list(aldehydes)[:20]
-amines = list(amines)[:20]
-
-print(base_stage_path)
 # Initialize building block structures.
 aldehyde_building_blocks = [
     stk.BuildingBlock.init_from_file(
@@ -91,7 +86,10 @@ generation_selector = stk.StochasticUniversalSampling(
 # #####################################################################
 
 # Settings for deterministic sampling.
-crossover_selector = stk.Tournament(num_batches=10)
+crossover_selector = stk.Tournament(
+    num_batches=10,
+    batch_size=2
+)
 
 # #####################################################################
 # Selector for selecting molecules for mutation.
@@ -152,11 +150,11 @@ optimizer = stk.CageOptimizerSequence(
         macromodel_path=macromodel_path,
         restricted=True
     ),
-    # stk.MacroModelMD(
-    #     macromodel_path=macromodel_path,
-    #     temperature=700,
-    #     eq_time=100,
-    # )
+    stk.MacroModelMD(
+        macromodel_path=macromodel_path,
+        temperature=700,
+        eq_time=100,
+    )
 )
 
 
@@ -243,7 +241,6 @@ def calculate_asymmetry(mol):
         if diff_num == 0:
             return None
         diff_sums.append(diff_sum / diff_num)
-
     if None in diff_sums:
         mol.fitness_values['asymmetry'] = None
         return None
@@ -283,6 +280,11 @@ fitness_calculator = stk.PropertyVector(
 fitness_normalizer = stk.NormalizerSequence(
     stk.Power([-1, 1, -1, -1]),
     stk.ScaleByMean(),
+    # Coefficient in order: 
+    # Pore volume
+    # Window size
+    # Asymmetry
+    # Synthetic accessibility
     stk.Multiply([10, 0, 5, 1]),
     stk.Sum()
 )
@@ -292,8 +294,8 @@ fitness_normalizer = stk.NormalizerSequence(
 # #####################################################################
 
 terminator = stk.FitnessPlateau(
-    num_generations=3,
-    top_members=1
+    num_generations=10,
+    top_members=5
 )
 
 # #####################################################################
