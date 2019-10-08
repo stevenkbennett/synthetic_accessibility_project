@@ -1,13 +1,23 @@
 '''
 Code to train ML models.
 '''
-from sklearn import linear_model
 from rdkit.Chem import AllChem as rdkit
 import pandas as pd
 import numpy as np
 import logging
 from collections import Counter
 from pathlib import Path
+from sklearn.metrics import (
+    make_scorer,
+    accuracy_score,
+    recall_score,
+    precision_score,
+)
+from sklearn.model_selection import (
+    StratifiedKFold,
+    cross_validate,
+)
+from sklearn.linear_model import LogisticRegression
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +43,19 @@ class SAScore:
     '''
     A class to contain ML models for synthetic accessibility scoring.
     '''
+
+    def __init__(self):
+        self.scores = []
+        self.train_settings()
+
+    def train_settings(
+        self,
+        oversampling=False,
+        class_weights=True,
+    ):
+        self.oversampling = oversampling
+        if class_weights:
+            self.class_weights = 'balanced'
 
     def load_data(self, data_path):
         '''
@@ -60,8 +83,77 @@ class SAScore:
         self.fingerprints = np.array(fingerprints)
         self.labels = np.array(labels)
 
-        logger.debug(f'Number of fingerprints is {fingerprints}.')
+        logger.debug(f'Number of fingerprints is {len(fingerprints)}.')
         logger.debug(f'Number of labels is {Counter(labels)}.')
+
+    def logistic_regression(self):
+        '''
+        Uses logistic regression for making predictions.
+        '''
+        self.model = LogisticRegression(
+            class_weight=self.class_weights,
+            solver='liblinear',
+        )
+
+    def train(
+        self,
+        splits=StratifiedKFold,
+        ):
+        '''
+        Trains the specified model.
+        '''
+
+        scores = cross_validate(
+            estimator=self.model,
+            X=self.fingerprints,
+            y=self.labels,
+            cv=splits(5),
+            scoring={
+                'accuracy': make_scorer(accuracy_score),
+                'precision_0': make_scorer(
+                    score_func=precision_score,
+                    pos_label=0,
+                    labels=[0],
+                ),
+                'recall_0': make_scorer(
+                    score_func=recall_score,
+                    pos_label=0,
+                    labels=[0],
+                ),
+                'precision_1': make_scorer(
+                    score_func=precision_score,
+                    pos_label=1,
+                    labels=[1],
+                ),
+                'recall_1': make_scorer(
+                    score_func=recall_score,
+                    pos_label=1,
+                    labels=[1],
+                ),
+            }
+        )
+
+        accuracy = scores['test_accuracy'].mean()
+        p0 = scores['test_precision_0'].mean()
+        r0 = scores['test_recall_0'].mean()
+        p1 = scores['test_precision_1'].mean()
+        r1 = scores['test_recall_1'].mean()
+
+        self.scores.append([
+            accuracy,
+            p0,
+            r0,
+            p1,
+            r1
+        ])
+        
+        logger.info(f'Accuracy\n{accuracy}')
+        logger.info(f'Precision (Unsynthesisable)\n{p0}')
+        logger.info(f'Recall (Unsynthesisable)\n{r0}')
+        logger.info(f'Precision (Synthesisable)\n{p1}')
+        logger.info(f'Recall (Synthesisable)\n{r1}')
+
+        self.model.fit(self.fingerprints, self.labels)
 
 
 def main():
@@ -78,7 +170,11 @@ def main():
     model.load_data(str(default_data))
     # Loads the Morgan Fingerprints as bit counts.
     model.parse_data()
-    
+    # Creates logistic regression model
+    model.logistic_regression()
+    model.train()
+
+
 
 
 if __name__ == '__main__':
