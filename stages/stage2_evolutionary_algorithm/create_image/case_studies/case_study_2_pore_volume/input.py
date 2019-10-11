@@ -59,7 +59,9 @@ progress_dump = True
 # Toggle the dumping of molecules at every generation.
 # #####################################################################
 
-debug_dumps = True
+generation_dumps = True
+
+debug_dumps = False
 
 # #####################################################################
 # Make a tar archive of the output.
@@ -72,13 +74,12 @@ tar_output = True
 # Set attributes to write to JSON.
 # #####################################################################
 
-dump_attrs = [
-    'fitness',
-    'sa_score',
-    'largest_window',
-    'window_std',
-    'pore_diameter',
-]
+# dump_attrs = [
+#     'sa_score',
+#     'largest_window',
+#     'window_std',
+#     'pore_diameter',
+# ]
 
 # #####################################################################
 # Initial population.
@@ -297,12 +298,10 @@ fitness_calculator = stk.PropertyVector(
 
 # #####################################################################
 # Fitness normalizer.
-# #####################################################################
-
+# #####################################################################    
 
 def valid_fitness(population, mol):
     return None not in population.get_fitness_values()[mol]
-
 
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
@@ -326,7 +325,7 @@ fitness_normalizer = stk.Sequence(
             ) / 2,
         filter=lambda p, m:
             isinstance(p.get_fitness_values()[m], list),
-    )
+    ),
 )
 
 # #####################################################################
