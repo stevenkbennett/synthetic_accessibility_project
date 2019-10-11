@@ -18,6 +18,7 @@ from sklearn.model_selection import (
     cross_validate,
 )
 from sklearn.linear_model import LogisticRegression
+from joblib import dump
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +99,7 @@ class SAScore:
     def train(
         self,
         splits=StratifiedKFold,
-        ):
+    ):
         '''
         Trains the specified model.
         '''
@@ -173,6 +174,8 @@ def main():
     # Creates logistic regression model
     model.logistic_regression()
     model.train()
+    # Dump the model file.
+    dump(model.model, 'sa_model_logisticrgr.joblib')
 
 
 
