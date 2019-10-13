@@ -7,6 +7,8 @@ import logging
 from pathlib import Path
 import numpy as np
 import pywindow
+import sys
+from rdkit.Chem import AllChem as rdkit
 
 # Global settings.
 
@@ -19,6 +21,10 @@ file_path = Path(__file__)
 for parent in file_path.parents:
     if parent.name == 'create_image':
         base_image_path = parent
+
+sys.path.append(str(base_image_path))
+
+from utilities.scscore.scscore import SCScore
 
 logging.info('Loading input file.')
 
@@ -60,18 +66,6 @@ debug_dumps = False
 
 tar_output = True
 
-
-# #####################################################################
-# Set attributes to write to JSON.
-# #####################################################################
-
-dump_attrs = [
-    'sa_score',
-    'largest_window',
-    'window_std',
-    'pore_diameter',
-]
-
 # #####################################################################
 # Initial population.
 # #####################################################################
@@ -83,6 +77,7 @@ building_blocks_path = base_image_path.joinpath(
     'all_precursors_filtered',
 )
 
+# Generator for all precursors.
 aldehydes = building_blocks_path.glob('**/aldehyde*.mol')
 amines = building_blocks_path.glob('**/amine*.mol')
 
@@ -255,8 +250,19 @@ def window_std(mol):
     return mol.window_std
 
 
+scscore = SCScore()
+
+
 def sa_score(mol):
-    return 10
+    scores = []
+    for bb in mol.get_building_blocks():
+        rdkit_mol = bb.to_rdkit_mol()
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
+        scores.append(scscore.score(rdkit_mol))
+    mol.sa_score = sum(scores)
+    return mol.sa_score
 
 
 fitness_calculator = stk.PropertyVector(
@@ -304,14 +310,22 @@ fitness_normalizer = stk.Sequence(
 # Exit condition.
 # #####################################################################
 
-terminator = stk.FitnessPlateau(
-    num_generations=5,
-    top_members=3,
-)
+terminator = stk.NumGenerations(30)
 
 # #####################################################################
 # Make plotters.
 # #####################################################################
+
+
+def apply(fn):
+
+    def filter_fn(mol):
+        return not hasattr(mol, fn.__name__)
+
+    def inner(progress):
+        all(True for _ in map(fn, filter(filter_fn, progress)))
+    return inner
+
 
 plotters = [
     stk.ProgressPlotter(
@@ -330,31 +344,35 @@ plotters = [
     ),
     stk.ProgressPlotter(
         filename='sascore_plot',
-        property_fn=lambda mol: mol.sa_score,
+        property_fn=lambda progress, mol: mol.sa_score,
         y_label='Synthetic Accessibility / unitless',
         filter=lambda progress, mol:
             mol.sa_score is not None,
+        progress_fn=apply(sa_score),
     ),
     stk.ProgressPlotter(
         filename='volume_plot',
-        property_fn=lambda mol: mol.pore_diameter,
+        property_fn=lambda progress, mol: mol.pore_diameter,
         y_label='Pore Diameter / A',
         filter=lambda progress, mol:
             mol.pore_diameter is not None,
+        progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
         filename='max_window_size',
-        property_fn=lambda mol: mol.largest_window,
+        property_fn=lambda progress, mol: mol.largest_window,
         y_label='Maximum Window Size / A',
         filter=lambda progress, mol:
             mol.largest_window is not None,
+        progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
         filename='window_std',
-        property_fn=lambda mol: mol.window_std,
+        property_fn=lambda progress, mol: mol.window_std,
         y_label='Std. Dev. of Window Diameters / A',
         filter=lambda progress, mol:
             mol.window_std is not None,
+        progress_fn=apply(window_std),
     )
 ]
 
