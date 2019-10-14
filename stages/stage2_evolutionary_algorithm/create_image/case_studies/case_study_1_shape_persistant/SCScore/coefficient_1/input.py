@@ -199,25 +199,42 @@ mutator = stk.Random(
 
 
 # Optimizer for full-run.
-optimizer = stk.Sequence(
-    stk.MacroModelForceField(
-        macromodel_path=macromodel_path,
-        restricted=True,
+optimizer = stk.TryCatch(
+    stk.Sequence(
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=True,
+            use_cache=True,
+        ),
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=False,
+            use_cache=True,
+        ),
+        stk.MacroModelMD(
+            macromodel_path=macromodel_path,
+            temperature=700,
+            eq_time=100,
+            use_cache=True,
+        ),
         use_cache=True,
     ),
-    stk.MacroModelForceField(
-        macromodel_path=macromodel_path,
-        restricted=False,
-        use_cache=True,
-    ),
-    stk.MacroModelMD(
-        macromodel_path=macromodel_path,
-        temperature=700,
-        eq_time=100,
+    stk.Sequence(
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=True,
+            use_cache=True,
+        ),
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=False,
+            use_cache=True,
+        ),
         use_cache=True,
     ),
     use_cache=True,
 )
+
 
 
 # #####################################################################
@@ -228,17 +245,23 @@ def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.pore_diameter = pw_mol.calculate_pore_diameter()
     # Ideal pore diameter is 5 A.
-    return abs(mol.pore_diameter-5)
+    if mol.pore_diameter is not None or isinstance(mol.pore_diameter, float):
+        return abs(mol.pore_diameter-5.0)
+    else:
+        return mol.pore_diameter
 
 
 def largest_window(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.largest_window = None
     windows = pw_mol.calculate_windows()
-    if windows is not None:
+    if windows is not None and len(windows) > 3:
         mol.largest_window = max(windows)
     # Ideal window diameter is 5 A.
-    return abs(mol.largest_window-5)
+    if mol.largest_window is not None or isinstance(mol.largest_window, float):
+        return abs(mol.largest_window-5.0)
+    else:
+        return mol.largest_window
 
 
 def window_std(mol):
