@@ -122,6 +122,8 @@ population = stk.EAPopulation.init_diverse(
 generation_selector = stk.StochasticUniversalSampling(
     num_batches=population_size,
     random_seed=random_seed,
+    duplicate_batches=False,
+    duplicate_mols=True,
 )
 
 # #####################################################################
@@ -133,6 +135,7 @@ crossover_selector = stk.Tournament(
     num_batches=10,
     batch_size=2,
     duplicate_batches=False,
+    duplicate_mols=False,
     random_seed=random_seed,
 )
 
@@ -142,7 +145,7 @@ crossover_selector = stk.Tournament(
 
 mutation_selector = stk.Roulette(
     num_batches=5,
-    duplicate_mols=True,
+    duplicate_mols=False,
     batch_size=1,
     random_seed=random_seed,
 )
@@ -240,7 +243,6 @@ optimizer = stk.TryCatch(
 # #####################################################################
 # Fitness Calculator.
 # #####################################################################
-
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.pore_diameter = pw_mol.calculate_pore_diameter()
