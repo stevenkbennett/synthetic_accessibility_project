@@ -123,7 +123,7 @@ generation_selector = stk.StochasticUniversalSampling(
     num_batches=population_size,
     random_seed=random_seed,
     duplicate_batches=False,
-    duplicate_mols=True,
+    duplicate_mols=False,
 )
 
 # #####################################################################
