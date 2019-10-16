@@ -238,11 +238,11 @@ optimizer = stk.TryCatch(
     use_cache=True,
 )
 
-
-
 # #####################################################################
 # Fitness Calculator.
 # #####################################################################
+
+
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.pore_diameter = pw_mol.calculate_pore_diameter()
@@ -315,8 +315,8 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 5
     # Window size: 1
     # Asymmetry: 10
-    # Synthetic accessibility: 5
-    stk.Multiply([5, 1, 10, 5], filter=valid_fitness),
+    # Synthetic accessibility: 10
+    stk.Multiply([5, 1, 10, 10], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.

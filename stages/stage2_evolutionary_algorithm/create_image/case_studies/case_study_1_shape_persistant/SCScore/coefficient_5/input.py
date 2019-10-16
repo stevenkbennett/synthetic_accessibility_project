@@ -238,11 +238,11 @@ optimizer = stk.TryCatch(
     use_cache=True,
 )
 
-
-
 # #####################################################################
 # Fitness Calculator.
 # #####################################################################
+
+
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.pore_diameter = pw_mol.calculate_pore_diameter()
