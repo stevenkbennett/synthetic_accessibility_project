@@ -15,3 +15,4 @@ stages/stage2_evolutionary_algorithm/create_image/utilities
 *.joblib
 stages/stage2_evolutionary_algorithm/create_image/case_studies/case_study_1_shape_persistant/No_SA/ea_run.log
 ea_run.log
+run*
