@@ -12,3 +12,4 @@ cd $PBS_O_WORKDIR
 python -m stk.ea $(realpath $PBS_O_WORKDIR/input.py) &> ea_run.log
 NUM_EA_RUNS=$(ls stk_ea_runs | wc -l)
 mv ea_run.log stk_ea_runs/"$NUM_EA_RUNS"/ea_run.log
+touch finished

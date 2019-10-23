@@ -12,11 +12,7 @@ from rdkit.Chem import AllChem as rdkit
 
 # Global settings.
 
-<<<<<<< HEAD
-random_seed = 20
-=======
 random_seed = 2
->>>>>>> temp
 macromodel_path = '/rds/general/user/sb2518/home/opt/schrodinger2018-1'
 
 file_path = Path(__file__)
@@ -28,11 +24,7 @@ for parent in file_path.parents:
 
 sys.path.append(str(base_image_path))
 
-<<<<<<< HEAD
-from utilities.scscore.scscore import SCScore
-=======
 from utilities.scscore.scscore import SCScore # noqa
->>>>>>> temp
 
 logging.info('Loading input file.')
 
@@ -210,11 +202,8 @@ mutator = stk.Random(
 
 
 # Optimizer for full-run.
-<<<<<<< HEAD
-=======
 failed_optimizer = stk.NullOptimizer(use_cache=True)
 
->>>>>>> temp
 optimizer = stk.TryCatch(
     stk.Sequence(
         stk.MacroModelForceField(
@@ -227,29 +216,6 @@ optimizer = stk.TryCatch(
             restricted=False,
             use_cache=True,
         ),
-<<<<<<< HEAD
-        stk.MacroModelMD(
-            macromodel_path=macromodel_path,
-            temperature=700,
-            eq_time=100,
-            use_cache=True,
-        ),
-        use_cache=True,
-    ),
-    stk.Sequence(
-        stk.MacroModelForceField(
-            macromodel_path=macromodel_path,
-            restricted=True,
-            use_cache=True,
-        ),
-        stk.MacroModelForceField(
-            macromodel_path=macromodel_path,
-            restricted=False,
-            use_cache=True,
-        ),
-        use_cache=True,
-    ),
-=======
         stk.TryCatch(
             stk.MacroModelMD(
                 macromodel_path=macromodel_path,
@@ -263,7 +229,6 @@ optimizer = stk.TryCatch(
         ),
     ),
     failed_optimizer,
->>>>>>> temp
     use_cache=True,
 )
 
@@ -325,19 +290,13 @@ def sa_score(mol):
     return mol.sa_score
 
 
-<<<<<<< HEAD
-fitness_calculator = stk.PropertyVector(
-=======
 cage_fitness_calculator = stk.PropertyVector(
->>>>>>> temp
     pore_diameter,
     largest_window,
     window_std,
     sa_score,
 )
 
-<<<<<<< HEAD
-=======
 fitness_calculator = stk.If(
     condition=lambda mol: failed_optimizer.is_in_cache(mol),
     true_calculator=stk.FitnessFunction(lambda mol: None),
@@ -346,7 +305,6 @@ fitness_calculator = stk.If(
 
 
 
->>>>>>> temp
 # #####################################################################
 # Fitness normalizer.
 # #####################################################################
@@ -365,13 +323,8 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 5
     # Window size: 1
     # Asymmetry: 10
-<<<<<<< HEAD
     # Synthetic accessibility: 1
     stk.Multiply([5, 1, 10, 1], filter=valid_fitness),
-=======
-    # Synthetic accessibility: 10
-    stk.Multiply([5, 1, 10, 10], filter=valid_fitness),
->>>>>>> temp
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.
@@ -390,14 +343,10 @@ fitness_normalizer = stk.Sequence(
 # Exit condition.
 # #####################################################################
 
-<<<<<<< HEAD
-terminator = stk.NumGenerations(50)
-=======
 terminator = stk.FitnessPlateau(
     num_generations=5,
     top_members=4,
 )
->>>>>>> temp
 
 # #####################################################################
 # Make plotters.
