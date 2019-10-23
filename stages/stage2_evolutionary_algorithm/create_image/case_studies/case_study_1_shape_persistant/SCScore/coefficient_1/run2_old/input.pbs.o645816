@@ -1,0 +1,11 @@
+mv: cannot move ‘ea_run.log’ to ‘stk_ea_runs/1/ea_run.log’: No such file or directory
+
+============================================
+
+        Job resource usage summary 
+
+                 Memory (GB)    NCPUs
+ Requested  :       100            32
+ Used       :        70 (peak)  13.97 (ave)
+
+============================================

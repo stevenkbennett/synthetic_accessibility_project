@@ -1,0 +1,1410 @@
+
+====================================================================================================
+
+22:48:20 - INFO - __main__ - Optimizing the population.
+
+====================================================================================================
+
+22:48:20 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:20 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:21 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:22 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:23 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:23 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:23 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:26 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:26 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:26 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:48:27 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:30 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:31 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:32 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:52:32 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:55:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-5-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:55:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-12-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:55:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-3-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:55:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-6-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:55:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-13-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:56:25 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-2-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:25 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-8-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:25 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-3-5daf7af6
+
+.
+
+====================================================================================================
+
+22:56:25 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-4-5daf7af6
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-10-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-7-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-4-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-22-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-20-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-19-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-18-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-17-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-15-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-23-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-11-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-9-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:26 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:56:42 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-2-5daf7af6
+
+.
+
+====================================================================================================
+
+22:56:42 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7af6
+
+.
+
+====================================================================================================
+
+22:56:42 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7af6
+
+.
+
+====================================================================================================
+
+22:57:31 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-21-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:57:31 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-14-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:57:31 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-16-5daf7ac8
+
+.
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:19 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:26 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:27 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:58:27 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+22:59:01 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:00:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-6-5daf7bad
+
+.
+
+====================================================================================================
+
+23:00:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-10-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-5-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-3-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-8-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-4-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-11-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:27 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-7-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-9-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-12-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-19-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-14-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-20-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-16-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-17-5daf7bad
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7bae
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-2-5daf7bae
+
+.
+
+====================================================================================================
+
+23:01:28 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7bae
+
+.
+
+====================================================================================================
+
+23:01:56 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:01:56 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:01:56 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:01:57 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:11 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:12 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:02:13 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:04:30 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(N)CC1CC1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-15-5daf7bad
+
+.
+
+====================================================================================================
+
+23:04:35 - INFO - stk.populations - Running "TryCatch.optimize()" on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))"
+
+====================================================================================================
+
+23:04:40 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1C(N)C1C(F)(F)F', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-7-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:04:40 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(Cc1c[nH]c2ccccc12)NC(=O)C(N)Cc1c[nH]cn1)C(=O)NC1CCN(C(Cc2ccccc2)C(=O)NC(CCCCN)C(N)=O)C1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-12-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:04:40 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('COC(=O)C(CCSC)NC(=O)C(CC(C)C)SCCNC(=O)C(Cc1ccccc1)NC(=O)C(Cc1ccccc1)NC(=O)C(CCC(N)=O)NC(=O)C(CCC(N)=O)NC(=O)C1CCCN1C(=O)C(CCCCN)NC(=O)C1CCCN1C(=O)C(N)CCCNC(=N)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-13-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:04:40 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCC(=O)O)NC(=O)C(CCC(N)=O)NC(=O)C(Cc1ccc(O)cc1)NC(=O)C(N)CC(N)=O)C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-14-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:04:46 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:04:46 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:04:47 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:04:47 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:04:51 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:04:51 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:04:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:04:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:04:56 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:04:56 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:04:57 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:04:57 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:01 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:01 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:06 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:06 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:07 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:07 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:11 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:11 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:12 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:12 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:16 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:16 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:17 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:17 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:21 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:21 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:22 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:22 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:26 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:26 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:27 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:27 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:36 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:37 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:37 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:38 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC1C2C=CC(C2)C1CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-18-5daf7bad
+
+.
+
+====================================================================================================
+
+23:05:38 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('Cc1cc(Cl)ccc1C(N)CN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-13-5daf7bad
+
+.
+
+====================================================================================================
+
+23:05:38 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCC(CN)N1C(=O)CCCC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7bad
+
+.
+
+====================================================================================================
+
+23:05:41 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:41 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:42 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:42 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:46 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:46 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:47 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:47 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:52 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:05:56 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:05:56 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:05:57 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:05:57 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:06:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "299216005248445706873447007967422884011-out.maegz".
+
+====================================================================================================
+
+23:06:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "35408667030870028129400961416604220607-out.maegz".
+
+====================================================================================================
+
+23:06:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "259424251731158209917486824983176107497-out.maegz".
+
+====================================================================================================
+
+23:06:02 - WARNING - stk.calculators.optimization.macromodel - Waiting for "270863901496814894797338609978092966839-out.maegz".
+
+====================================================================================================
+
+23:06:43 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NCC(C)(C)N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-2-5daf7bad
+
+.
+
+====================================================================================================
+
+23:06:57 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:06:58 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:08:18 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7d8e
+
+.
+
+====================================================================================================
+
+23:10:44 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:10:44 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:12:36 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('NCCCCCC(=O)Oc1ccc2[nH]cc(CCN)c2c1', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7c64
+
+.
+
+====================================================================================================
+
+23:12:54 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7e99
+
+.
+
+====================================================================================================
+
+23:13:02 - DEBUG - stk.calculators.optimization.macromodel - Creating .com file for "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:13:03 - INFO - stk.calculators.optimization.macromodel - Running bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))".
+
+====================================================================================================
+
+23:13:56 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)(O)C(NC(=O)CC(N)CCCCN)C(=O)NC(=Cc1cc(O)c(Cl)c(O)c1)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-3-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:15:40 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('N=C(N)NCCCC(N)C(=O)CNCCCCCCCCCCN', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7c64
+
+.
+
+====================================================================================================
+
+23:16:58 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(N)COC(=O)C(CCCCN)NC(=O)Cc1c(-c2ccc3ccccc3c2)[nH]c2c1ccc1ccccc12', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-8-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:21:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('N#CC(N)C(N)C#N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-2-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:24:17 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(NC(=O)C(CCCNC(=N)N)NC(=O)CN)C(=O)NC(CC(=O)O)C(=O)NC(CO)C(=O)N1CCCC1C(=O)NC(CCCCN)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-15-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:25:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('NC1CC1N', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-11-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:26:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCC(=O)OCC(NC(=O)C(CO)NC(=O)CN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:31:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCCCCCCCCCCCCCCC(=O)NC(CCCCN)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCCN)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-16-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:33:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(CC(C)C)NC(=O)C(CCCNC(=N)N)NC(=O)C(CCC(N)=O)NC(=O)C(CCCCN)NC(=O)C(C)NC(=O)C(C)N)C(=O)NC(Cc1ccc(F)cc1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-6-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:37:17 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(=O)NC1C(OC2c3ccc(c(Cl)c3)Oc3cc4cc(c3OC3OC(CO)C(O)C(O)C3N)Oc3ccc(cc3Cl)CC3NC(=O)C(N)c5ccc(O)c(c5)Oc5cc(O)cc(c5)C(NC3=O)C(=O)NC4C(=O)NC3C(=O)NC2C(=O)NC(C(=O)O)c2cc(O)cc(OC4OC(CO)C(O)C(O)C4O)c2-c2cc3ccc2O)OC(CO)C(O)C1O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-5-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:37:17 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(C)CC1NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC(=O)C(CC(C)C)NC(=O)C(CCN)NC(=O)C(C(C)C)NC(=O)C2CCCN2C(=O)C(Cc2ccccc2)NC1=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-10-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:40:03 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=Cc1ccc(C=Cc2cc(C=Cc3ccc(C=O)cc3)cc(C=Cc3ccc(C=O)cc3)c2)cc1', ['aldehyde']), BuildingBlock('CC(O)C(NC(=O)C1CSSCC(NC(=O)C(N)Cc2ccccc2)C(=O)NC(Cc2ccccc2)C(=O)NC(Cc2c[nH]c3ccccc23)C(=O)NC(CCCCN)C(=O)NC(C(C)O)C(=O)N1)C(N)=O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-0-5daf7efe
+
+.
+
+====================================================================================================
+
+23:43:16 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CCC(C)C(NC(=O)C(C)NC(=O)CNC(=O)C(CCCCN)NC(=O)C(CC(N)=O)NC(=O)C(CO)NC(=O)CNC(=O)C(NC(=O)C(CC(=O)O)NC(=O)C(N)CCC(=O)O)C(C)C)C(=O)NC(C(=O)NCC(=O)NC(CC(C)C)C(=O)NC(CCSC)C(=O)O)C(C)CC', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-4-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:43:17 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(NC(=O)CNC(=O)C(N)CC(N)=O)C(=O)NC(CC(C)C)C(=O)NC(CS)C(=O)NC(CO)C(=O)NCC(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)NC(CCCCN)C(=O)NC(CS)C(=O)NC(CCC(=O)O)C(=O)NC(CS)C(=O)NCC(=O)NC(CO)C(=O)O', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-1-5daf7c6f
+
+.
+
+====================================================================================================
+
+23:43:17 - DEBUG - stk.calculators.optimization.macromodel - Output of bmin on "ConstructedMolecule(building_blocks=[BuildingBlock('O=CC(C=O)C=O', ['aldehyde']), BuildingBlock('CC(C)CC(N)C(=O)NC(Cc1ccccc1)C(=O)NC(CCCNC(=N)N)C(=O)NC(C(=O)NC(Cc1ccc(O)cc1)C(=O)OCC(N)C(=O)NC(CC(N)=O)C(=O)NC(Cc1ccccc1)C(=O)NC(CC(C)C)C(=O)NC(CCCNC(=N)N)C(=O)NCC(=O)O)C(C)C', ['primary_amine'])], topology_graph=cage.FourPlusSix(vertex_alignments={0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}))" was: JobId: cx1-137-10-3-9-5daf7c6f
+
+.
