@@ -1,43 +1,56 @@
 import stk
 from pathlib import Path
 from itertools import islice
+import re
 
 
 def load_population(pop_path):
     '''Loads the population of molecules from the EA.'''
-    with open(str(pop_path),'r') as f:
+    with open(pop_path, 'r') as f:
         pop = []
-        subpop = [] 
+        subpop = []
+        recording = False
+        gen = 1
         for line in f:
-            # Obtain first population.
-            recording = False
-            if 'Population log:' in line:
-                recording = True
-            elif recording == True and 'ConstructedMolecule' in line:
-                subpop.append(line)
-            elif line == '\n':
-                recording = False
-                break
-        pop.append(subpop)
-        finished_recording = False
-        while not finished_recording:
-            subpop = []
-            line = f.readline()
-            if 'Selecting members of the next generation' in line:
-                for line in f:
-                    if 'ConstructedMolecule' in line:
-                        subpop.append(line)
-                    elif 'Starting' in line:
-                        pop.append(subpop)
-                        break
+            # Initial population treated differently.
+            if gen == 1:
+                if 'Population log:' in line:
+                    recording = True
+                    print('New generation - recording.')
+                elif 'ConstructedMolecule' in line and recording:
+                    subpop.append(line)
+                elif 'Starting generation' in line and recording:
+                    recording = False
+                    pop.append(subpop)
+                    subpop = []
+                    gen += 1
+            elif gen != 1:
+                if 'Selecting members' in line:
+                    recording = True
+                    print('New generation - recording.')
+                elif 'ConstructedMolecule' in line and recording:
+                    subpop.append(line)
+                elif 'Starting' in line or 'Successful' in line and recording:
+                    recording = False
+                    pop.append(subpop)
+                    subpop = []
+                    gen += 1
+        return pop
 
+(\d)+ +\t(.*)\)\)\t\t\[((\d+.\d+), )+]\t(\d+.\d.)
+def load_stk_pop(pop):
+    '''
+    Loads stk populations.
+    '''
+    for gen in pop:
+        for mem in gen:
+            id = 
 
 
 def main():
-    pop_path = Path('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage2_evolutionary_algorithm/create_image/case_studies/case_study_1_shape_persistant/No_SA/run3_almost_finished/ea_run.log')
-    pop = load_population(pop_path)
-    print(pop[0])
-    
+    pop_path = Path('/Users/stevenbennett/Box/Steven/Work/PhD/Work/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/example_pop.log')
+    pop = load_population(str(pop_path))
 
-if __name__='__main__':
+
+if __name__=='__main__':
     main()
