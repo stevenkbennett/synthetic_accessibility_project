@@ -343,10 +343,7 @@ fitness_normalizer = stk.Sequence(
 # Exit condition.
 # #####################################################################
 
-terminator = stk.FitnessPlateau(
-    num_generations=5,
-    top_members=4,
-)
+terminator = stk.NumGenerations(50)
 
 # #####################################################################
 # Make plotters.
