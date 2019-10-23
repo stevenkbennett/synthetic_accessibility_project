@@ -8,10 +8,11 @@ from pathlib import Path
 import numpy as np
 import pywindow
 import sys
+from rdkit.Chem import AllChem as rdkit
 
 # Global settings.
 
-random_seed = 32
+random_seed = 2
 macromodel_path = '/rds/general/user/sb2518/home/opt/schrodinger2018-1'
 
 file_path = Path(__file__)
@@ -23,7 +24,7 @@ for parent in file_path.parents:
 
 sys.path.append(str(base_image_path))
 
-from utilities.scscore.scscore import SCScore  # noqa: E402
+from utilities.scscore.scscore import SCScore # noqa
 
 logging.info('Loading input file.')
 
@@ -31,7 +32,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 32
+num_processes = 24
 
 # #####################################################################
 # Set logging level.
@@ -65,18 +66,6 @@ debug_dumps = False
 
 tar_output = True
 
-
-# #####################################################################
-# Set attributes to write to JSON.
-# #####################################################################
-
-dump_attrs = [
-    'sa_score',
-    'largest_window',
-    'window_std',
-    'pore_diameter',
-]
-
 # #####################################################################
 # Initial population.
 # #####################################################################
@@ -88,6 +77,7 @@ building_blocks_path = base_image_path.joinpath(
     'all_precursors_filtered',
 )
 
+# Generator for all precursors.
 aldehydes = building_blocks_path.glob('**/aldehyde*.mol')
 amines = building_blocks_path.glob('**/amine*.mol')
 
@@ -132,6 +122,8 @@ population = stk.EAPopulation.init_diverse(
 generation_selector = stk.StochasticUniversalSampling(
     num_batches=population_size,
     random_seed=random_seed,
+    duplicate_batches=False,
+    duplicate_mols=False,
 )
 
 # #####################################################################
@@ -143,6 +135,7 @@ crossover_selector = stk.Tournament(
     num_batches=10,
     batch_size=2,
     duplicate_batches=False,
+    duplicate_mols=False,
     random_seed=random_seed,
 )
 
@@ -152,7 +145,7 @@ crossover_selector = stk.Tournament(
 
 mutation_selector = stk.Roulette(
     num_batches=5,
-    duplicate_mols=True,
+    duplicate_mols=False,
     batch_size=1,
     random_seed=random_seed,
 )
@@ -209,46 +202,74 @@ mutator = stk.Random(
 
 
 # Optimizer for full-run.
-optimizer = stk.Sequence(
-    stk.MacroModelForceField(
-        macromodel_path=macromodel_path,
-        restricted=True,
+optimizer = stk.TryCatch(
+    stk.Sequence(
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=True,
+            use_cache=True,
+        ),
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=False,
+            use_cache=True,
+        ),
+        stk.MacroModelMD(
+            macromodel_path=macromodel_path,
+            temperature=700,
+            eq_time=100,
+            use_cache=True,
+        ),
         use_cache=True,
     ),
-    stk.MacroModelForceField(
-        macromodel_path=macromodel_path,
-        restricted=False,
-        use_cache=True,
-    ),
-    stk.MacroModelMD(
-        macromodel_path=macromodel_path,
-        temperature=700,
-        eq_time=100,
+    stk.Sequence(
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=True,
+            use_cache=True,
+        ),
+        stk.MacroModelForceField(
+            macromodel_path=macromodel_path,
+            restricted=False,
+            use_cache=True,
+        ),
         use_cache=True,
     ),
     use_cache=True,
 )
 
-
 # #####################################################################
 # Fitness Calculator.
 # #####################################################################
+
 
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.pore_diameter = pw_mol.calculate_pore_diameter()
     # Ideal pore diameter is 5 A.
-    return abs(mol.pore_diameter-5)
+    if (
+        mol.pore_diameter is not None or
+        isinstance(mol.pore_diameter, float)
+    ):
+        return abs(mol.pore_diameter-5.0)
+    else:
+        return mol.pore_diameter
 
 
 def largest_window(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     mol.largest_window = None
     windows = pw_mol.calculate_windows()
-    if windows is not None:
+    if windows is not None and len(windows) > 3:
         mol.largest_window = max(windows)
     # Ideal window diameter is 5 A.
-    return abs(mol.largest_window-5)
+    if (
+        mol.largest_window is not None or
+        isinstance(mol.largest_window, float)
+    ):
+        return abs(mol.largest_window-5.0)
+    else:
+        return mol.largest_window
 
 
 def window_std(mol):
@@ -294,14 +315,14 @@ def valid_fitness(population, mol):
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
 fitness_normalizer = stk.Sequence(
-    stk.Power([1, 1, -1, -1], filter=valid_fitness),
+    stk.Power([-1, -1, -1, -1], filter=valid_fitness),
     stk.DivideByMean(filter=valid_fitness),
     # Coefficients of fitness function in order:
     # Pore volume: 5
     # Window size: 1
     # Asymmetry: 10
-    # Synthetic accessibility: 1
-    stk.Multiply([5, 1, 10, 1], filter=valid_fitness),
+    # Synthetic accessibility: 10
+    stk.Multiply([5, 1, 10, 10], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.
@@ -322,12 +343,23 @@ fitness_normalizer = stk.Sequence(
 
 terminator = stk.FitnessPlateau(
     num_generations=5,
-    top_members=3,
+    top_members=4,
 )
 
 # #####################################################################
 # Make plotters.
 # #####################################################################
+
+
+def apply(fn):
+
+    def filter_fn(mol):
+        return not hasattr(mol, fn.__name__)
+
+    def inner(progress):
+        all(True for _ in map(fn, filter(filter_fn, progress)))
+    return inner
+
 
 plotters = [
     stk.ProgressPlotter(
@@ -346,31 +378,35 @@ plotters = [
     ),
     stk.ProgressPlotter(
         filename='sascore_plot',
-        property_fn=lambda mol: mol.sa_score,
+        property_fn=lambda progress, mol: mol.sa_score,
         y_label='Synthetic Accessibility / unitless',
         filter=lambda progress, mol:
             mol.sa_score is not None,
+        progress_fn=apply(sa_score),
     ),
     stk.ProgressPlotter(
         filename='volume_plot',
-        property_fn=lambda mol: mol.pore_diameter,
+        property_fn=lambda progress, mol: mol.pore_diameter,
         y_label='Pore Diameter / A',
         filter=lambda progress, mol:
             mol.pore_diameter is not None,
+        progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
         filename='max_window_size',
-        property_fn=lambda mol: mol.largest_window,
+        property_fn=lambda progress, mol: mol.largest_window,
         y_label='Maximum Window Size / A',
         filter=lambda progress, mol:
             mol.largest_window is not None,
+        progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
         filename='window_std',
-        property_fn=lambda mol: mol.window_std,
+        property_fn=lambda progress, mol: mol.window_std,
         y_label='Std. Dev. of Window Diameters / A',
         filter=lambda progress, mol:
             mol.window_std is not None,
+        progress_fn=apply(window_std),
     )
 ]
 
