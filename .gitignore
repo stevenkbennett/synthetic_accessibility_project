@@ -9,13 +9,5 @@ stages/stage2_evolutionary_algorithm/create_image/utilities
 # EA output files.
 *output
 *stk_ea_runs
-<<<<<<< HEAD
-*.o*
-
-# Do not track models.
-*.joblib
-stages/stage2_evolutionary_algorithm/create_image/case_studies/case_study_1_shape_persistant/No_SA/ea_run.log
-ea_run.log
-=======
->>>>>>> temp
+!run_template.sh
 run*
