@@ -11,3 +11,5 @@ stages/stage2_evolutionary_algorithm/create_image/utilities
 *stk_ea_runs
 !run_template.sh
 run*
+rate_my_molecule
+example_pop.log
