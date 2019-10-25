@@ -1,7 +1,6 @@
 *.code-workspace
 .vscode/
 stages/stage2_evolutionary_algorithm/create_image/databases
-stages/stage2_evolutionary_algorithm/create_image/utilities
 
 .DS_Store
 *__pycache__

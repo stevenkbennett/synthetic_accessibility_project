@@ -1,4 +1,3 @@
-import stk
 from pathlib import Path
 from itertools import islice
 
@@ -15,6 +14,7 @@ def load_population(pop_path):
                 recording = True
             elif recording == True and 'ConstructedMolecule' in line:
                 subpop.append(line)
+                print(subpop)
             elif line == '\n':
                 recording = False
                 break
@@ -34,10 +34,10 @@ def load_population(pop_path):
 
 
 def main():
-    pop_path = Path('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage2_evolutionary_algorithm/create_image/case_studies/case_study_1_shape_persistant/No_SA/run3_almost_finished/ea_run.log')
+    pop_path = Path('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/example_pop.log')
     pop = load_population(pop_path)
-    print(pop[0])
+    print(pop)
     
 
-if __name__='__main__':
+if __name__=='__main__':
     main()
