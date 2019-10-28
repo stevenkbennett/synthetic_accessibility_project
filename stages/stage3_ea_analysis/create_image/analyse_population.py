@@ -55,8 +55,10 @@ def parse_population(pop):
         for mem in sp:
             p_bb = re.compile('(Const[^\t]+)')
             stk_mem = eval(p_bb.search(mem)[0])
-            stk_mem.fitness_vector = literal_eval(re.search('\t(\[([^\,]+\,)+[^\]]+\])', p_bb).group(1))
-            stk_mem.fitness_value = literal_eval(re.search('\d+\.\d+(?=$)', p_bb).group(0))
+            stk_mem.fitness_vector = literal_eval(
+                re.search('\t(\[([^\,]+\,)+[^\]]+\])', mem).group(1))
+            stk_mem.fitness_value = literal_eval(
+                re.search('\d+\.\d+(?=$)', mem).group(0))
             subpop.append(stk_mem)
         stk_pop.append(stk_mem)
     return stk_pop
@@ -68,5 +70,6 @@ def get_stk_pop(pop_path):
     pop = parse_population(pop)
     return pop
 
-if __name__=='__main__':
-    print(get_stk_pop('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/analyse_population.py'))
+
+if __name__ == '__main__':
+    print(get_stk_pop('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/example_pop.log'))
