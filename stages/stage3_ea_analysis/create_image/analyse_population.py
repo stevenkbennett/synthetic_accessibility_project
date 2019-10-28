@@ -1,6 +1,6 @@
 from pathlib import Path
 import re
-import importlib
+from ast import literal_eval
 from stk import (
     BuildingBlock,
     ConstructedMolecule,
@@ -17,39 +17,6 @@ def load_population(pop_path):
             recording = True
         else:
             recording = False
-<<<<<<< HEAD
-            if 'Population log:' in line:
-                recording = True
-            elif recording == True and 'ConstructedMolecule' in line:
-                subpop.append(line)
-                print(subpop)
-            elif line == '\n':
-                recording = False
-                break
-        pop.append(subpop)
-        finished_recording = False
-        while not finished_recording:
-            subpop = []
-            line = f.readline()
-            if 'Selecting members of the next generation' in line:
-                for line in f:
-                    if 'ConstructedMolecule' in line:
-                        subpop.append(line)
-                    elif 'Starting' in line:
-                        pop.append(subpop)
-                        break
-
-
-
-def main():
-    pop_path = Path('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/example_pop.log')
-    pop = load_population(pop_path)
-    print(pop)
-    
-
-if __name__=='__main__':
-    main()
-=======
 
         gen = 1
 
@@ -88,6 +55,8 @@ def parse_population(pop):
         for mem in sp:
             p_bb = re.compile('(Const[^\t]+)')
             stk_mem = eval(p_bb.search(mem)[0])
+            stk_mem.fitness_vector = literal_eval(re.search('\t(\[([^\,]+\,)+[^\]]+\])', p_bb).group(1))
+            stk_mem.fitness_value = literal_eval(re.search('\d+\.\d+(?=$)', p_bb).group(0))
             subpop.append(stk_mem)
         stk_pop.append(stk_mem)
     return stk_pop
@@ -98,4 +67,6 @@ def get_stk_pop(pop_path):
     pop = load_population(str(pop_path))
     pop = parse_population(pop)
     return pop
->>>>>>> b433549099eb7c727c6a7ec83d8f7f4d2b017cba
+
+if __name__=='__main__':
+    print(get_stk_pop('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/analyse_population.py'))

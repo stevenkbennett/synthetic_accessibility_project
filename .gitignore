@@ -12,3 +12,4 @@ stages/stage2_evolutionary_algorithm/create_image/databases
 run*
 rate_my_molecule
 example_pop.log
+stages/stage3_ea_analysis/create_image/case_study*
