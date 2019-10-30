@@ -60,7 +60,7 @@ def parse_population(pop):
             stk_mem.fitness_value = literal_eval(
                 re.search('\d+\.\d+(?=$)', mem).group(0))
             subpop.append(stk_mem)
-        stk_pop.append(stk_mem)
+        stk_pop.append(subpop)
     return stk_pop
 
 
