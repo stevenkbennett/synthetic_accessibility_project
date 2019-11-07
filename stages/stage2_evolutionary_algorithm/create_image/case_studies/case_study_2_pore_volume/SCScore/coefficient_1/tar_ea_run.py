@@ -8,7 +8,7 @@ ea_run = current_dir.joinpath('stk_ea_runs', '0')
 
 with tarfile.open(str(ea_run.joinpath('schrodinger_files.tar.gz')), "w:gz") as tar:
     schrodinger_files = ea_run.joinpath('scratch')
-    prnit('Compressing Schrodinger files.')
+    ('Compressing Schrodinger files.')
     for file in schrodinger_files.glob('[0-9]*'):
         tar.add(file)
         if file.is_dir():

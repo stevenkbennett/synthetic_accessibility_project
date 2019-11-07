@@ -323,8 +323,8 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 5
     # Window size: 1
     # Asymmetry: 10
-    # Synthetic accessibility: 10
-    stk.Multiply([5, 1, 10, 10], filter=valid_fitness),
+    # Synthetic accessibility: 1
+    stk.Multiply([5, 1, 10, 1], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.

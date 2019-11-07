@@ -1,7 +1,7 @@
 #!/bin/bash
 ea_run_count=$(($(find run* -maxdepth 0 -type d | wc -l)+1))
 mkdir run$ea_run_count
-cp {input_template.pbs,input_template.py} run$ea_run_count
+cp {input_template.pbs, input_template.py, tar_ea_run.py} run$ea_run_count
 cd run$ea_run_count
 mv input_template.pbs input.pbs
 mv input_template.py input.py
