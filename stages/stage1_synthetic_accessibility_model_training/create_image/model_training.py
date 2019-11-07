@@ -30,7 +30,7 @@ def get_fingerprint(mol):
     info = {}
     fp = rdkit.GetMorganFingerprintAsBitVect(
         mol=mol,
-        radius=8,
+        radius=2,
         nBits=512,
         bitInfo=info,
     )
