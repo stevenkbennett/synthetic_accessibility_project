@@ -32,7 +32,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 24
+num_processes = 32
 
 # #####################################################################
 # Set logging level.
@@ -323,8 +323,8 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 5
     # Window size: 1
     # Asymmetry: 10
-    # Synthetic accessibility: 1
-    stk.Multiply([5, 1, 10, 1], filter=valid_fitness),
+    # Synthetic accessibility: 5
+    stk.Multiply([5, 1, 10, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.

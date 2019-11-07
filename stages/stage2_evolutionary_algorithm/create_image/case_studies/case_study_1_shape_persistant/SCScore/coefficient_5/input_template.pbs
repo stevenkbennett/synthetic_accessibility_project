@@ -2,8 +2,7 @@
 
 #PBS -j oe
 #PBS -lwalltime=48:00:00
-#PBS -lselect=1:ncpus=24:mem=80gb:ompthreads=24
-#PBS -q pqchem
+#PBS -lselect=1:ncpus=32:mem=80gb:ompthreads=32
 #PBS -N CS1_SCScore_Coefficient5
 
 
@@ -15,4 +14,5 @@ cd $PBS_O_WORKDIR
 python -m stk.ea $(realpath $PBS_O_WORKDIR/input.py) &> ea_run.log
 NUM_EA_RUNS=$(ls stk_ea_runs | wc -l)
 mv ea_run.log stk_ea_runs/"$NUM_EA_RUNS"/ea_run.log
+python tar_ea_run.py
 touch finished

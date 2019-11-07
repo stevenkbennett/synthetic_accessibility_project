@@ -32,7 +32,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 24
+num_processes = 32
 
 # #####################################################################
 # Set logging level.

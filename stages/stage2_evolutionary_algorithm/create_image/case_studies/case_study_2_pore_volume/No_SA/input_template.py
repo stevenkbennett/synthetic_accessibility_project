@@ -32,7 +32,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 24
+num_processes = 32
 
 # #####################################################################
 # Set logging level.
@@ -245,7 +245,7 @@ def pore_diameter(mol):
         mol.pore_diameter is not None or
         isinstance(mol.pore_diameter, float)
     ):
-        return abs(mol.pore_diameter-5.0)
+        return mol.pore_diameter
     else:
         return mol.pore_diameter
 
@@ -261,7 +261,7 @@ def largest_window(mol):
         mol.largest_window is not None or
         isinstance(mol.largest_window, float)
     ):
-        return abs(mol.largest_window-5.0)
+        return mol.largest_window
     else:
         return mol.largest_window
 
