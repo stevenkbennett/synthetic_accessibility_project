@@ -15,3 +15,4 @@ example_pop.log
 stages/stage3_ea_analysis/create_image/case_study*
 *results*
 .ipynb_checkpoints
+run*/tar_ea_run.py
