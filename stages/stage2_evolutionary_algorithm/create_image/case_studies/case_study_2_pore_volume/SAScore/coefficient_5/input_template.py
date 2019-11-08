@@ -22,7 +22,6 @@ for parent in file_path.parents:
     if parent.name == 'create_image':
         base_image_path = parent
 
-
 logging.info('Loading input file.')
 
 # #####################################################################
@@ -245,7 +244,7 @@ def pore_diameter(mol):
         mol.pore_diameter is not None or
         isinstance(mol.pore_diameter, float)
     ):
-        return abs(mol.pore_diameter-5.0)
+        return mol.pore_diameter
     else:
         return mol.pore_diameter
 
@@ -261,7 +260,7 @@ def largest_window(mol):
         mol.largest_window is not None or
         isinstance(mol.largest_window, float)
     ):
-        return abs(mol.largest_window-5.0)
+        return mol.largest_window
     else:
         return mol.largest_window
 
@@ -282,7 +281,6 @@ def sa_score(mol):
         scores.append(calculateScore(rdkit_mol))
     mol.sa_score = sum(scores)
     return mol.sa_score
-
 
 cage_fitness_calculator = stk.PropertyVector(
     pore_diameter,
@@ -314,11 +312,11 @@ fitness_normalizer = stk.Sequence(
     stk.Power([-1, -1, -1, -1], filter=valid_fitness),
     stk.DivideByMean(filter=valid_fitness),
     # Coefficients of fitness function in order:
-    # Pore volume: 5
-    # Window size: 1
-    # Asymmetry: 10
-    # Synthetic accessibility (SAScore): 1
-    stk.Multiply([5, 1, 10, 1], filter=valid_fitness),
+    # Pore volume: 10
+    # Window size: 0
+    # Asymmetry: 5
+    # Synthetic accessibility (SAScore): 5
+    stk.Multiply([10, 0, 5, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists with
     # minimum fitness / 2.
