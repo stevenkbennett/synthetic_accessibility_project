@@ -17,8 +17,14 @@ from sklearn.model_selection import (
     StratifiedKFold,
     cross_validate,
 )
-from sklearn.linear_model import LogisticRegression
-from joblib import dump
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import (
+    LogisticRegression,
+)
+from sklearn.neural_network import MLPClassifier
+from sklearn import svm
+import joblib
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -45,9 +51,10 @@ class SAScore:
     A class to contain ML models for synthetic accessibility scoring.
     '''
 
-    def __init__(self):
-        self.scores = []
+    def __init__(self, random_state=None):
+        self.scores = {}
         self.train_settings()
+        self.random_state = random_state
 
     def train_settings(
         self,
@@ -71,6 +78,8 @@ class SAScore:
             self.data = pd.read_csv(
                 data_path,
             )
+            self.parse_data()
+            return
         else:
             return
 
@@ -94,11 +103,46 @@ class SAScore:
         self.model = LogisticRegression(
             class_weight=self.class_weights,
             solver='liblinear',
+            random_state=self.random_state,
+        )
+
+    def svm(self, linear=True):
+        if linear:
+            # Linear SVM.
+            self.model = svm.SVC(
+                class_weight=self.class_weights,
+                kernel='linear',
+                random_state=self.random_state,
+            )
+        else:
+            # Non-linear SVM.
+            self.model = svm.SVC(
+                class_weight=self.class_weights,
+                kernel='rbf',
+                gamma='auto',
+                random_state=self.random_state,
+            )
+
+    def random_forest(self):
+        self.model = RandomForestClassifier(
+            n_estimators=10,
+            class_weights=self.class_weights,
+            gamma='auto',
+            random_state=self.random_state,
+        )
+
+    def multi_layer_perceptron(self):
+        self.model = MLPClassifier(
+            solver='adam',
+            random_state=self.random_state,
+            
         )
 
     def train(
         self,
         splits=StratifiedKFold,
+        dump=False,
+        dump_path=os.getcwd()
     ):
         '''
         Trains the specified model.
@@ -140,14 +184,20 @@ class SAScore:
         p1 = scores['test_precision_1'].mean()
         r1 = scores['test_recall_1'].mean()
 
-        self.scores.append([
-            accuracy,
-            p0,
-            r0,
-            p1,
-            r1
-        ])
-        
+        self.scores.update(
+            {
+                # Prints the name of the model class.
+                str(self.model).split('(')[0]:
+                {
+                    'accuracy': accuracy,
+                    'p0': p0,
+                    'r0': r0,
+                    'p1': p1,
+                    'r1': r1,
+                },
+            },
+        )
+
         logger.info(f'Accuracy\n{accuracy}')
         logger.info(f'Precision (Unsynthesisable)\n{p0}')
         logger.info(f'Recall (Unsynthesisable)\n{r0}')
@@ -155,6 +205,9 @@ class SAScore:
         logger.info(f'Recall (Synthesisable)\n{r1}')
 
         self.model.fit(self.fingerprints, self.labels)
+
+        if dump:
+            joblib.dump(self.model, dump_path)
 
 
 def main():
@@ -174,10 +227,6 @@ def main():
     # Creates logistic regression model
     model.logistic_regression()
     model.train()
-    # Dump the model file.
-    dump(model.model, 'sa_model_logisticrgr.joblib')
-
-
 
 
 if __name__ == '__main__':
