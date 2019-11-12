@@ -17,3 +17,4 @@ stages/stage3_ea_analysis/create_image/case_study*
 .ipynb_checkpoints
 run*/tar_ea_run.py
 tests
+opt_pops
