@@ -175,7 +175,7 @@ class SAScore:
                     pos_label=1,
                     labels=[1],
                 ),
-            }
+            },
         )
 
         accuracy = scores['test_accuracy'].mean()
