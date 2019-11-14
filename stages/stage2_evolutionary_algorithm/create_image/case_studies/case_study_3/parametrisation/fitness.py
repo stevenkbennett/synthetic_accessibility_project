@@ -57,8 +57,8 @@ def sc_score(mol):
         rdkit.GetSymmSSSR(rdkit_mol)
         rdkit_mol.GetRingInfo()
         scores.append(scscore.score(rdkit_mol))
-    mol.sa_score = sum(scores)
-    return mol.sa_score
+    mol.sc_score = sum(scores)
+    return mol.sc_score
 
 
 def sa_score(mol):
@@ -88,5 +88,4 @@ def calculate_fitness(pop_path):
         fitness_calculator,
         num_processes=3,
     )
-    fitness = pop.get_fitness_values()
-    return fitness
+    return pop

@@ -17,6 +17,7 @@ from sklearn.model_selection import (
     StratifiedKFold,
     cross_validate,
 )
+from mordred import Calculator, descriptors
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import (
     LogisticRegression,
@@ -46,6 +47,8 @@ def get_fingerprint(mol):
     return fp
 
 
+
+
 class SAScore:
     '''
     A class to contain ML models for synthetic accessibility scoring.
@@ -64,6 +67,17 @@ class SAScore:
         self.oversampling = oversampling
         if class_weights:
             self.class_weights = 'balanced'
+
+    def get_features(self):
+        '''
+        Gets the chemical features using Mordred.
+        '''
+        mols = []
+        for row in self.data.itertuples():
+            mols.append(rdkit.MolFromSmiles(row.Smiles))
+        calc = Calculator(descriptors, ignore_3D=True)
+        df = calc.pandas(mols)
+        return df
 
     def load_data(self, data_path):
         '''
@@ -126,8 +140,7 @@ class SAScore:
     def random_forest(self):
         self.model = RandomForestClassifier(
             n_estimators=10,
-            class_weights=self.class_weights,
-            gamma='auto',
+            class_weight=self.class_weights,
             random_state=self.random_state,
         )
 
@@ -135,23 +148,27 @@ class SAScore:
         self.model = MLPClassifier(
             solver='adam',
             random_state=self.random_state,
-            
         )
 
     def train(
         self,
+        X,
+        y,
         splits=StratifiedKFold,
-        dump=False,
+        dump=True,
         dump_path=os.getcwd()
     ):
         '''
         Trains the specified model.
         '''
-
+        if not X.any() or not y.any():
+            logging.debug('Loading default data.')
+            X = self.fingerprints
+            y = self.labels
         scores = cross_validate(
             estimator=self.model,
-            X=self.fingerprints,
-            y=self.labels,
+            X=X,
+            y=y,
             cv=splits(5),
             scoring={
                 'accuracy': make_scorer(accuracy_score),
@@ -175,7 +192,8 @@ class SAScore:
                     pos_label=1,
                     labels=[1],
                 ),
-            }
+            },
+            error_score=np.nan,
         )
 
         accuracy = scores['test_accuracy'].mean()
@@ -183,11 +201,10 @@ class SAScore:
         r0 = scores['test_recall_0'].mean()
         p1 = scores['test_precision_1'].mean()
         r1 = scores['test_recall_1'].mean()
-
+        model_name = str(self.model).split('(')[0]
         self.scores.update(
             {
-                # Prints the name of the model class.
-                str(self.model).split('(')[0]:
+                model_name:
                 {
                     'accuracy': accuracy,
                     'p0': p0,
@@ -207,7 +224,7 @@ class SAScore:
         self.model.fit(self.fingerprints, self.labels)
 
         if dump:
-            joblib.dump(self.model, dump_path)
+            joblib.dump(self.model, os.path.join(dump_path, model_name))
 
 
 def main():
