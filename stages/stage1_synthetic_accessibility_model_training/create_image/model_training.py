@@ -193,7 +193,10 @@ class SAScore:
                     labels=[1],
                 ),
             },
+<<<<<<< HEAD
             error_score=np.nan,
+=======
+>>>>>>> cx1
         )
 
         accuracy = scores['test_accuracy'].mean()

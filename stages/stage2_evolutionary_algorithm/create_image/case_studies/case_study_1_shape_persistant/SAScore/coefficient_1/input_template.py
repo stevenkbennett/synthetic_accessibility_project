@@ -279,6 +279,9 @@ def sa_score(mol):
     scores = []
     for bb in mol.get_building_blocks():
         rdkit_mol = bb.to_rdkit_mol()
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
         scores.append(calculateScore(rdkit_mol))
     mol.sa_score = sum(scores)
     return mol.sa_score
