@@ -1,0 +1,14 @@
+#PBS -l walltime=12:00:00
+#PBS -l select=1:ncpus=1:mem=10gb
+#PBS -N fitness
+#PBS -J 1-50
+#PBS -q pqchem
+
+module load anaconda3/personal
+source activate py37
+cd $PBS_O_WORKDIR
+
+for i in $PBS_ARRAY_INDEX:
+do
+	python fitness_calculator_random_files.py  
+done
