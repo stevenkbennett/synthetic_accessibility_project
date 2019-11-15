@@ -155,7 +155,6 @@ mutation_selector = stk.Roulette(
 crosser = stk.GeneticRecombination(
     key=lambda mol: mol.func_groups[0].fg_type.name,
     random_seed=random_seed,
-    use_cache=True,
 )
 
 # #####################################################################
@@ -165,31 +164,25 @@ crosser = stk.GeneticRecombination(
 mutator = stk.Random(
     stk.RandomBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].
-        fg_type.name == 'primary_amine',
+        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
         random_seed=random_seed,
-        use_cache=True,
     ),
     stk.SimilarBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].
-        fg_type.name == 'primary_amine',
+        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
-        use_cache=True,
     ),
     stk.RandomBuildingBlock(
         aldehyde_building_blocks,
         key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
         random_seed=random_seed,
-        use_cache=True,
     ),
     stk.SimilarBuildingBlock(
         aldehyde_building_blocks,
         key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
         duplicate_building_blocks=False,
         random_seed=random_seed,
-        use_cache=True,
     ),
 )
 
@@ -282,8 +275,8 @@ def sa_score(mol):
         rdkit.GetSymmSSSR(rdkit_mol)
         rdkit_mol.GetRingInfo()
         scores.append(calculateScore(rdkit_mol))
-    mol.sa_score = sum(scores)
-    return mol.sa_score
+    sa_score = sum(scores)
+    return sa_score
 
 
 cage_fitness_calculator = stk.PropertyVector(
@@ -299,8 +292,6 @@ fitness_calculator = stk.If(
     false_calculator=cage_fitness_calculator,
 )
 
-
-
 # #####################################################################
 # Fitness normalizer.
 # #####################################################################
@@ -313,6 +304,7 @@ def valid_fitness(population, mol):
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
 fitness_normalizer = stk.Sequence(
+    save_fitness,
     stk.Power([-1, -1, -1, -1], filter=valid_fitness),
     stk.DivideByMean(filter=valid_fitness),
     # Coefficients of fitness function in order:
@@ -384,7 +376,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.pore_diameter,
         y_label='Pore Diameter / A',
         filter=lambda progress, mol:
-            mol.pore_diameter is not None,
+            mol.pore_diameter is not None or mol.pore_diameter < 0,
         progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
@@ -392,7 +384,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.largest_window,
         y_label='Maximum Window Size / A',
         filter=lambda progress, mol:
-            mol.largest_window is not None,
+            mol.largest_window is not None or mol.largest_window < 0,
         progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
@@ -400,7 +392,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.window_std,
         y_label='Std. Dev. of Window Diameters / A',
         filter=lambda progress, mol:
-            mol.window_std is not None,
+            mol.window_std is not None or mol.window_std < 0,
         progress_fn=apply(window_std),
     )
 ]
