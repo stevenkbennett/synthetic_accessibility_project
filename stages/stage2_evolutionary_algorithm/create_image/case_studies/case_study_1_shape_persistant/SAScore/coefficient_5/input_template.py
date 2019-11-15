@@ -222,49 +222,78 @@ optimizer = stk.TryCatch(
     use_cache=True,
 )
 
+
+# #####################################################################
+# Fitness Attributes to Dump.
+# #####################################################################
+
+dump_attrs = ['pore_diameter', 'largest_window', 'window_std', 'sa_score']
+
 # #####################################################################
 # Fitness Calculator.
 # #####################################################################
 
 sys.path.append(str(base_image_path))
-from utilities.sascore.sascorer import calculateScore # noqa
+from utilities.sascore.sascorer import calculateScore  # noqa
+
+# Normalizer for saving individual fitness scores.
+
+
+class Saver(stk.Normalizer):
+    # Fitness function in order:
+    # Pore volume
+    # Window size
+    # Asymmetry
+    # Synthetic accessibility (SAScore)
+    def normalize(self, population):
+        # Write the individual fitness values to the file.
+        fitness_values = population.get_fitness_values()
+        for mol in population:
+            mol.pore_diameter = fitness_values[mol][0]
+            mol.largest_window = fitness_values[1]
+            mol.window_std = fitness_values[2]
+            mol.sa_score = fitness_values[3]
+
+
+save_fitness = Saver()
+
 
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
-    mol.pore_diameter = pw_mol.calculate_pore_diameter()
+    pore_diameter = pw_mol.calculate_pore_diameter()
     # Ideal pore diameter is 5 A.
     if (
-        mol.pore_diameter is not None or
-        isinstance(mol.pore_diameter, float)
+        pore_diameter is not None or
+        isinstance(pore_diameter, float)
     ):
-        return abs(mol.pore_diameter-5.0)
+        return abs(pore_diameter-5.0)
     else:
-        return mol.pore_diameter
+        return pore_diameter
 
 
 def largest_window(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
-    mol.largest_window = None
+    largest_window = None
     windows = pw_mol.calculate_windows()
     if windows is not None and len(windows) > 3:
-        mol.largest_window = max(windows)
+        largest_window = max(windows)
     # Ideal window diameter is 5 A.
     if (
-        mol.largest_window is not None or
-        isinstance(mol.largest_window, float)
+        largest_window is not None or
+        isinstance(largest_window, float)
     ):
-        return abs(mol.largest_window-5.0)
+        return abs(largest_window-5.0)
     else:
-        return mol.largest_window
+        return largest_window
 
 
 def window_std(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     windows = pw_mol.calculate_windows()
-    mol.window_std = None
+    window_std = None
     if windows is not None and len(windows) > 3:
-        mol.window_std = np.std(windows)
-    return mol.window_std
+        window_std = np.std(windows)
+    return window_std
 
 
 def sa_score(mol):
@@ -291,6 +320,7 @@ fitness_calculator = stk.If(
     true_calculator=stk.FitnessFunction(lambda mol: None),
     false_calculator=cage_fitness_calculator,
 )
+
 
 # #####################################################################
 # Fitness normalizer.
