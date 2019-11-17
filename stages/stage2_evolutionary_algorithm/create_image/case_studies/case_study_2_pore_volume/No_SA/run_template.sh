@@ -6,5 +6,5 @@ cd run$ea_run_count
 mv input_template.pbs input.pbs
 mv input_template.py input.py
 random_seed=$(shuf -i 1-65000 -n 1)
-sed -i "s/random_seed = 20/random_seed = $random_seed/g" input.py
+sed -i "s/random_seed = 2/random_seed = $random_seed/g" input.py
 qsub input.pbs

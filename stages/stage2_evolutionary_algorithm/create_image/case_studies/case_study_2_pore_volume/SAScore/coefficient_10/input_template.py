@@ -235,7 +235,7 @@ dump_attrs = ['pore_diameter', 'largest_window', 'window_std', 'sa_score']
 # Normalizer for saving individual fitness scores.
 
 
-class Saver(stk.Normalizer):
+class Saver(stk.FitnessNormalizer):
     # Fitness function in order:
     # Pore volume
     # Window size

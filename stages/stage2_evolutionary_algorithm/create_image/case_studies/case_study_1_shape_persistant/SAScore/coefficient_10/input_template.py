@@ -239,7 +239,7 @@ from utilities.sascore.sascorer import calculateScore  # noqa
 # Normalizer for saving individual fitness scores.
 
 
-class Saver(stk.Normalizer):
+class Saver(stk.FitnessNormalizer):
     # Fitness function in order:
     # Pore volume
     # Window size
