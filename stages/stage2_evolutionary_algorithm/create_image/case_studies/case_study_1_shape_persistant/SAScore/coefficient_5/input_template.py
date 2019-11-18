@@ -250,9 +250,9 @@ class Saver(stk.FitnessNormalizer):
         fitness_values = population.get_fitness_values()
         for mol in population:
             mol.pore_diameter = fitness_values[mol][0]
-            mol.largest_window = fitness_values[1]
-            mol.window_std = fitness_values[2]
-            mol.sa_score = fitness_values[3]
+            mol.largest_window = fitness_values[mol][1]
+            mol.window_std = fitness_values[mol][2]
+            mol.sa_score = fitness_values[mol][3]
 
 
 save_fitness = Saver()
