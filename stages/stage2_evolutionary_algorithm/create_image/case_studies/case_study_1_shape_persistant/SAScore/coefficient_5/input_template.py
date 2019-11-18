@@ -253,7 +253,7 @@ class Saver(stk.FitnessNormalizer):
             mol.largest_window = fitness_values[mol][1]
             mol.window_std = fitness_values[mol][2]
             mol.sa_score = fitness_values[mol][3]
-
+        return fitness_values
 
 save_fitness = Saver()
 
