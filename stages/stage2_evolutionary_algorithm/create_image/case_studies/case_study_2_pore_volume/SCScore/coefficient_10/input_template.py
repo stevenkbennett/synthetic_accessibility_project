@@ -409,7 +409,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.pore_diameter,
         y_label='Pore Diameter / A',
         filter=lambda progress, mol:
-            mol.pore_diameter is not None or mol.pore_diameter < 0,
+            mol.pore_diameter is not None,
         progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
@@ -417,7 +417,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.largest_window,
         y_label='Maximum Window Size / A',
         filter=lambda progress, mol:
-            mol.largest_window is not None or mol.largest_window < 0,
+            mol.largest_window is not None,
         progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
@@ -425,7 +425,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.window_std,
         y_label='Std. Dev. of Window Diameters / A',
         filter=lambda progress, mol:
-            mol.window_std is not None or mol.window_std < 0,
+            mol.window_std is not None,
         progress_fn=apply(window_std),
     )
 ]
