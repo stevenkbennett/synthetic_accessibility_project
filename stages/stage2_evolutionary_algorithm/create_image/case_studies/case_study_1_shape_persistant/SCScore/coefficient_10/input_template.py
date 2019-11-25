@@ -9,6 +9,7 @@ import numpy as np
 import pywindow
 import sys
 from rdkit.Chem import AllChem as rdkit
+import os
 
 # Global settings.
 
@@ -330,8 +331,15 @@ fitness_calculator = stk.If(
 
 
 def valid_fitness(population, mol):
-    return None not in population.get_fitness_values()[mol]
+    f = population.get_fitness_values()[mol]
+    if not isinstance(f, list):
+        return f is not None
 
+    elif isinstance(f, list):
+        return None not in population.get_fitness_values()[mol]
+
+    else:
+        return False
 
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
@@ -354,8 +362,7 @@ fitness_normalizer = stk.Sequence(
                 f for _, f in population.get_fitness_values().items()
                 if not isinstance(f, list)
             ) / 2,
-        filter=lambda p, m:
-            isinstance(p.get_fitness_values()[m], list),
+        filter=valid_fitness,
     )
 )
 

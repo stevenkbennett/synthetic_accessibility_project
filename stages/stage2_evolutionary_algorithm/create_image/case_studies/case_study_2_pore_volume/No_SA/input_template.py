@@ -9,6 +9,7 @@ import numpy as np
 import pywindow
 import sys
 from rdkit.Chem import AllChem as rdkit
+import os
 
 # Global settings.
 
@@ -24,7 +25,7 @@ for parent in file_path.parents:
 
 sys.path.append(str(base_image_path))
 
-from utilities.scscore.scscore import SCScore # noqa
+from utilities.scscore.scscore import SCScore  # noqa
 
 logging.info('Loading input file.')
 
@@ -32,7 +33,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 32
+num_processes = int(os.environ.get('CPU_COUNT'))
 
 # #####################################################################
 # Set logging level.
@@ -255,7 +256,9 @@ class Saver(stk.FitnessNormalizer):
             mol.sa_score = fitness_values[mol][3]
         return fitness_values
 
+
 save_fitness = Saver()
+
 
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
@@ -330,7 +333,15 @@ fitness_calculator = stk.If(
 
 
 def valid_fitness(population, mol):
-    return None not in population.get_fitness_values()[mol]
+    f = population.get_fitness_values()[mol]
+    if not isinstance(f, list):
+        return f is not None
+
+    elif isinstance(f, list):
+        return None not in population.get_fitness_values()[mol]
+
+    else:
+        return False
 
 
 # Minimize synthetic accessibility and asymmetry.
@@ -354,8 +365,7 @@ fitness_normalizer = stk.Sequence(
                 f for _, f in population.get_fitness_values().items()
                 if not isinstance(f, list)
             ) / 2,
-        filter=lambda p, m:
-            isinstance(p.get_fitness_values()[m], list),
+        filter=valid_fitness,
     )
 )
 
