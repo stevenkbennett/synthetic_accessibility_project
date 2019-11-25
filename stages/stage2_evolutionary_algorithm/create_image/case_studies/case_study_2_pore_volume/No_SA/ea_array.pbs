@@ -1,0 +1,10 @@
+#!/bin/sh
+
+#PBS -j oe
+#PBS -lwalltime=72:00:00
+#PBS -lselect=1:ncpus=8:mem=50gb
+#PBS -J 1-69
+
+module load anaconda3/personal
+source activate py37
+
