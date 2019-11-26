@@ -1,3 +1,4 @@
+
 # #####################################################################
 # Imports.
 # #####################################################################
@@ -170,7 +171,9 @@ mutator = stk.Random(
     ),
     stk.SimilarBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
+        key=lambda mol: (
+            mol.func_groups[0].fg_type.name == 'primary_amine',
+        ),
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -181,7 +184,9 @@ mutator = stk.Random(
     ),
     stk.SimilarBuildingBlock(
         aldehyde_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
+        key=lambda mol: (
+            mol.func_groups[0].fg_type.name == 'aldehyde',
+        ),
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -228,7 +233,12 @@ optimizer = stk.TryCatch(
 # Fitness Attributes to Dump.
 # #####################################################################
 
-dump_attrs = ['pore_diameter', 'largest_window', 'window_std', 'sa_score']
+dump_attrs = [
+    'pore_diameter',
+    'largest_window',
+    'window_std',
+    'sa_score',
+]
 
 # #####################################################################
 # Fitness Calculator.
@@ -253,6 +263,7 @@ class Saver(stk.FitnessNormalizer):
             mol.pore_diameter = fitness_values[mol][0]
             mol.largest_window = fitness_values[mol][1]
             mol.window_std = fitness_values[mol][2]
+
             mol.sa_score = fitness_values[mol][3]
         return fitness_values
 
@@ -339,6 +350,7 @@ def valid_fitness(population, mol):
     else:
         return False
 
+
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
 fitness_normalizer = stk.Sequence(
@@ -352,16 +364,22 @@ fitness_normalizer = stk.Sequence(
     # Synthetic accessibility (SAScore): 5
     stk.Multiply([5, 1, 10, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
-    # Replace all fitness values that are lists with
+    # Replace all fitness values that are lists or None with
     # minimum fitness / 2.
     stk.ReplaceFitness(
         replacement_fn=lambda population:
             min(
                 f for _, f in population.get_fitness_values().items()
-                if not isinstance(f, list)
+                if not isinstance(f, list) if not None
             ) / 2,
-        filter=valid_fitness,
-    )
+        filter=lambda p, m:
+            (
+                isinstance(
+                    p.get_fitness_values()[m],
+                    (list, type(None)),
+                ),
+            ),
+    ),
 )
 
 # #####################################################################
