@@ -166,31 +166,38 @@ crosser = stk.GeneticRecombination(
 mutator = stk.Random(
     stk.RandomBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'primary_amine',
+        duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.SimilarBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: (
-            mol.func_groups[0].fg_type.name == 'primary_amine',
-        ),
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'primary_amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.RandomBuildingBlock(
         aldehyde_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'aldehyde',
+        duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.SimilarBuildingBlock(
         aldehyde_building_blocks,
-        key=lambda mol: (
-            mol.func_groups[0].fg_type.name == 'aldehyde',
-        ),
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'aldehyde',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
 )
+
 
 # #####################################################################
 # Optimizer.
@@ -266,6 +273,7 @@ class Saver(stk.FitnessNormalizer):
 
             mol.sa_score = fitness_values[mol][3]
         return fitness_values
+
 
 save_fitness = Saver()
 
@@ -369,15 +377,13 @@ fitness_normalizer = stk.Sequence(
     stk.ReplaceFitness(
         replacement_fn=lambda population:
             min(
-                f for _, f in population.get_fitness_values().items()
-                if not isinstance(f, list) if not None
+                f if not isinstance(f, list) else 0
+                for _, f in population.get_fitness_values().items()
             ) / 2,
         filter=lambda p, m:
-            (
-                isinstance(
-                    p.get_fitness_values()[m],
-                    (list, type(None)),
-                ),
+            isinstance(
+                p.get_fitness_values()[m],
+                (list, type(None)),
             ),
     ),
 )

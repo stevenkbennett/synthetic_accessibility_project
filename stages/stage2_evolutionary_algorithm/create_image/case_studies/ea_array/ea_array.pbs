@@ -1,0 +1,43 @@
+#!/bin/sh
+
+#PBS -j oe
+#PBS -lwalltime=72:00:00
+#PBS -lselect=1:ncpus=8:mem=75gb:ompthreads=8
+
+module load anaconda3/personal
+source activate py37
+
+cd $PBS_O_WORKDIR
+
+BASE_DIR=${dir:-.}
+DEPTH=${maxdepth:-2}
+
+FILES=$(find $BASE_DIR -maxdepth $DEPTH -name input_template.py)
+DIR=$(echo $FILES | cut -d ' ' -f1)
+echo "Selected input file is $DIR"
+
+# Runs the EA a specific number of times.
+for i in $(seq 1 $PBS_ARRAY_INDEX)
+do
+    # Move to directory of input_template.py
+    cd $(dirname $DIR)
+    # Count the number of EA runs.
+    run_count=$(($(find run* -maxdepth 0 -type d | wc -l)+1))
+    # Make new run directory.
+    mkdir run$run_count
+    # Copy files from main to run directory.
+    cp {input_template.py,tar_ea_run.py} run$run_count
+    # Move into new directory.
+    cd run$run_count
+    # Rename.
+    mv input_template.py input.py
+    # Get a new random seed and write to the input file.
+    random_seed=$(shuf -i 1-65000 -n 1)
+    sed -i "s/random_seed = 2/random_seed = $random_seed/g" input.py
+    # Run the EA.
+    python -m stk.ea $(realpath input.py) &> ea_run.log
+    # Move and compress files.
+    mv ea_run.log stk_ea_runs/0/ea_run.log
+    python tar_ea_run.py
+    touch finished       
+done
