@@ -370,13 +370,9 @@ fitness_normalizer = stk.Sequence(
     stk.Multiply([10, 0, 5, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists or None with
-    # minimum fitness / 2.
+    # a small value.
     stk.ReplaceFitness(
-        replacement_fn=lambda population:
-            min(
-                f if not isinstance(f, list) else 0
-                for _, f in population.get_fitness_values().items()
-            ) / 2,
+        replacement_fn=lambda population: 1e-8,
         filter=lambda p, m:
             isinstance(
                 p.get_fitness_values()[m],

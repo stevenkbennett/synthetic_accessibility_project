@@ -374,7 +374,7 @@ fitness_normalizer = stk.Sequence(
     stk.Multiply([10, 0, 5, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists or None with
-    # minimum fitness / 2.
+    # a small value.
     stk.ReplaceFitness(
         replacement_fn=lambda population:
             min(
