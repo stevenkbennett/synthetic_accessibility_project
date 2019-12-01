@@ -26,7 +26,7 @@ for parent in file_path.parents:
 
 sys.path.append(str(base_image_path))
 
-from utilities.scscore.scscore import SCScore # noqa
+from utilities.scscore.scscore import SCScore  # noqa
 
 logging.info('Loading input file.')
 
@@ -275,6 +275,7 @@ class Saver(stk.FitnessNormalizer):
 
 save_fitness = Saver()
 
+
 def pore_diameter(mol):
     pw_mol = pywindow.Molecule.load_rdkit_mol(mol.to_rdkit_mol())
     pore_diameter = pw_mol.calculate_pore_diameter()
@@ -360,6 +361,7 @@ def valid_fitness(population, mol):
 
 # Minimize synthetic accessibility and asymmetry.
 
+
 # Maximise pore volume and window size.
 fitness_normalizer = stk.Sequence(
     save_fitness,
@@ -418,7 +420,7 @@ plotters = [
                 fitness_calculator=fitness_calculator,
                 fitness_normalizer=fitness_normalizer,
                 num_processes=num_processes,
-            )
+            ),
     ),
     stk.ProgressPlotter(
         filename='sascore_plot',

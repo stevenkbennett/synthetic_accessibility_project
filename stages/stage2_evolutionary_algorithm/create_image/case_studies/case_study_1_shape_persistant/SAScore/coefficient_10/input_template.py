@@ -418,7 +418,7 @@ plotters = [
                 fitness_calculator=fitness_calculator,
                 fitness_normalizer=fitness_normalizer,
                 num_processes=num_processes,
-            )
+            ),
     ),
     stk.ProgressPlotter(
         filename='sascore_plot',
