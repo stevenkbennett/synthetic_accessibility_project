@@ -381,7 +381,7 @@ fitness_normalizer = stk.Sequence(
             isinstance(
                 p.get_fitness_values()[m],
                 (list, type(None)),
-            ),
+            )
     ),
 )
 
