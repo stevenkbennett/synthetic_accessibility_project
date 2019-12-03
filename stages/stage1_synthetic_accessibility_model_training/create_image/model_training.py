@@ -1,31 +1,28 @@
-'''
-Code to train ML models.
-'''
-from rdkit.Chem import AllChem as rdkit
-import pandas as pd
-import numpy as np
+"""
+Synthetic Accessibility Model Training
+==============
+"""
 import logging
+import os
 from collections import Counter
 from pathlib import Path
-from sklearn.metrics import (
-    make_scorer,
-    accuracy_score,
-    recall_score,
-    precision_score,
-)
-from sklearn.model_selection import (
-    StratifiedKFold,
-    cross_validate,
-)
-from mordred import Calculator, descriptors
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import (
-    LogisticRegression,
-)
-from sklearn.neural_network import MLPClassifier
-from sklearn import svm
+
 import joblib
-import os
+import numpy as np
+import pandas as pd
+from mordred import Calculator, descriptors
+from rdkit.Chem import AllChem as rdkit
+from sklearn import svm
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (
+    accuracy_score,
+    make_scorer,
+    precision_score,
+    recall_score
+)
+from sklearn.model_selection import StratifiedKFold, cross_validate
+from sklearn.neural_network import MLPClassifier
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +30,12 @@ logger = logging.getLogger(__name__)
 def get_fingerprint(mol):
     '''
     Gets Morgan fingerprint bit counts.
+
+    Parameters
+    ----------
+    mol : :class:`rdkit.Mol`
+        The molecule in :mod:`rdkit` format to have its fingerprints
+        calculated.
     '''
     info = {}
     fp = rdkit.GetMorganFingerprintAsBitVect(
@@ -47,37 +50,90 @@ def get_fingerprint(mol):
     return fp
 
 
-
-
-class SAScore:
+class Model:
     '''
-    A class to contain ML models for synthetic accessibility scoring.
+    Represents the model for producing synthetic accessibility
+    predictions.
+
+    Attributes
+    ----------
+    scores : :class:`dict`
+        Contains cross-validation scores, updated after calling
+        :meth:`train`.
+
+    random_state : :class:`int`
+        Random state used in each ML model.
+
+    oversampling : :class:`bool`
+        Defines whether oversampling is used while training the model.
+
+    class_weights : :class:`str`
+        Defines the type of class weights to use while
+        training the ML model.
+
+    data : :class:`pandas.DataFrame`
+        Contains data used for training the model.
+
+    model: :class:`sklearn.BaseEstimator`
+        Stores the ML model.
+
+    fingerprints: :class:`numpy.array`
+        Array of fingerprints for each molecule in `.data`.
+
     '''
 
-    def __init__(self, random_state=None):
+    def __init__(
+        self,
+        random_state=None,
+        num_processes=1,
+    ):
+        '''
+        Initialises the training settings and random state.
+
+        Parameters
+        ----------
+        random_state : :class:`int`, optional
+            Random state used in ML models.
+
+        num_processes : :class:`int`, optional
+            Number of CPU cores to use for training.
+        '''
         self.scores = {}
-        self.train_settings()
+        self.num_processes = num_processes
+        self._train_settings()
         self.random_state = random_state
 
-    def train_settings(
+    def _train_settings(
         self,
         oversampling=False,
         class_weights=True,
     ):
+        '''
+        Sets up the settings for training the ML model.
+
+        Note
+        ----
+        This function is called upon initialisation.
+        '''
         self.oversampling = oversampling
         if class_weights:
             self.class_weights = 'balanced'
 
     def get_features(self):
         '''
-        Gets the chemical features using Mordred.
+        Calculate all chemical descriptors using Mordred.
+
+        Returns
+        -------
+        features : :class:`pandas.DataFrame`
+            DataFrame containing chemical descriptors, calculated using
+            Mordred.
         '''
         mols = []
         for row in self.data.itertuples():
             mols.append(rdkit.MolFromSmiles(row.Smiles))
         calc = Calculator(descriptors, ignore_3D=True)
-        df = calc.pandas(mols)
-        return df
+        return calc.pandas(mols)
 
     def load_data(self, data_path):
         '''
@@ -86,18 +142,21 @@ class SAScore:
         Parameters
         ----------
         data : :class:`str`
-            The path to the data file used for loading.
+            Path to the `csv` data file used for loading.
         '''
         if data_path.endswith('.csv'):
             self.data = pd.read_csv(
                 data_path,
             )
+            # Call :meth:`parse_data` to label the DataFrame.
             self.parse_data()
-            return
-        else:
-            return
+        return
 
     def parse_data(self):
+        '''
+        Parses the original `csv` data, adding labels to
+        `.data`.
+        '''
         fingerprints, labels = [], []
         for row in self.data.itertuples():
             molecule = rdkit.MolFromSmiles(row.Smiles)
@@ -112,7 +171,7 @@ class SAScore:
 
     def logistic_regression(self):
         '''
-        Uses logistic regression for making predictions.
+        Initialises the logistic regression model.
         '''
         self.model = LogisticRegression(
             class_weight=self.class_weights,
@@ -121,6 +180,9 @@ class SAScore:
         )
 
     def svm(self, linear=True):
+        '''
+        Initialises the support vector machine model.
+        '''
         if linear:
             # Linear SVM.
             self.model = svm.SVC(
@@ -138,6 +200,9 @@ class SAScore:
             )
 
     def random_forest(self):
+        '''
+        Initialises the random forest classification model.
+        '''
         self.model = RandomForestClassifier(
             n_estimators=10,
             class_weight=self.class_weights,
@@ -145,6 +210,9 @@ class SAScore:
         )
 
     def multi_layer_perceptron(self):
+        '''
+        Initialises the multi-layer perceptron model.
+        '''
         self.model = MLPClassifier(
             solver='adam',
             random_state=self.random_state,
@@ -152,16 +220,37 @@ class SAScore:
 
     def train(
         self,
-        X,
-        y,
+        X=None,
+        y=None,
         splits=StratifiedKFold,
         dump=True,
         dump_path=os.getcwd()
     ):
         '''
-        Trains the specified model.
+        Trains the ML model using cross-validation.
+
+        The model that will be trained is in `self.model`.
+
+        Parameters
+        ----------
+        X : :class:`numpy.array`, optional
+            Data used to train the model. If `None`,
+            uses the default training data.
+
+        y : :class:`numpy.array`, optional
+            Classification data used for the synthetic
+            accessibility model.
+
+        splits : :class:`sklearn.model_selection.StratifiedKFold`
+            Splitting type to use for training the model.
+
+        dump : :class:`bool`
+            Whether to dump the trained model.
+
+        dump_path : :class:`str`
+            Path to dump the trained model.
         '''
-        if not X.any() or not y.any():
+        if not X or not y:
             logging.debug('Loading default data.')
             X = self.fingerprints
             y = self.labels
@@ -169,6 +258,7 @@ class SAScore:
             estimator=self.model,
             X=X,
             y=y,
+            n_jobs=self.num_processes,
             cv=splits(5),
             scoring={
                 'accuracy': make_scorer(accuracy_score),
@@ -200,7 +290,9 @@ class SAScore:
         r0 = scores['test_recall_0'].mean()
         p1 = scores['test_precision_1'].mean()
         r1 = scores['test_recall_1'].mean()
+        # Gets gets the name of the model from the dictionary.
         model_name = str(self.model).split('(')[0]
+        # Appends scores of the model to the dictionary.
         self.scores.update(
             {
                 model_name:
@@ -223,14 +315,18 @@ class SAScore:
         self.model.fit(self.fingerprints, self.labels)
 
         if dump:
-            joblib.dump(self.model, os.path.join(dump_path, model_name))
+            # Dumps the model.
+            joblib.dump(self.model, os.path.join(
+                dump_path, model_name+'.joblib'))
 
 
 def main():
-    np.random.seed(4)
     logging.basicConfig(level=logging.DEBUG)
 
-    model = SAScore()
+    model = Model(
+        num_processes=10,
+        random_state=13,
+    )
 
     default_data = Path(__file__).parent.joinpath(
         'databases',
@@ -238,11 +334,10 @@ def main():
     )
     # Loads the CSV data file.
     model.load_data(str(default_data))
-    # Loads the Morgan Fingerprints as bit counts.
-    model.parse_data()
     # Creates logistic regression model
-    model.logistic_regression()
-    model.train()
+    model.random_forest()
+    # Trains the current model.
+    model.train(dump=True)
 
 
 if __name__ == '__main__':
