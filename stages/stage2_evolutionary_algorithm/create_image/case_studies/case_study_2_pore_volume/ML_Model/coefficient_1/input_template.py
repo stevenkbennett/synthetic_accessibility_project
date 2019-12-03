@@ -350,7 +350,7 @@ ml_model = joblib.load(
 
 def ml_score(mol):
     scores = []
-    for bb in mol:
+    for bb in mol.get_building_blocks():
         fp = get_fingerprint(mol)
         prob = ml_model.predict_proba(fp)[0]
         scores.append(prob)
