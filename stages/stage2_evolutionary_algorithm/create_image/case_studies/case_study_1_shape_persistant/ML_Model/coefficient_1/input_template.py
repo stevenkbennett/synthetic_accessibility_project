@@ -356,8 +356,12 @@ ml_model = joblib.load(
 def ml_score(mol):
     scores = []
     for bb in mol.get_building_blocks():
-        fp = get_fingerprint(mol)
-        prob = ml_model.predict_proba(fp)[0]
+        rdkit_mol = bb.to_rdkit_mol()
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
+        fp = np.array(get_fingerprint(rdkit_mol)).reshape(1, -1)
+        prob = ml_model.predict_proba(fp)[0][0]
         scores.append(prob)
     return sum(scores)
 
