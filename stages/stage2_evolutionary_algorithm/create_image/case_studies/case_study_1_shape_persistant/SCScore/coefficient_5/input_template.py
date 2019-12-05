@@ -1,3 +1,4 @@
+
 # #####################################################################
 # Imports.
 # #####################################################################
@@ -9,6 +10,7 @@ import numpy as np
 import pywindow
 import sys
 from rdkit.Chem import AllChem as rdkit
+import os
 
 # Global settings.
 
@@ -32,7 +34,7 @@ logging.info('Loading input file.')
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = 32
+num_processes = int(os.environ.get('CPU_COUNT'))
 
 # #####################################################################
 # Set logging level.
@@ -167,23 +169,33 @@ crosser = stk.GeneticRecombination(
 mutator = stk.Random(
     stk.RandomBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'primary_amine',
+        duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.SimilarBuildingBlock(
         amine_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'primary_amine',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'primary_amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.RandomBuildingBlock(
         aldehyde_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'aldehyde',
+        duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
     stk.SimilarBuildingBlock(
         aldehyde_building_blocks,
-        key=lambda mol: mol.func_groups[0].fg_type.name == 'aldehyde',
+        key=lambda mol:
+            mol.func_groups[0].fg_type.name
+            == 'aldehyde',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -230,7 +242,12 @@ optimizer = stk.TryCatch(
 # Fitness Attributes to Dump.
 # #####################################################################
 
-dump_attrs = ['pore_diameter', 'largest_window', 'window_std', 'sa_score']
+dump_attrs = [
+    'pore_diameter',
+    'largest_window',
+    'window_std',
+    'sa_score',
+]
 
 # #####################################################################
 # Fitness Calculator.
@@ -250,9 +267,10 @@ class Saver(stk.FitnessNormalizer):
         fitness_values = population.get_fitness_values()
         for mol in population:
             mol.pore_diameter = fitness_values[mol][0]
-            mol.largest_window = fitness_values[1]
-            mol.window_std = fitness_values[2]
-            mol.sa_score = fitness_values[3]
+            mol.largest_window = fitness_values[mol][1]
+            mol.window_std = fitness_values[mol][2]
+            mol.sa_score = fitness_values[mol][3]
+        return fitness_values
 
 
 save_fitness = Saver()
@@ -331,7 +349,15 @@ fitness_calculator = stk.If(
 
 
 def valid_fitness(population, mol):
-    return None not in population.get_fitness_values()[mol]
+    f = population.get_fitness_values()[mol]
+    if not isinstance(f, list):
+        return f is not None
+
+    elif isinstance(f, list):
+        return None not in population.get_fitness_values()[mol]
+
+    else:
+        return False
 
 
 # Minimize synthetic accessibility and asymmetry.
@@ -347,17 +373,16 @@ fitness_normalizer = stk.Sequence(
     # Synthetic accessibility: 5
     stk.Multiply([5, 1, 10, 5], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
-    # Replace all fitness values that are lists with
-    # minimum fitness / 2.
+    # Replace all fitness values that are lists or None with
+    # a small value.
     stk.ReplaceFitness(
-        replacement_fn=lambda population:
-            min(
-                f for _, f in population.get_fitness_values().items()
-                if not isinstance(f, list)
-            ) / 2,
+        replacement_fn=lambda population: 1e-8,
         filter=lambda p, m:
-            isinstance(p.get_fitness_values()[m], list),
-    )
+            isinstance(
+                p.get_fitness_values()[m],
+                (list, type(None)),
+            )
+    ),
 )
 
 # #####################################################################
@@ -394,7 +419,7 @@ plotters = [
                 fitness_calculator=fitness_calculator,
                 fitness_normalizer=fitness_normalizer,
                 num_processes=num_processes,
-            )
+            ),
     ),
     stk.ProgressPlotter(
         filename='sascore_plot',
@@ -409,7 +434,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.pore_diameter,
         y_label='Pore Diameter / A',
         filter=lambda progress, mol:
-            mol.pore_diameter is not None or mol.pore_diameter < 0,
+            mol.pore_diameter is not None,
         progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
@@ -417,7 +442,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.largest_window,
         y_label='Maximum Window Size / A',
         filter=lambda progress, mol:
-            mol.largest_window is not None or mol.largest_window < 0,
+            mol.largest_window is not None,
         progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
@@ -425,7 +450,7 @@ plotters = [
         property_fn=lambda progress, mol: mol.window_std,
         y_label='Std. Dev. of Window Diameters / A',
         filter=lambda progress, mol:
-            mol.window_std is not None or mol.window_std < 0,
+            mol.window_std is not None,
         progress_fn=apply(window_std),
     )
 ]

@@ -1,9 +1,10 @@
 #!/bin/sh
 
 #PBS -j oe
-#PBS -lwalltime=24:00:00
+#PBS -lwalltime=72:00:00
 #PBS -lselect=1:ncpus=32:mem=80gb:ompthreads=32
 #PBS -N CS2_SAScore_Coefficient5
+#PBS -v CPU_COUNT=32
 
 
 module load anaconda3/personal

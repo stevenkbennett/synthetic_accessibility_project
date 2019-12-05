@@ -3,12 +3,12 @@
 # Imports.
 # #####################################################################
 
+import joblib
 import stk
 import logging
 from pathlib import Path
 import numpy as np
 import pywindow
-import sys
 from rdkit.Chem import AllChem as rdkit
 import os
 
@@ -24,9 +24,6 @@ for parent in file_path.parents:
     if parent.name == 'create_image':
         base_image_path = parent
 
-sys.path.append(str(base_image_path))
-
-from utilities.scscore.scscore import SCScore  # noqa
 
 logging.info('Loading input file.')
 
@@ -201,6 +198,7 @@ mutator = stk.Random(
     ),
 )
 
+
 # #####################################################################
 # Optimizer.
 # #####################################################################
@@ -313,27 +311,61 @@ def window_std(mol):
         window_std = np.std(windows)
     return window_std
 
+# #####################################################################
+# Synthetic Accessibility Model Scoring Parameters.
+# #####################################################################
 
-scscore = SCScore()
+
+def get_fingerprint(mol):
+    '''
+    Gets Morgan fingerprint bit counts.
+
+    Parameters
+    ----------
+    mol : :class:`rdkit.Mol`
+        The molecule in :mod:`rdkit` format to have its fingerprints
+        calculated.
+    '''
+    info = {}
+    fp = rdkit.GetMorganFingerprintAsBitVect(
+        mol=mol,
+        radius=2,
+        nBits=512,
+        bitInfo=info,
+    )
+    fp = list(fp)
+    for bit, activators in info.items():
+        fp[bit] = len(activators)
+    return fp
 
 
-def sa_score(mol):
+ml_model = joblib.load(
+    '/rds/general/user/sb2518/home/WORK'
+    '/main_projects/synthetic_accessibility_project'
+    '/stages/stage1_synthetic_accessibility_model_'
+    'training/create_image/RandomForestClassifier'
+    '.joblib'
+)
+
+
+def ml_score(mol):
     scores = []
     for bb in mol.get_building_blocks():
         rdkit_mol = bb.to_rdkit_mol()
         rdkit_mol.UpdatePropertyCache()
         rdkit.GetSymmSSSR(rdkit_mol)
         rdkit_mol.GetRingInfo()
-        scores.append(scscore.score(rdkit_mol))
-    sa_score = sum(scores)
-    return sa_score
+        fp = np.array(get_fingerprint(rdkit_mol)).reshape(1, -1)
+        prob = ml_model.predict_proba(fp)[0][0]
+        scores.append(prob)
+    return sum(scores)
 
 
 cage_fitness_calculator = stk.PropertyVector(
     pore_diameter,
     largest_window,
     window_std,
-    sa_score,
+    ml_score,
 )
 
 fitness_calculator = stk.If(
@@ -370,8 +402,8 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 10
     # Window size: 0
     # Asymmetry: 5
-    # Synthetic accessibility: 5
-    stk.Multiply([10, 0, 5, 5], filter=valid_fitness),
+    # Synthetic accessibility (ML Model): 10
+    stk.Multiply([10, 0, 5, 10], filter=valid_fitness),
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists or None with
     # a small value.
@@ -427,7 +459,7 @@ plotters = [
         y_label='Synthetic Accessibility / unitless',
         filter=lambda progress, mol:
             mol.sa_score is not None,
-        progress_fn=apply(sa_score),
+        progress_fn=apply(ml_model),
     ),
     stk.ProgressPlotter(
         filename='volume_plot',
