@@ -4,7 +4,6 @@
 #PBS -j oe
 #PBS -lwalltime=72:00:00
 #PBS -lselect=1:ncpus=8:mem=20gb:ompthreads=7
-#PBS -q pqchem
 
 module load anaconda3/personal
 source activate py37
