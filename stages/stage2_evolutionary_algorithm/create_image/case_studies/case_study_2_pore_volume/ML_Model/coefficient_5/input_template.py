@@ -214,11 +214,13 @@ optimizer = stk.TryCatch(
             restricted=True,
             use_cache=True,
         ),
+            timeout=10800,
         stk.MacroModelForceField(
             macromodel_path=macromodel_path,
             restricted=False,
             use_cache=True,
         ),
+            timeout=10800,
         stk.TryCatch(
             stk.MacroModelMD(
                 macromodel_path=macromodel_path,
@@ -226,6 +228,7 @@ optimizer = stk.TryCatch(
                 eq_time=100,
                 use_cache=True,
             ),
+                timeout=10800,
             stk.NullOptimizer(
                 use_cache=True,
             ),
@@ -459,7 +462,7 @@ plotters = [
         y_label='Synthetic Accessibility / unitless',
         filter=lambda progress, mol:
             mol.sa_score is not None,
-        progress_fn=apply(ml_model),
+        progress_fn=apply(ml_score),
     ),
     stk.ProgressPlotter(
         filename='volume_plot',

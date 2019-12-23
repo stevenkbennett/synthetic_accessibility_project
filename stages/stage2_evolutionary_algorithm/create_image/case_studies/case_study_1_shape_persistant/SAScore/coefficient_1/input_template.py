@@ -214,11 +214,13 @@ optimizer = stk.TryCatch(
             restricted=True,
             use_cache=True,
         ),
+            timeout=10800,
         stk.MacroModelForceField(
             macromodel_path=macromodel_path,
             restricted=False,
             use_cache=True,
         ),
+            timeout=10800,
         stk.TryCatch(
             stk.MacroModelMD(
                 macromodel_path=macromodel_path,
@@ -226,6 +228,7 @@ optimizer = stk.TryCatch(
                 eq_time=100,
                 use_cache=True,
             ),
+                timeout=10800,
             stk.NullOptimizer(
                 use_cache=True,
             ),
