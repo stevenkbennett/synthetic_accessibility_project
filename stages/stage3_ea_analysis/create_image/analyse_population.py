@@ -25,7 +25,6 @@ def load_population(pop_path):
             if gen == 1:
                 if 'Population log:' in line:
                     recording = True
-                    print('New generation - recording.')
                 elif 'ConstructedMolecule' in line and recording:
                     subpop.append(line)
                 elif 'Starting generation' in line and recording:
@@ -36,7 +35,6 @@ def load_population(pop_path):
             elif gen != 1:
                 if 'Selecting members' in line:
                     recording = True
-                    print('New generation - recording.')
                 elif 'ConstructedMolecule' in line and recording:
                     subpop.append(line)
                 elif 'Starting' in line or 'Successful' in line and recording:
@@ -58,7 +56,7 @@ def parse_population(pop):
             stk_mem.fitness_vector = literal_eval(
                 re.search('\t(\[([^\,]+\,)+[^\]]+\])', mem).group(1))
             stk_mem.fitness_value = literal_eval(
-                re.search('\d+\.\d+(?=$)', mem).group(0))
+                re.search('(\d+\.\d+|1e-08)(?=$)', mem).group(0))
             subpop.append(stk_mem)
         stk_pop.append(subpop)
     return stk_pop
@@ -71,5 +69,3 @@ def get_stk_pop(pop_path):
     return pop
 
 
-if __name__ == '__main__':
-    print(get_stk_pop('/rds/general/user/sb2518/home/WORK/main_projects/synthetic_accessibility_project/stages/stage3_ea_analysis/create_image/example_pop.log'))

@@ -212,23 +212,23 @@ optimizer = stk.TryCatch(
             macromodel_path=macromodel_path,
             restricted=True,
             use_cache=True,
+            timeout=10800,
         ),
         stk.MacroModelForceField(
-            timeout=10800,
             macromodel_path=macromodel_path,
             restricted=False,
             use_cache=True,
+            timeout=10800,
         ),
         stk.TryCatch(
-            timeout=10800,
             stk.MacroModelMD(
                 macromodel_path=macromodel_path,
                 temperature=700,
                 eq_time=100,
                 use_cache=True,
+                timeout=10800,
             ),
             stk.NullOptimizer(
-                timeout=10800,
                 use_cache=True,
             ),
         ),
@@ -236,7 +236,6 @@ optimizer = stk.TryCatch(
     failed_optimizer,
     use_cache=True,
 )
-
 
 # #####################################################################
 # Fitness Attributes to Dump.
