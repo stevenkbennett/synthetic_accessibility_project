@@ -65,7 +65,7 @@ def parse_population(pop):
 def get_stk_pop(pop_path):
     pop_path = Path(pop_path)
     pop = load_population(str(pop_path))
-    pop = parse_population(pop)
+    pop = {pop_path: parse_population(pop)}
     return pop
 
 
