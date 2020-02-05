@@ -1,18 +1,21 @@
-# This script is used to execute a single EA run.
+# This script is used to execute a single EA run across an 
 #!/bin/sh
 
 #PBS -j oe
 #PBS -lwalltime=72:00:00
-#PBS -lselect=1:ncpus=8:mem=20gb:ompthreads=7
+#PBS -lselect=1:ncpus=8:mem=40gb:ompthreads=7
 
 module load anaconda3/personal
 source activate py37
 
 cd $PBS_O_WORKDIR
 
+
+# Assign base directory to the current directory the user is in.
 BASE_DIR=${dir:-.}
 DEPTH=${maxdepth:-2}
 
+# Finds input files from base directory.
 FILES=$(find $BASE_DIR -maxdepth $DEPTH -name input_template.py)
 DIR=$(echo $FILES | cut -d ' ' -f1)
 echo "Selected input file is $(realpath $DIR)"
@@ -34,7 +37,7 @@ cd run$run_count
 # Get a new random seed and write to the input file.
 random_seed=$(shuf -i 1-65000 -n 1)
 sed -i "s/random_seed = 2/random_seed = $random_seed/g" input.py
-# Run the EA.
+# Run the EA the same number of times as the array job specifies.
 echo "Run command is python -m stk.ea $(realpath input.py) &> ea_run.log"
 python -m stk.ea $(realpath input.py) &> ea_run.log
 # Check if directory exists, if so move and compress files.
