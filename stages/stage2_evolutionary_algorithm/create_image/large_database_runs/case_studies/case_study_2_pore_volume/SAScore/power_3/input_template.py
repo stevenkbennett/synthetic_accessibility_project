@@ -93,7 +93,7 @@ aldehyde_building_blocks = [
 amine_building_blocks = [
     stk.BuildingBlock.init_from_file(
         str(building_block),
-        ['primary_amine'],
+        ['amine'],
         use_cache=True
     )
     for building_block in amines
@@ -169,7 +169,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == 'amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -177,7 +177,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == 'amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -234,7 +234,6 @@ optimizer = stk.TryCatch(
     failed_optimizer,
     use_cache=True,
 )
-
 
 # #####################################################################
 # Fitness Attributes to Dump.
@@ -368,13 +367,13 @@ fitness_normalizer = stk.Sequence(
     # Pore volume: 10
     # Window size: 0
     # Asymmetry: 5
-    # Synthetic accessibility (SAScore): 10
-    stk.Multiply([10, 0, 5, 10], filter=valid_fitness),
+    # Synthetic accessibility (SAScore): 1
+    stk.Multiply([10, 0, 5, 1], filter=valid_fitness),
+    stk.Power([1, 1, 1, 3], filter=valid_fitness),
+    # Apply powers to fitness function.
     stk.Sum(filter=valid_fitness),
     # Replace all fitness values that are lists or None with
     # a small value.
-    # Apply powers to fitness function.
-    stk.Power([1, 1, 1, 3], filter=valid_fitness),
     stk.ReplaceFitness(
         replacement_fn=lambda population: 1e-8,
         filter=lambda p, m:

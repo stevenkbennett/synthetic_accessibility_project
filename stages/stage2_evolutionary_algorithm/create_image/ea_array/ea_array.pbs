@@ -5,27 +5,17 @@
 #PBS -lwalltime=72:00:00
 #PBS -lselect=1:ncpus=8:mem=40gb:ompthreads=7
 
+
+# Activate correct environments.
 module load anaconda3/personal
 source activate py37
 
-cd $PBS_O_WORKDIR
-
-
-# Assign base directory to the current directory the user is in.
-BASE_DIR=${dir:-.}
-DEPTH=${maxdepth:-2}
-
-# Finds input files from base directory.
-FILES=$(find $BASE_DIR -maxdepth $DEPTH -name input_template.py)
-DIR=$(echo $FILES | cut -d ' ' -f1)
-echo "Selected input file is $(realpath $DIR)"
-
-# Move to directory of input_template.py
-cd $(dirname $DIR)
+# Move to starting directory.
+cd $START_DIR
 
 # Wait a random amount of time to ensure folder creation does not overlap.
 sleep $((RANDOM % 120))
-# Count the number of EA runs.
+# Count the number of EA runs in the directory.
 run_count=$(find run* -maxdepth 0 -type d | wc -l)
 # Make new run directory.
 mkdir run$run_count

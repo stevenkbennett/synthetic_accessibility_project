@@ -94,7 +94,7 @@ aldehyde_building_blocks = [
 amine_building_blocks = [
     stk.BuildingBlock.init_from_file(
         str(building_block),
-        ['primary_amine'],
+        ['amine'],
         use_cache=True
     )
     for building_block in amines
@@ -170,7 +170,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == 'amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -178,7 +178,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == 'amine',
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
