@@ -25,3 +25,4 @@ example_population
 stages/stage3_ea_analysis/create_image*
 data
 old_database_runs
+stage4_parametrisation

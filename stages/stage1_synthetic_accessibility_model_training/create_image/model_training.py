@@ -27,15 +27,13 @@ from sklearn.neural_network import MLPClassifier
 logger = logging.getLogger(__name__)
 
 
-def get_fingerprint(mol):
+def get_fingerprint_as_bit_counts(mol):
     '''
     Gets Morgan fingerprint bit counts.
 
-    Parameters
-    ----------
-    mol : :class:`rdkit.Mol`
-        The molecule in :mod:`rdkit` format to have its fingerprints
-        calculated.
+    Args:
+        mol : The molecule in :mod:`rdkit` format
+        to have its fingerprints calculated.
     '''
     info = {}
     fp = rdkit.GetMorganFingerprintAsBitVect(
@@ -52,30 +50,24 @@ def get_fingerprint(mol):
 
 class Model:
     '''
-    Represents the model for producing synthetic accessibility
-    predictions.
+    Represents the synthetic accesibility prediction model.
 
-    Attributes
-    ----------
-    scores : :class:`dict`
-        Contains cross-validation scores, updated after calling
-        :meth:`train`.
+    Args:
+        scores (dict) : Contains cross-validation scores, updated
+        after calling :meth":`train`.
 
-    random_state : :class:`int`
-        Random state used in each ML model.
+    random_key (int) : Random key to use in each ML model.
 
-    oversampling : :class:`bool`
-        Defines whether oversampling is used while training the model.
+    oversampling (bool) : Defines whether oversampling is
+    used while training the model. Involves supplementing
+    data from the minority class.
 
-    class_weights : :class:`str`
-        Defines the type of class weights to use while
-        training the ML model.
+    class_weights (str) : Defines the type of class weights to use while
+    training the ML model.
 
-    data : :class:`pandas.DataFrame`
-        Contains data used for training the model.
+    data (DataFrame) : Contains data for training the model.
 
-    model: :class:`sklearn.BaseEstimator`
-        Stores the ML model.
+    model : ML model.
 
     fingerprints: :class:`numpy.array`
         Array of fingerprints for each molecule in `.data`.
