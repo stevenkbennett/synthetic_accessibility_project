@@ -9,8 +9,8 @@ stages/stage2_evolutionary_algorithm/create_image/databases
 *output
 *stk_ea_runs
 !run_template.sh
-run*
 rate_my_molecule
+run*/
 example_pop.log
 stages/stage3_ea_analysis/create_image/case_study*
 *results*
@@ -25,4 +25,8 @@ example_population
 stages/stage3_ea_analysis/create_image*
 data
 old_database_runs
+<<<<<<< HEAD
 stage4_parametrisation
+=======
+*.json
+>>>>>>> f48ec8f7d32162e219cebc1952b8d6603c81198b

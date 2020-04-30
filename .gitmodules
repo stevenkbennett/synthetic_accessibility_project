@@ -1,0 +1,6 @@
+[submodule "5e831af48e3cac000130415b"]
+	path = 5e831af48e3cac000130415b
+	url = https://git.overleaf.com/5e831af48e3cac000130415b
+[submodule "synthetic_accesibility_project_paper"]
+	path = synthetic_accesibility_project_paper
+	url = https://github.com/stevenbennett96/synthetic_accesibility_project_paper.git
