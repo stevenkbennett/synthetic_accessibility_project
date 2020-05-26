@@ -10,7 +10,6 @@ stages/stage2_evolutionary_algorithm/create_image/databases
 *stk_ea_runs
 !run_template.sh
 rate_my_molecule
-run*/
 example_pop.log
 stages/stage3_ea_analysis/create_image/case_study*
 *results*
@@ -28,3 +27,15 @@ old_database_runs
 stage4_parametrisation
 .mypy_cache
 databases
+
+# PBS outputs
+*.o*
+
+# Input data
+Project_Data
+
+# Run outputs
+Run_[0-9]*
+
+# Temp
+cage_optimisation/

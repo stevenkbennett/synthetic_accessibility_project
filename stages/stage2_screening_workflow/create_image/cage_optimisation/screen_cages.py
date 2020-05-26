@@ -11,11 +11,15 @@ from rdkit_tools import (
 )
 from os.path import splitext, basename
 import sqlite3
+import argparse
+from tqdm import tqdm
+from pathlib import Path
 
 # from old_code_test.stk import stk as old_stk
 # from old_code_test.cage_prediction.database.make_database import (
 #     make_entry as make_entry_old,
 # )
+import os
 from pathos.pools import ProcessPool
 
 
@@ -140,43 +144,49 @@ def test_old_version(finish_val):
             print(f"New Results: {make_entry(new_cage)}")
 
 
-def make_database(databases):
-    db = sqlite3.connect("cage_prediction.db")
-    cursor = db.cursor()
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS cages (
-            name TEXT,
-            collapsed BOOLEAN,
-            cavity_size FLOAT,
-            max_diameter FLOAT,
-            windows TEXT,
-            window_diff FLOAT,
-            window_std FLOAT
-        )"""
-    )
-
+def make_database(databases, pop_path, processes):
     for db_path in databases:
+        db = sqlite3.connect(db_path)
+        cursor = db.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS cages (
+                name TEXT,
+                collapsed BOOLEAN,
+                cavity_size FLOAT,
+                max_diameter FLOAT,
+                windows TEXT,
+                window_diff FLOAT,
+                window_std FLOAT
+            )"""
+        )
         print(f"Starting on database {db_path}.")
         dbname, _ = splitext(basename(db_path))
-        with ProcessPool(2) as pool:
-            pop = [
-                stk.ConstructedMolecule.load(
-                    "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/optimisation_run_0/chunk_42/cage_4.json"
+        with ProcessPool(processes) as pool:
+            try:
+                pop = [
+                    stk.ConstructedMolecule.load(str(i))
+                    for i in tqdm(Path(pop_path).glob("**/*.json"))
+                ]
+                # Display progress every 5% complete.
+                miniters = int(len(pop) * 0.05)
+                cages = pool.map(make_entry, pop)
+                cursor.executemany(
+                    "INSERT INTO cages VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    tqdm(cages, miniters=miniters),
                 )
-            ]
-            cages = pool.map(make_entry, pop)
-            cursor.executemany(
-                "INSERT INTO cages VALUES (?, ?, ?, ?, ?, ?, ?)", cages,
-            )
+            except Exception as err:
+                print(err)
+                pool.close()
     db.commit()
     db.close()
     pool.close()
 
 
 if __name__ == "__main__":
-    make_database(
-        [
-            "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/cage_prediction.db"
-        ]
-    )
+    processes = int(os.environ.get("NCPUS", 1))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", type=str)
+    parser.add_argument("-o", type=str)
+    args = parser.parse_args()
+    make_database([args.o], args.d, processes)
