@@ -3,7 +3,6 @@ import argparse
 import subprocess as sp
 from pathlib import Path
 import re
-import random
 import itertools as it
 
 

@@ -35,7 +35,7 @@ databases
 Project_Data
 
 # Run outputs
-Run_[0-9]*
+Run_*/
 
 # Temp
 cage_optimisation/
