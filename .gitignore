@@ -1,6 +1,5 @@
 *.code-workspace
 .vscode/
-stages/stage2_evolutionary_algorithm/create_image/databases
 
 .DS_Store
 *__pycache__
@@ -46,4 +45,4 @@ ChemCollect_Data
 Molder_DB
 *.db
 *.log
-*/Stage1*/Utilities
+# */Stage1*/Utilities

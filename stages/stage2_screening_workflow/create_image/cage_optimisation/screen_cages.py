@@ -12,11 +12,17 @@ from rdkit_tools import (
 from os.path import splitext, basename
 import sqlite3
 <<<<<<< HEAD
+<<<<<<< HEAD
 import time
 import argparse
 from pathlib import Path
 from tqdm import tqdm
 import multiprocessing as mp
+=======
+import argparse
+from tqdm import tqdm
+from pathlib import Path
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
 =======
 import argparse
 from tqdm import tqdm
@@ -159,6 +165,9 @@ def test_old_version(finish_val):
 
 
 def make_database(databases, pop_path, processes):
+<<<<<<< HEAD
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
+=======
 >>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
     for db_path in databases:
         db = sqlite3.connect(db_path)
@@ -177,6 +186,7 @@ def make_database(databases, pop_path, processes):
         )
         print(f"Starting on database {db_path}.")
         dbname, _ = splitext(basename(db_path))
+<<<<<<< HEAD
 <<<<<<< HEAD
         with ProcessPool(mp.cpu_count()) as pool:
             pop = [
@@ -197,6 +207,8 @@ def make_database(databases, pop_path, processes):
                 print(f"Cage took {time.time()-start_time} to complete.")
 
 =======
+=======
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
         with ProcessPool(processes) as pool:
             try:
                 pop = [
@@ -221,6 +233,10 @@ def make_database(databases, pop_path, processes):
 
 if __name__ == "__main__":
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    processes = int(os.environ.get("NCPUS", 1))
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
 =======
     processes = int(os.environ.get("NCPUS", 1))
 >>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
@@ -229,7 +245,11 @@ if __name__ == "__main__":
     parser.add_argument("-o", type=str)
     args = parser.parse_args()
 <<<<<<< HEAD
+<<<<<<< HEAD
     make_database([args.o], args.d)
+=======
+    make_database([args.o], args.d, processes)
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
 =======
     make_database([args.o], args.d, processes)
 >>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
