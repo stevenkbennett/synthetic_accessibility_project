@@ -1,6 +1,5 @@
 *.code-workspace
 .vscode/
-stages/stage2_evolutionary_algorithm/create_image/databases
 
 .DS_Store
 *__pycache__
@@ -38,4 +37,12 @@ Project_Data
 Run_*/
 
 # Temp
-cage_optimisation/
+stages/optimisation*
+cage_optimisation
+
+# Training data.
+ChemCollect_Data
+Molder_DB
+*.db
+*.log
+# */Stage1*/Utilities
