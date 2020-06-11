@@ -11,6 +11,11 @@ from rdkit_tools import (
 )
 from os.path import splitext, basename
 import sqlite3
+import time
+import argparse
+from pathlib import Path
+from tqdm import tqdm
+import multiprocessing as mp
 
 # from old_code_test.stk import stk as old_stk
 # from old_code_test.cage_prediction.database.make_database import (
@@ -90,15 +95,17 @@ def make_entry(cage: stk.ConstructedMolecule):
     mol.RemoveAllConformers()
     mol.AddConformer(cage.to_rdkit_mol().GetConformer(-1))
     windows = get_windows(mol)
+    md = 0.0
     if windows is None:
         wd = window_std = None
     else:
         w = sorted(windows, reverse=True)[:4]
         wd = get_window_difference(w) if len(w) == 4 else None
         window_std = np.std(w) if len(w) == 4 else None
+        if wd and window_std:
+            md = get_max_diameter(mol)
     mol = set_position(mol, [0, 0, 0])
     cs = cavity_size(mol)
-    md = get_max_diameter(mol)
     return (
         str(cage),
         collapsed(mol, md, wd, cs),
@@ -110,73 +117,50 @@ def make_entry(cage: stk.ConstructedMolecule):
     )
 
 
-def test():
-    cage = [
-        stk.ConstructedMolecule.load(
-            "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/data/cage_43.json"
-        )
-    ]
-    print(make_entry(cage[0]))
-
-
-def test_old_version(finish_val):
-    pop = old_stk.Population.load(
-        "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/old_code_test/cages/amine2aldehyde3.json",
-        old_stk.Molecule.from_dict,
-    )
-    for cage in pop[:finish_val]:
-        if cage.topology.__class__.__name__ == "FourPlusSix":
-            bb1 = stk.BuildingBlock.init_from_rdkit_mol(
-                cage.building_blocks[0].mol, ["aldehyde"]
-            )
-            bb2 = stk.BuildingBlock.init_from_rdkit_mol(
-                cage.building_blocks[1].mol, ["amine"]
-            )
-            new_cage = stk.ConstructedMolecule(
-                [bb1, bb2], stk.cage.FourPlusSix()
-            )
-            new_cage.update_from_rdkit_mol(cage.mol)
-            print(f"Old Results: {make_entry_old(cage)}")
-            print(f"New Results: {make_entry(new_cage)}")
-
-
-def make_database(databases):
-    db = sqlite3.connect("cage_prediction.db")
-    cursor = db.cursor()
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS cages (
-            name TEXT,
-            collapsed BOOLEAN,
-            cavity_size FLOAT,
-            max_diameter FLOAT,
-            windows TEXT,
-            window_diff FLOAT,
-            window_std FLOAT
-        )"""
-    )
+def make_database(databases, pop_path):
 
     for db_path in databases:
+        db = sqlite3.connect(db_path)
+        cursor = db.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS cages (
+                name TEXT,
+                collapsed BOOLEAN,
+                cavity_size FLOAT,
+                max_diameter FLOAT,
+                windows TEXT,
+                window_diff FLOAT,
+                window_std FLOAT
+            )"""
+        )
         print(f"Starting on database {db_path}.")
         dbname, _ = splitext(basename(db_path))
-        with ProcessPool(2) as pool:
+        with ProcessPool(mp.cpu_count()) as pool:
             pop = [
-                stk.ConstructedMolecule.load(
-                    "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/optimisation_run_0/chunk_42/cage_4.json"
-                )
+                stk.ConstructedMolecule.load(str(i))
+                for i in tqdm(list(Path(pop_path).glob("**/*.json")))
             ]
-            cages = pool.map(make_entry, pop)
-            cursor.executemany(
-                "INSERT INTO cages VALUES (?, ?, ?, ?, ?, ?, ?)", cages,
-            )
-    db.commit()
+            # miniters = int(len(pop) * 0.05)
+            print("Performing database calculations.")
+            cages = pool.imap(make_entry, pop)
+            start_time = time.time()
+            print(f"Started calculating at {start_time}.")
+            miniters = int(len(pop) * 0.05)
+            for cage in tqdm(cages, miniters=miniters):
+                cursor.execute(
+                    "INSERT INTO cages VALUES (?, ?, ?, ?, ?, ?, ?)", cage,
+                )
+                db.commit()
+                print(f"Cage took {time.time()-start_time} to complete.")
+
     db.close()
     pool.close()
 
 
 if __name__ == "__main__":
-    make_database(
-        [
-            "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/cage_prediction.db"
-        ]
-    )
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", type=str)
+    parser.add_argument("-o", type=str)
+    args = parser.parse_args()
+    make_database([args.o], args.d)
