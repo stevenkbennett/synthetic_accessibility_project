@@ -3,38 +3,32 @@
 # Imports.
 # #####################################################################
 
+import joblib
 import stk
 import logging
 from pathlib import Path
 import numpy as np
 import pywindow
-import sys
 from rdkit.Chem import AllChem as rdkit
 import os
 
 # Global settings.
 
 random_seed = 2
-macromodel_path = '/rds/general/user/sb2518/home/opt/schrodinger2018-1'
+macromodel_path = "/rds/general/user/sb2518/home/opt/schrodinger2018-1"
+precursor_dir = Path(
+    "/rds/general/user/sb2518/home/PhD/main_projects"
+    "/synthetic_accessibility_project/stages/Project_Data/Precursor_Databases"
+    "/all_precursors_filtered"
+)
 
-file_path = Path(__file__)
-
-# Identify and set the base directory.
-for parent in file_path.parents:
-    if parent.name == 'create_image':
-        base_image_path = parent
-
-sys.path.append(str(base_image_path))
-
-from utilities.scscore.scscore import SCScore  # noqa
-
-logging.info('Loading input file.')
+logging.info("Loading input file.")
 
 # #####################################################################
 # Number of processes to start with the EA.
 # #####################################################################
 
-num_processes = int(os.environ.get('CPU_COUNT'))
+num_processes = int(os.environ.get("CPUS"))
 
 # #####################################################################
 # Set logging level.
@@ -74,20 +68,16 @@ tar_output = True
 
 population_size = 25
 
-building_blocks_path = base_image_path.joinpath(
-    'databases',
-    'all_precursors_filtered',
-)
 
 # Generator for all precursors.
-aldehydes = building_blocks_path.glob('**/aldehyde*.mol')
-amines = building_blocks_path.glob('**/amine*.mol')
+aldehydes = precursor_dir.glob("**/aldehyde*.mol")
+amines = precursor_dir.glob("**/amine*.mol")
 
 # Initialize building block structures.
 aldehyde_building_blocks = [
     stk.BuildingBlock.init_from_file(
         str(building_block),
-        ['aldehyde'],
+        ["aldehyde"],
         use_cache=True
     )
     for building_block in aldehydes
@@ -96,7 +86,7 @@ aldehyde_building_blocks = [
 amine_building_blocks = [
     stk.BuildingBlock.init_from_file(
         str(building_block),
-        ['primary_amine'],
+        ["primary_amine"],
         use_cache=True
     )
     for building_block in amines
@@ -109,12 +99,11 @@ topology_graph = [
 
 # Create initial population.
 
-population = stk.EAPopulation.init_random_with_replacement(
+population = stk.EAPopulation.init_diverse(
     building_blocks=[aldehyde_building_blocks, amine_building_blocks],
     topology_graphs=topology_graph,
     size=population_size,
     use_cache=True,
-    random_seed=random_seed,
 )
 
 # #####################################################################
@@ -172,7 +161,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == "primary_amine",
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -180,7 +169,7 @@ mutator = stk.Random(
         amine_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'primary_amine',
+            == "primary_amine",
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -188,7 +177,7 @@ mutator = stk.Random(
         aldehyde_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'aldehyde',
+            == "aldehyde",
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
@@ -196,12 +185,12 @@ mutator = stk.Random(
         aldehyde_building_blocks,
         key=lambda mol:
             mol.func_groups[0].fg_type.name
-            == 'aldehyde',
+            == "aldehyde",
         duplicate_building_blocks=False,
         random_seed=random_seed,
     ),
-    random_seed=random_seed,
 )
+
 
 # #####################################################################
 # Optimizer.
@@ -225,12 +214,17 @@ optimizer = stk.TryCatch(
             use_cache=True,
             timeout=10800,
         ),
-        stk.MacroModelMD(
-            macromodel_path=macromodel_path,
-            temperature=700,
-            eq_time=100,
-            use_cache=True,
-            timeout=10800,
+        stk.TryCatch(
+            stk.MacroModelMD(
+                macromodel_path=macromodel_path,
+                temperature=700,
+                eq_time=100,
+                use_cache=True,
+                timeout=10800,
+            ),
+            stk.NullOptimizer(
+                use_cache=True,
+            ),
         ),
     ),
     failed_optimizer,
@@ -238,16 +232,15 @@ optimizer = stk.TryCatch(
 )
 
 
-
 # #####################################################################
 # Fitness Attributes to Dump.
 # #####################################################################
 
 dump_attrs = [
-    'pore_diameter',
-    'largest_window',
-    'window_std',
-    'sa_score',
+    "pore_diameter",
+    "largest_window",
+    "window_std",
+    "sa_score",
 ]
 
 # #####################################################################
@@ -262,7 +255,7 @@ class Saver(stk.FitnessNormalizer):
     # Pore volume
     # Window size
     # Asymmetry
-    # Synthetic accessibility (SAScore)
+    # Synthetic accessibility
     def normalize(self, population):
         # Write the individual fitness values to the file.
         fitness_values = population.get_fitness_values()
@@ -315,23 +308,98 @@ def window_std(mol):
     return window_std
 
 
-scscore = SCScore()
+# #####################################################################
+# Synthetic Accessibility Model Scoring Options
+# #####################################################################
+
+# RFModel function
+def get_fingerprint(mol):
+    """
+    Gets Morgan fingerprint bit counts.
+
+    Parameters
+    ----------
+    mol : :class:`rdkit.Mol`
+        The molecule in :mod:`rdkit` format to have its fingerprints
+        calculated.
+    """
+    info = {}
+    fp = rdkit.GetMorganFingerprintAsBitVect(
+        mol=mol,
+        radius=2,
+        nBits=512,
+        bitInfo=info,
+    )
+    fp = list(fp)
+    for bit, activators in info.items():
+        fp[bit] = len(activators)
+    return fp
 
 
-def sa_score(mol):
+ml_model = joblib.load(
+    "/rds/general/user/sb2518/home/PhD/main_projects/"
+    "synthetic_accessibility_project/stages/stage2_screening_workflow/"
+    "create_image/Evolutionary_Algorithm"
+    "/EA_PBS/Utilities/RandomForestClassifier.joblib"
+)
+
+
+def mlscore(mol):
     scores = []
     for bb in mol.get_building_blocks():
         rdkit_mol = bb.to_rdkit_mol()
-        scores.append(scscore.score(rdkit_mol))
-    sa_score = sum(scores)
-    return sa_score
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
+        fp = np.array(get_fingerprint(rdkit_mol)).reshape(1, -1)
+        prob = ml_model.predict_proba(fp)[0][0]
+        scores.append(prob)
+    return sum(scores)
 
+
+# SAScore function
+from Utilities.SAScore.sascorer import calculateScore # noqa:
+
+
+def sascore(mol):
+    scores = []
+    for bb in mol.get_building_blocks():
+        rdkit_mol = bb.to_rdkit_mol()
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
+        scores.append(calculateScore(rdkit_mol))
+    return sum(scores)
+
+
+# SCScore function
+from Utilities.SCScore.scscore.standalone_model_numpy import SCScorer  # noqa:
+
+
+scscore_cls = SCScorer()
+scscore_cls.restore()
+scscorer = lambda m: scscore_cls.get_score_from_smi(rdkit.MolToSmiles(m))  # noqa:
+
+
+def scscore(mol):
+    scores = []
+    for bb in mol.get_building_blocks():
+        rdkit_mol = bb.to_rdkit_mol()
+        rdkit_mol.UpdatePropertyCache()
+        rdkit.GetSymmSSSR(rdkit_mol)
+        rdkit_mol.GetRingInfo()
+        scores.append(scscorer(rdkit_mol)[1])
+    return sum(scores)
+
+
+# Defines synthetic accesibility function to use.
+synthetic_accesibility_func = scscore
 
 cage_fitness_calculator = stk.PropertyVector(
     pore_diameter,
     largest_window,
     window_std,
-    sa_score,
+    synthetic_accesibility_func,
 )
 
 fitness_calculator = stk.If(
@@ -360,28 +428,25 @@ def valid_fitness(population, mol):
 
 # Minimize synthetic accessibility and asymmetry.
 # Maximise pore volume and window size.
-fitness_normalizer = stk.Sequence(
-    save_fitness,
-    stk.Power([1, 1, -1, -1], filter=valid_fitness),
-    stk.DivideByMean(filter=valid_fitness),
-    # Coefficients of fitness function in order:
-    # Pore volume: 10
-    # Window size: 0
-    # Asymmetry: 5
-    # Synthetic accessibility: 1
-    stk.Multiply([0, 0, 1, 1], filter=valid_fitness),
-    stk.Power([1, 1, 1, 3], filter=valid_fitness),
-    stk.Sum(filter=valid_fitness),
-    # Replace all fitness values that are lists or None with
-    # a small value.
-    stk.ReplaceFitness(
-        replacement_fn=lambda population: 1e-8,
-        filter=lambda p, m:
-            isinstance(
-                p.get_fitness_values()[m],
-                (list, type(None)),
-            )
+fitness_normalizer = stk.TryCatch(
+    stk.Sequence(
+        save_fitness,
+        stk.Power([1, 1, -1, -1], filter=valid_fitness),
+        stk.DivideByMean(filter=valid_fitness),
+        stk.Multiply([10, 0, 5, 1], filter=valid_fitness),
+        stk.Sum(filter=valid_fitness),
+        # Replace all fitness values that are lists or None with
+        # a small value.
+        stk.ReplaceFitness(
+            replacement_fn=lambda population: 1e-8,
+            filter=lambda p, m:
+                isinstance(
+                    p.get_fitness_values()[m],
+                    (list, type(None)),
+                )
+        ),
     ),
+    stk.ReplaceFitness(replacement_fn=lambda population: 1e-8,)
 )
 
 # #####################################################################
@@ -407,10 +472,10 @@ def apply(fn):
 
 plotters = [
     stk.ProgressPlotter(
-        filename='fitness_plot',
+        filename="fitness_plot",
         property_fn=lambda progress, mol:
             progress.get_fitness_values()[mol],
-        y_label='Fitness',
+        y_label="Fitness",
         filter=lambda progress, mol:
             progress.get_fitness_values()[mol],
         progress_fn=lambda progress:
@@ -421,33 +486,33 @@ plotters = [
             ),
     ),
     stk.ProgressPlotter(
-        filename='sascore_plot',
+        filename="synthetic_accesibility_scores",
         property_fn=lambda progress, mol: mol.sa_score,
-        y_label='Synthetic Accessibility / unitless',
+        y_label="Synthetic Accessibility / unitless",
         filter=lambda progress, mol:
             mol.sa_score is not None,
-        progress_fn=apply(sa_score),
+        progress_fn=apply(synthetic_accesibility_func),
     ),
     stk.ProgressPlotter(
-        filename='volume_plot',
+        filename="volume_plot",
         property_fn=lambda progress, mol: mol.pore_diameter,
-        y_label='Pore Diameter / A',
+        y_label="Pore Diameter / A",
         filter=lambda progress, mol:
             mol.pore_diameter is not None,
         progress_fn=apply(pore_diameter),
     ),
     stk.ProgressPlotter(
-        filename='max_window_size',
+        filename="max_window_size",
         property_fn=lambda progress, mol: mol.largest_window,
-        y_label='Maximum Window Size / A',
+        y_label="Maximum Window Size / A",
         filter=lambda progress, mol:
             mol.largest_window is not None,
         progress_fn=apply(largest_window),
     ),
     stk.ProgressPlotter(
-        filename='window_std',
+        filename="window_std",
         property_fn=lambda progress, mol: mol.window_std,
-        y_label='Std. Dev. of Window Diameters / A',
+        y_label="Std. Dev. of Window Diameters / A",
         filter=lambda progress, mol:
             mol.window_std is not None,
         progress_fn=apply(window_std),
@@ -455,14 +520,14 @@ plotters = [
 ]
 
 stk.SelectionPlotter(
-    filename='generational_selection',
+    filename="generational_selection",
     selector=generation_selector,
 )
 stk.SelectionPlotter(
-    filename='crossover_selection',
+    filename="crossover_selection",
     selector=crossover_selector,
 )
 stk.SelectionPlotter(
-    filename='mutation_selection',
+    filename="mutation_selection",
     selector=mutation_selector,
 )

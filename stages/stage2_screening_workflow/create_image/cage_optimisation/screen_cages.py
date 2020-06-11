@@ -11,16 +11,23 @@ from rdkit_tools import (
 )
 from os.path import splitext, basename
 import sqlite3
+<<<<<<< HEAD
 import time
 import argparse
 from pathlib import Path
 from tqdm import tqdm
 import multiprocessing as mp
+=======
+import argparse
+from tqdm import tqdm
+from pathlib import Path
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
 
 # from old_code_test.stk import stk as old_stk
 # from old_code_test.cage_prediction.database.make_database import (
 #     make_entry as make_entry_old,
 # )
+import os
 from pathos.pools import ProcessPool
 
 
@@ -117,8 +124,42 @@ def make_entry(cage: stk.ConstructedMolecule):
     )
 
 
+<<<<<<< HEAD
 def make_database(databases, pop_path):
 
+=======
+def test():
+    cage = [
+        stk.ConstructedMolecule.load(
+            "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/data/cage_43.json"
+        )
+    ]
+    print(make_entry(cage[0]))
+
+
+def test_old_version(finish_val):
+    pop = old_stk.Population.load(
+        "/Users/stevenbennett/PhD/main_projects/synthetic_accessibility_project/stages/stage2_screening_workflow/create_image/cage_optimisation/old_code_test/cages/amine2aldehyde3.json",
+        old_stk.Molecule.from_dict,
+    )
+    for cage in pop[:finish_val]:
+        if cage.topology.__class__.__name__ == "FourPlusSix":
+            bb1 = stk.BuildingBlock.init_from_rdkit_mol(
+                cage.building_blocks[0].mol, ["aldehyde"]
+            )
+            bb2 = stk.BuildingBlock.init_from_rdkit_mol(
+                cage.building_blocks[1].mol, ["amine"]
+            )
+            new_cage = stk.ConstructedMolecule(
+                [bb1, bb2], stk.cage.FourPlusSix()
+            )
+            new_cage.update_from_rdkit_mol(cage.mol)
+            print(f"Old Results: {make_entry_old(cage)}")
+            print(f"New Results: {make_entry(new_cage)}")
+
+
+def make_database(databases, pop_path, processes):
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
     for db_path in databases:
         db = sqlite3.connect(db_path)
         cursor = db.cursor()
@@ -136,6 +177,7 @@ def make_database(databases, pop_path):
         )
         print(f"Starting on database {db_path}.")
         dbname, _ = splitext(basename(db_path))
+<<<<<<< HEAD
         with ProcessPool(mp.cpu_count()) as pool:
             pop = [
                 stk.ConstructedMolecule.load(str(i))
@@ -154,13 +196,40 @@ def make_database(databases, pop_path):
                 db.commit()
                 print(f"Cage took {time.time()-start_time} to complete.")
 
+=======
+        with ProcessPool(processes) as pool:
+            try:
+                pop = [
+                    stk.ConstructedMolecule.load(str(i))
+                    for i in tqdm(Path(pop_path).glob("**/*.json"))
+                ]
+                # Display progress every 5% complete.
+                miniters = int(len(pop) * 0.05)
+                cages = pool.map(make_entry, pop)
+                cursor.executemany(
+                    "INSERT INTO cages VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    tqdm(cages, miniters=miniters),
+                )
+            except Exception as err:
+                print(err)
+                pool.close()
+    db.commit()
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
     db.close()
     pool.close()
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
+=======
+    processes = int(os.environ.get("NCPUS", 1))
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", type=str)
     parser.add_argument("-o", type=str)
     args = parser.parse_args()
+<<<<<<< HEAD
     make_database([args.o], args.d)
+=======
+    make_database([args.o], args.d, processes)
+>>>>>>> 59e6b91473962f196e315eed7bfc906824f497d4

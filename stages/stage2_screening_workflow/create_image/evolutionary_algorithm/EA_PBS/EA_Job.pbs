@@ -1,0 +1,17 @@
+#PBS -j oe
+
+module load anaconda3/personal
+source ~/anaconda3/etc/profile.d/conda.sh
+conda activate SA_Project
+
+
+# Move to starting directory.
+cd $START_DIR
+# Make new run directory.
+RUN_NAME=Run_$( basename $PBS_JOBID .pbs )
+mkdir $RUN_NAME
+cp Input.py $RUN_NAME
+cd $RUN_NAME
+RANDOM_SEED=$(shuf -i 1-300 -n 1)
+sed -i "s/random_seed = 2/random_seed = $RANDOM_SEED/g" Input.py
+python -m stk.ea $(realpath Input.py) &> Run_Log.log
