@@ -10,6 +10,10 @@ from three expert chemists.
 The model returns a probability that a molecule belong to the 'difficult-to-synthesise' class, which can be interpreted as a continuous score,
 such that a lower score indicates a molecule is easier-to-synthesise.
 
+Summary
+-------
+![image](images/Summary_Image.png)
+
 Contents
 -----------
 
