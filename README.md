@@ -14,6 +14,9 @@ Summary
 -------
 ![image](images/Summary_Image.png)
 
+In this work, we use high-throughput screening to discover if it possible to form shape-persistent cages from the easiest-to-synthesise (as shown in the above figure).
+We screen for easiest-to-synthesise precursors, followed by constructing cages from those precursors, with the aim of identifying cages that remain shape persistent.
+
 Contents
 -----------
 
