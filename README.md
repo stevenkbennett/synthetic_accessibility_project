@@ -34,7 +34,7 @@ The repository is organised in the following way:
     - `cage_optimise.py`: Contains code to perform the optimisation procedure used in the paper, which makes extensive use of the MacroModel software.
     To replicate this procedure, the user must have MacroModel installed, in addition to the identical version of `stk` used in the paper. 
     The provided `environment.yml` file will install all dependencies into a new Anaconda environment named `mpscore`.
-    Generally, this code takes input of the cage precursors from a `.csv` file of the form `diamine SMILES`, `trialdehyde SMILES` and populates a MongoDB database with tbe cage in a dictionary format. 
+    Generally, this code takes input of the cage precursors from a `.csv` file of the form diamine SMILES, trialdehyde SMILES and populates a MongoDB database with tbe cage in a dictionary format. 
     - `property_calculate.py`: Contains code to perform property calculations on optimised cages.
     This makes extensive use of `RDKit` and `pywindow` to perform optimisations, which can be easily installed using the given `environment.yml` file.
 
