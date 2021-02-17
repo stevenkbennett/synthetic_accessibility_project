@@ -45,7 +45,7 @@ The repository is organised in the following way:
     - `cage_analysis.ipynb`: Reproduces Figure 7 from the main text, which shows the distributions of cavity sizes for shape persistent cages. In this notebook cages are loaded directly from MongoDB and filtered for their properties.
 
 - `models`
-    - `mpscore.pkl`: The pickled model MPScore model. Can be loaded using the `pickle` builtin module.
+    - `mpscore.joblib`: The stored MPScore model. Can be loaded using the `joblib` Python library.
 
 - `site`
     Contains the code for the website provided to experimental chemists to label molecules as easy- and difficult-to-synthesise.
