@@ -89,11 +89,7 @@ def make_entry(cage, output_collection, database):
     """
     # Check if entry already inserted.
     client = MongoClient(
-        "ch-sb2518.ch.ic.ac.uk",
-        27017,
-        connect=False,
-        connectTimeoutMS=600000,
-        serverSelectionTimeoutMS=600000,
+        # Enter Mongo details
     )
     db = client[database]
     if db[output_collection].count_documents({"_id": str(cage)}) != 0:

@@ -122,8 +122,14 @@ def optimise_parallel(
     precursors = load_precursors(path)
     random.shuffle(precursors)
     optimiser_sequence = stk.Sequence(
-        stk.MacroModelForceField(macromodel_path, restricted=True,),
-        stk.MacroModelForceField(macromodel_path, restricted=False,),
+        stk.MacroModelForceField(
+            macromodel_path,
+            restricted=True,
+        ),
+        stk.MacroModelForceField(
+            macromodel_path,
+            restricted=False,
+        ),
         stk.MacroModelMD(
             macromodel_path,
             temperature=700,
@@ -144,9 +150,9 @@ def optimise_parallel(
     # Perform parallel optimisation.
     logger.info("Performing optimisations.")
     try:
-        for optimised_cage in pool.imap_unordered(
-            optimiser_func, precursors, chunksize=chunksize
-        ):
+        for optimised_cage in pool.imap_unordered(optimiser_func,
+                                                  precursors,
+                                                  chunksize=chunksize):
             continue
     except Exception as err:
         # Ensure the pool is closed.
@@ -182,7 +188,7 @@ def macromodel_optimisation(
     )
     # Establishing connection to MongoDB must be done in each child process.
     client = MongoClient(
-        "129.31.66.201", 27017, serverSelectionTimeoutMS=90000, username="Steven", password="zK1NGWORLD", authSource="admin"
+        # Enter Mongo details
     )
     db = client[db_name]
     run_name = str(uuid4().int)
@@ -226,9 +232,10 @@ def macromodel_optimisation(
     cage.dump(f"opt_{run_name}.json")
     cage.write(f"opt_{run_name}.mol")
     # If dumped, update the molecule identifier.
-    db[collection_name].update_one(
-        {"_id": key}, {"$set": {"identifier": run_name}}
-    )
+    db[collection_name].update_one({"_id": key},
+                                   {"$set": {
+                                       "identifier": run_name
+                                   }})
     logger.info(f"Finished optimisation for {cage}.")
 
 
@@ -236,18 +243,20 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Optimise cages.")
     parser.add_argument(
         "-p",
-        help=(
-            "Path to set of precursors. Precursors must"
-            "be given as SMILES in a csv file, with the aldehyde in column 1"
-            " and the amine in column 2."
-        ),
+        help=("Path to set of precursors. Precursors must"
+              "be given as SMILES in a csv file, with the aldehyde in column 1"
+              " and the amine in column 2."),
         type=str,
     )
     parser.add_argument(
-        "-o", help=("Name of the collection to store the cages."), type=str,
+        "-o",
+        help=("Name of the collection to store the cages."),
+        type=str,
     )
     parser.add_argument(
-        "-d", help=("Name of the database to store the cages."), type=str,
+        "-d",
+        help=("Name of the database to store the cages."),
+        type=str,
     )
     parser.add_argument(
         "-t",
@@ -256,7 +265,10 @@ if __name__ == "__main__":
         default=None,
     )
     parser.add_argument(
-        "-c", help=("Chunksize to split the cages into."), type=int, default=1,
+        "-c",
+        help=("Chunksize to split the cages into."),
+        type=int,
+        default=1,
     )
     # Check number of processes to create.
     args = parser.parse_args()
