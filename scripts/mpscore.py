@@ -413,6 +413,10 @@ class MPScore:
 
 def main():
     model = MPScore()
+    data = model.load_data(
+        "/Users/stevenbennett/PhD/Main_Projects/Synthetic_Accessibility_Project/Clean/data/Training_SA_Data_AddHs.json"
+    )
+    model.cross_validate(data)
     model.plot_figure_5()
 
 
