@@ -51,8 +51,10 @@ The repository is organised in the following way:
     - `database_analysis.ipynb`: Contains code to reproduce Figure 4 and Figure 6, which are based on the synthetic difficulty score distributions of the training dataset, and the dataset of precursors used for cage screening.
     In this notebook synthetic difficulty scores are calculated and plotted.
     Additionally, reproduces Figure 7 from the main text, which shows the distributions of cavity sizes for shape persistent cages. 
-    In this notebook cages are loaded directly from MongoDB and filtered for their properties.
-    Optimised cages and their properties are written to MongoDB in `cage_optimise.py` and `property_calculate.py`.
+    In this notebook cages are loaded directly from JSON and filtered for their properties.
+    To fully utilise this notebook, additional files corresponding to the optimised cages for this work are required.
+    These files are accessible [here](https://doi.org/10.14469/hpc/8045).
+    Optimised cages and their properties are written to a database in `cage_optimise.py` and `property_calculate.py`.
 
 - `models`
     - `mpscore.joblib`: The stored MPScore model. Can be loaded using the `joblib` Python library.
