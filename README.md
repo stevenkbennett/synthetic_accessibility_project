@@ -22,10 +22,12 @@ Contents
 
 The repository is organised in the following way:
 - `data`
-    - `training_mols.csv`: Contains all the molecules in SMILES format that were provided to the three chemists for labelling.
-    - `chemist_scores.csv`: Contains the training data for the MPScore, consisting of molecules in SMILES format, followed by a 1 or 0, in addition to the chemist that scored them.
-    - `reaxys_precursors.csv` Contains diamines and trialdehydes used to build cages in the high-throughput screening part of the paper.
+    - `chemist_scores.json`: Contains the molecules in InChi format, their whether a chemist scored them as synthesisable or not and their Extended-Connectivity Fingerprint.
+    - ``training_mols.csv`: Contains all molecules used for training in SMILES format.
+    - `reaxys_mols.csv`: Contains diamines and trialdehydes used to build cages in the high-throughput screening part of the paper.
+    Database contains molecules as SMILES stirngs, in addition to their functional group, and calculated synthetic accessibility scores (SAScore, SCScore)
     Precursors were screened for their synthetic accessibility, before building a cage using `stk` and undergoing a fast geometry optimisation.
+    - 
 - `scripts`
     - `mpscore.py`: Contains code to reproduce the cross-validation procedure performed in the paper, in addition to training the final MPScore model.
     The code to reproduce the precision recall curve (Figure 5b in the main paper) is also present here.
