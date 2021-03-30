@@ -1,6 +1,10 @@
 Modelling Chemist Intuition for the Synthetic Accessibility of Porous Organic Cages
 ===================================================================================
 
+
+[![DOI](https://zenodo.org/badge/210332220.svg)](https://zenodo.org/badge/latestdoi/210332220)
+
+
 Description
 -----------
 
