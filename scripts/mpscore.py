@@ -196,6 +196,17 @@ class MPScore:
         fp = np.array(get_fingerprint_as_bit_counts(mol)).reshape(1, -1)
         return int(self.model.predict(fp))
 
+    def get_score_from_smiles(smiles):
+        """Gets MPScore from SMILES string of molecule.
+
+        Args:
+            smiles: SMILES string of molecule
+        Returns:
+            int: Prediction from model - 0 if easy-to-synthesise, 1 if not/
+        """
+        mol = AllChem.MolFromSmiles(smiles)
+        return self.predict(mol)
+
     def predict_proba(self, mol):
         """Predict SA of molecule as a probability. 
 
