@@ -30,7 +30,9 @@ import seaborn as sns
 from molvs import standardize_smiles
 
 
-def get_fingerprint_as_bit_counts(mol: AllChem.Mol, return_info=False):
+def get_fingerprint_as_bit_counts(
+    mol: AllChem.Mol, return_info=False, nbits=1024, radius=2
+):
     """
     Gets Morgan fingerprint bit counts.
 
@@ -43,7 +45,7 @@ def get_fingerprint_as_bit_counts(mol: AllChem.Mol, return_info=False):
     # Ensure molecules has hydrogens added for consistency.
     mol = AllChem.AddHs(mol)
     fp = AllChem.GetMorganFingerprintAsBitVect(
-        mol=mol, radius=2, nBits=1024, bitInfo=info,
+        mol=mol, radius=radius, nBits=nbits, bitInfo=info,
     )
     fp = list(fp)
     for bit, activators in info.items():
@@ -97,7 +99,7 @@ class MPScore:
         y_test_combined = []
         metrics = {
             "Accuracy": accuracy_score,
-            "Precision (Easy-to-synthesise)": partial(
+            "Precision (Difficult-to-synthesise)": partial(
                 precision_score, pos_label=0
             ),
             "Recall (Difficult-to-synthesise)": partial(
