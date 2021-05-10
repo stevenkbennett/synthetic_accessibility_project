@@ -161,7 +161,7 @@ class MPScore:
         x = np.array([np.array(fp) for fp in data["fingerprint"]])
         y = data["synthesisable"].to_numpy()
         print(
-            f"There are {sum(y)} molecules labelled as synthesisable (which has a value of 1)"
+            f"There are {sum(y)} molecules labelled indeas synthesisable (which has a value of 1)"
         )
         print(
             f"There are {len(y)-sum(y)} labelled as unsynthesisable (which has a value of 0)"
