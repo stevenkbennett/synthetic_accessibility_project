@@ -14,8 +14,13 @@ import joblib
 import numpy as np
 from rdkit.Chem import AllChem
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
-                             precision_score, recall_score)
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+)
 from sklearn.model_selection import KFold
 import pandas as pd
 from matplotlib import pyplot as plt
@@ -38,10 +43,7 @@ def get_fingerprint_as_bit_counts(mol: AllChem.Mol, return_info=False):
     # Ensure molecules has hydrogens added for consistency.
     mol = AllChem.AddHs(mol)
     fp = AllChem.GetMorganFingerprintAsBitVect(
-        mol=mol,
-        radius=2,
-        nBits=1024,
-        bitInfo=info,
+        mol=mol, radius=2, nBits=1024, bitInfo=info,
     )
     fp = list(fp)
     for bit, activators in info.items():
@@ -58,6 +60,7 @@ class MPScore:
     Attributes:
         model: The sklearn classification model.
     """
+
     def __init__(self, random_state=None, processes=-1):
         """Initialise the MPScore.
 
@@ -68,14 +71,15 @@ class MPScore:
         self.model = RandomForestClassifier(
             n_jobs=processes,
             random_state=random_state,
-            class_weight='balanced',
+            class_weight="balanced",
             n_estimators=100,
-            criterion='gini',
+            criterion="gini",
         )
 
-    def restore(self,
-                model_path=str(
-                    Path('..').resolve().joinpath('models/mpscore.joblib'))):
+    def restore(
+        self,
+        model_path=str(Path("..").resolve().joinpath("models/mpscore.joblib")),
+    ):
         self.model = joblib.load(model_path)
 
     def cross_validate(self, data):
@@ -93,13 +97,16 @@ class MPScore:
         y_test_combined = []
         metrics = {
             "Accuracy": accuracy_score,
-            "Precision (Easy-to-synthesise)": partial(precision_score,
-                                                      pos_label=0),
-            "Recall (Difficult-to-synthesise)": partial(recall_score,
-                                                        pos_label=0),
+            "Precision (Easy-to-synthesise)": partial(
+                precision_score, pos_label=0
+            ),
+            "Recall (Difficult-to-synthesise)": partial(
+                recall_score, pos_label=0
+            ),
             "Recall (Easy-to-synthesise)": partial(recall_score, pos_label=1),
-            "Precision (Easy-to-synthesise)": partial(precision_score,
-                                                      pos_label=1),
+            "Precision (Easy-to-synthesise)": partial(
+                precision_score, pos_label=1
+            ),
             "F1": partial(f1_score, pos_label=1),
         }
         results = defaultdict(list)
@@ -121,12 +128,12 @@ class MPScore:
         tns = 0
         fns = 0
         for i, prediction in enumerate(predictions_combined):
-            if (prediction == y_test_combined[i]):
+            if prediction == y_test_combined[i]:
                 if y_test_combined[i] == 1:
                     tps += 1
                 if y_test_combined[i] == 0:
                     tns += 1
-            if (prediction != y_test_combined[i]):
+            if prediction != y_test_combined[i]:
                 if y_test_combined[i] == 1:
                     fps += 1
                 if y_test_combined[i] == 0:
@@ -198,7 +205,7 @@ class MPScore:
         fp = np.array(get_fingerprint_as_bit_counts(mol)).reshape(1, -1)
         return int(self.model.predict(fp))
 
-    def get_score_from_smiles(smiles):
+    def get_score_from_smiles(self, smiles):
         """Gets MPScore from SMILES string of molecule.
 
         Args:
@@ -210,7 +217,7 @@ class MPScore:
         return self.predict(mol)
 
     def predict_proba(self, mol):
-        """Predict SA of molecule as a probability. 
+        """Predict SA of molecule as a probability.
 
         Notes:
             Molecules labelled 1 are synthesisable and those marked as 0 are unsynthesisable.
@@ -223,16 +230,14 @@ class MPScore:
         fp = np.array(get_fingerprint_as_bit_counts(mol)).reshape(1, -1)
         return self.model.predict_proba(fp)[0][0]
 
-    def get_precision_recall_curve_data(self,
-                                        data,
-                                        final_cutoff=None,
-                                        step=None,
-                                        swap_classes=False):
+    def get_precision_recall_curve_data(
+        self, data, final_cutoff=None, step=None, swap_classes=False
+    ):
         results = defaultdict(lambda: [])
         if not step:
             step = 100
         thresholds = np.linspace(0, 1, step)
-        X = np.array([np.array(i) for i in data['fingerprint'].to_list()])
+        X = np.array([np.array(i) for i in data["fingerprint"].to_list()])
         y = data["synthesisable"].to_numpy()
         splits = KFold(n_splits=5, shuffle=True, random_state=1)
         for train_idx, test_idx in splits.split(X=X, y=y):
@@ -251,25 +256,55 @@ class MPScore:
                     1 if prob[1] >= threshold else 0 for prob in y_probs_test
                 ]
                 metrics = [
-                    "tp_train", "tp_test", "fp_train", "fp_test", "tn_train",
-                    "tn_test", "fn_train", "fn_test"
+                    "tp_train",
+                    "tp_test",
+                    "fp_train",
+                    "fp_test",
+                    "tn_train",
+                    "tn_test",
+                    "fn_train",
+                    "fn_test",
                 ]
-                tp_train = sum(1 for i, pred in enumerate(y_pred_train)
-                               if (y_train[i] == pred) and (y_train[i] == 1))
-                tp_test = sum(1 for i, pred in enumerate(y_pred_test)
-                              if (y_test[i] == pred) and (y_test[i] == 1))
-                fp_train = sum(1 for i, pred in enumerate(y_pred_train)
-                               if (y_train[i] != pred) and (y_train[i] == 1))
-                fp_test = sum(1 for i, pred in enumerate(y_pred_test)
-                              if (y_test[i] != pred) and (y_test[i] == 1))
-                tn_train = sum(1 for i, pred in enumerate(y_pred_train)
-                               if (y_train[i] == pred) and (y_train[i] == 0))
-                tn_test = sum(1 for i, pred in enumerate(y_pred_test)
-                              if (y_test[i] == pred) and (y_test[i] == 0))
-                fn_train = sum(1 for i, pred in enumerate(y_pred_train)
-                               if (y_train[i] != pred) and (y_train[i] == 0))
-                fn_test = sum(1 for i, pred in enumerate(y_pred_test)
-                              if (y_test[i] != pred) and (y_test[i] == 0))
+                tp_train = sum(
+                    1
+                    for i, pred in enumerate(y_pred_train)
+                    if (y_train[i] == pred) and (y_train[i] == 1)
+                )
+                tp_test = sum(
+                    1
+                    for i, pred in enumerate(y_pred_test)
+                    if (y_test[i] == pred) and (y_test[i] == 1)
+                )
+                fp_train = sum(
+                    1
+                    for i, pred in enumerate(y_pred_train)
+                    if (y_train[i] != pred) and (y_train[i] == 1)
+                )
+                fp_test = sum(
+                    1
+                    for i, pred in enumerate(y_pred_test)
+                    if (y_test[i] != pred) and (y_test[i] == 1)
+                )
+                tn_train = sum(
+                    1
+                    for i, pred in enumerate(y_pred_train)
+                    if (y_train[i] == pred) and (y_train[i] == 0)
+                )
+                tn_test = sum(
+                    1
+                    for i, pred in enumerate(y_pred_test)
+                    if (y_test[i] == pred) and (y_test[i] == 0)
+                )
+                fn_train = sum(
+                    1
+                    for i, pred in enumerate(y_pred_train)
+                    if (y_train[i] != pred) and (y_train[i] == 0)
+                )
+                fn_test = sum(
+                    1
+                    for i, pred in enumerate(y_pred_test)
+                    if (y_test[i] != pred) and (y_test[i] == 0)
+                )
                 if swap_classes:
                     tn_train, tp_train = tp_train, tn_train
                     tn_test, tp_test = tp_test, tn_test
@@ -277,10 +312,18 @@ class MPScore:
                     fp_test, fn_test = fn_test, fp_test
                 if threshold not in results["thresholds"]:
                     results["thresholds"].append(threshold)
-                for i, val in enumerate([
-                        tp_train, tp_test, fp_train, fp_test, tn_train,
-                        tn_test, fn_train, fn_test
-                ]):
+                for i, val in enumerate(
+                    [
+                        tp_train,
+                        tp_test,
+                        fp_train,
+                        fp_test,
+                        tn_train,
+                        tn_test,
+                        fn_train,
+                        fn_test,
+                    ]
+                ):
                     pos = results["thresholds"].index(threshold)
                     if results[metrics[i]] == []:
                         results[metrics[i]] = [0] * len(thresholds)
@@ -289,15 +332,17 @@ class MPScore:
         for i in range(len(thresholds)):
             row = df.iloc[i]
             results["p_train"].append(
-                round(row["tp_train"] / (row["tp_train"] + row["fp_train"]),
-                      3))
-            results['p_test'].append(
-                round(row['tp_test'] / (row['tp_test'] + row['fp_test']), 3))
-            results['r_train'].append(
-                round(row['tp_train'] / (row['tp_train'] + row['fn_train']),
-                      3))
-            results['r_test'].append(
-                round(row['tp_test'] / (row['tp_test'] + (row['fn_test'])), 3))
+                round(row["tp_train"] / (row["tp_train"] + row["fp_train"]), 3)
+            )
+            results["p_test"].append(
+                round(row["tp_test"] / (row["tp_test"] + row["fp_test"]), 3)
+            )
+            results["r_train"].append(
+                round(row["tp_train"] / (row["tp_train"] + row["fn_train"]), 3)
+            )
+            results["r_test"].append(
+                round(row["tp_test"] / (row["tp_test"] + (row["fn_test"])), 3)
+            )
         return pd.DataFrame(results)
 
     def plot_precision_recall_curve(self, fig, ax):
@@ -308,19 +353,23 @@ class MPScore:
         for _, row in loaded_data.iterrows():
             data["smiles"].append(
                 standardize_smiles(
-                    AllChem.MolToSmiles((mol :=
-                                         AllChem.MolFromInchi(row["inchi"])))))
+                    AllChem.MolToSmiles(
+                        (mol := AllChem.MolFromInchi(row["inchi"]))
+                    )
+                )
+            )
             data["synthesisable"].append(int(row["synthesisable"]))
             data["fingerprint"].append(get_fingerprint_as_bit_counts(mol))
         data = pd.DataFrame(data)
         pr_data = self.get_precision_recall_curve_data(data)
-        X = pr_data['r_test'].to_numpy()
-        y = pr_data['p_test'].to_numpy()
-        Xy = np.array([[(X[i], y[i]), (X[i + 1], y[i + 1])]
-                       for i in range(len(X) - 1)])
-        viridis = cm.get_cmap('viridis', len(Xy))
+        X = pr_data["r_test"].to_numpy()
+        y = pr_data["p_test"].to_numpy()
+        Xy = np.array(
+            [[(X[i], y[i]), (X[i + 1], y[i + 1])] for i in range(len(X) - 1)]
+        )
+        viridis = cm.get_cmap("viridis", len(Xy))
         threshold_colors = [
-            viridis(i) for i in pr_data['thresholds'].to_list()
+            viridis(i) for i in pr_data["thresholds"].to_list()
         ]
         # Create a set of line segments so that we can color them individually
         # This creates the points as a N x 1 x 2 array so that we can stack points
@@ -328,7 +377,7 @@ class MPScore:
         # needs to be (numlines) x (points per line) x 2 (for x and y)
         # from multicolored lines example
         mpscore_thresh_idx = [
-            round(i, 2) for i in pr_data['thresholds'].to_list()
+            round(i, 2) for i in pr_data["thresholds"].to_list()
         ].index(0.12)
         mpscore_pr = y[mpscore_thresh_idx]
         mpscore_re = X[mpscore_thresh_idx]
@@ -336,54 +385,68 @@ class MPScore:
         ax.add_collection(ls)
         ax.set_ylim(-0, 1.01)
         cbar = fig.colorbar(
-            mappable=cm.ScalarMappable(cmap=viridis, norm=None))
+            mappable=cm.ScalarMappable(cmap=viridis, norm=None)
+        )
         cbar.minorticks_on()
-        cbar.set_label('Threshold', fontsize='medium')
-        cbar.ax.tick_params(labelsize='medium')
+        cbar.set_label("Threshold", fontsize="medium")
+        cbar.ax.tick_params(labelsize="medium")
         baseline_y = len(
-            data['synthesisable'][data['synthesisable'] == 1]) / len(
-                data['synthesisable'])
-        ax.plot([0, 1], [baseline_y, baseline_y],
-                '--',
-                lw=2,
-                alpha=0.5,
-                color='grey')
+            data["synthesisable"][data["synthesisable"] == 1]
+        ) / len(data["synthesisable"])
+        ax.plot(
+            [0, 1],
+            [baseline_y, baseline_y],
+            "--",
+            lw=2,
+            alpha=0.5,
+            color="grey",
+        )
         ax.set_xlim(0, 1)
-        circ = plt.Circle((mpscore_re, mpscore_pr),
-                          0.01,
-                          color='black',
-                          fill=False,
-                          linewidth=1)
-        ax.text(mpscore_re + 0.025,
-                mpscore_pr - 0.01,
-                fontsize='medium',
-                s='MPScore Threshold',
-                color='black',
-                alpha=0.8)
-        ax.text(mpscore_re + 0.3,
-                mpscore_pr - 0.08,
-                fontsize='medium',
-                s='0.12',
-                color='black',
-                alpha=0.8)
+        circ = plt.Circle(
+            (mpscore_re, mpscore_pr),
+            0.01,
+            color="black",
+            fill=False,
+            linewidth=1,
+        )
+        ax.text(
+            mpscore_re + 0.025,
+            mpscore_pr - 0.01,
+            fontsize="medium",
+            s="MPScore Threshold",
+            color="black",
+            alpha=0.8,
+        )
+        ax.text(
+            mpscore_re + 0.3,
+            mpscore_pr - 0.08,
+            fontsize="medium",
+            s="0.12",
+            color="black",
+            alpha=0.8,
+        )
         ax.add_artist(circ)
-        ax.set_xlabel('Recall', labelpad=20, fontsize='medium')
-        ax.set_ylabel('Precision', fontsize='medium')
-        ax.tick_params('both', labelsize='medium')
-        ax.text(0.01,
-                baseline_y - 0.06,
-                fontsize='medium',
-                alpha=0.6,
-                s='Baseline',
-                color='grey')
-        ax.set_title('b)', fontsize='medium')
+        ax.set_xlabel("Recall", labelpad=20, fontsize="medium")
+        ax.set_ylabel("Precision", fontsize="medium")
+        ax.tick_params("both", labelsize="medium")
+        ax.text(
+            0.01,
+            baseline_y - 0.06,
+            fontsize="medium",
+            alpha=0.6,
+            s="Baseline",
+            color="grey",
+        )
+        ax.set_title("b)", fontsize="medium")
         return fig, ax
 
     def plot_feature_importances(self, ax):
         self.load_model(
-            str(Path.home() /
-                "PhD/Main_Projects/Synthetic_Accessibility_Project/synthetic_accessibility_project/stages/Stage1_SyntheticAccesibilityScores/Utilities/RFModel_FullDatasetTrained.joblib"
-                ))
+            str(
+                Path.home()
+                / "PhD/Main_Projects/Synthetic_Accessibility_Project/synthetic_accessibility_project/stages/Stage1_SyntheticAccesibilityScores/Utilities/RFModel_FullDatasetTrained.joblib"
+            )
+        )
         importances = [[] for _ in range(1024)]
         for tree in self.model.estimators_:
             for i, importance in enumerate(tree.feature_importances_):
@@ -393,35 +456,42 @@ class MPScore:
         importances_stdev = np.std(importances, axis=1)
         fp_importances = {str(i): j for i, j in enumerate(importances_mean)}
         fp_stdevs = list(
-            sorted(importances_stdev,
-                   key=lambda x: fp_importances[str(
-                       list(importances_stdev).index(x))],
-                   reverse=True))
+            sorted(
+                importances_stdev,
+                key=lambda x: fp_importances[
+                    str(list(importances_stdev).index(x))
+                ],
+                reverse=True,
+            )
+        )
         fp_importances = dict(
-            sorted(fp_importances.items(), key=lambda x: x[1], reverse=True))
+            sorted(fp_importances.items(), key=lambda x: x[1], reverse=True)
+        )
         plt.tight_layout()
-        palette = list(sns.color_palette('viridis', 20))[13]
+        palette = list(sns.color_palette("viridis", 20))[13]
         x = list(fp_importances.keys())[:20]
         height = list(fp_importances.values())[:20]
         ax.bar(x, height, width=0.75, color=palette, yerr=fp_stdevs[:20])
         ax.set_ylim([0, 0.06])
         sns.despine()
-        ax.set_xlabel('Bit Number', labelpad=10, fontsize='medium')
-        ax.set_ylabel('Feature Importance', fontsize='medium')
-        ax.tick_params(labelsize='medium')
-        ax.tick_params('y', labelsize='medium')
-        ax.tick_params('x', rotation=90, labelsize=8)
-        ax.set_title('a)', fontsize='large')
+        ax.set_xlabel("Bit Number", labelpad=10, fontsize="medium")
+        ax.set_ylabel("Feature Importance", fontsize="medium")
+        ax.tick_params(labelsize="medium")
+        ax.tick_params("y", labelsize="medium")
+        ax.tick_params("x", rotation=90, labelsize=8)
+        ax.set_title("a)", fontsize="large")
         return ax
 
     def plot_figure_5(self):
         fig, axes = plt.subplots(1, 2, figsize=(6.43420506434205, 3.3))
         fig, axes[1] = self.plot_precision_recall_curve(fig, axes[1])
         axes[0] = self.plot_feature_importances(axes[0])
-        print('Saving figure.')
+        print("Saving figure.")
         fig.savefig(
-            Path(__file__).parents[1].joinpath(
-                'images/paper_figures/Figure_5.pdf'))
+            Path(__file__)
+            .parents[1]
+            .joinpath("images/paper_figures/Figure_5.pdf")
+        )
 
 
 def main():
