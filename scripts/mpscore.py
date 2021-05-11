@@ -27,7 +27,7 @@ from matplotlib import pyplot as plt
 from matplotlib import cm
 from matplotlib.collections import LineCollection
 import seaborn as sns
-from molvs import standardize_smiles
+from rdkit.Chem.MolStandardize import standardize_smiles
 
 
 def get_fingerprint_as_bit_counts(
@@ -100,14 +100,16 @@ class MPScore:
         metrics = {
             "Accuracy": accuracy_score,
             "Precision (Difficult-to-synthesise)": partial(
-                precision_score, pos_label=0
+                precision_score, pos_label=0, zero_division=0
             ),
             "Recall (Difficult-to-synthesise)": partial(
-                recall_score, pos_label=0
+                recall_score, pos_label=0, zero_division=0
             ),
-            "Recall (Easy-to-synthesise)": partial(recall_score, pos_label=1),
+            "Recall (Easy-to-synthesise)": partial(
+                recall_score, pos_label=1, zero_division=0
+            ),
             "Precision (Easy-to-synthesise)": partial(
-                precision_score, pos_label=1
+                precision_score, pos_label=1, zero_division=0
             ),
             "F1": partial(f1_score, pos_label=1),
         }
@@ -497,12 +499,11 @@ class MPScore:
 
 
 def main():
+    data_path = Path("../data/chemist_scores.json").resolve()
+    training_data = MPScore().load_data(str(data_path))
     model = MPScore()
-    data = model.load_data(
-        "/Users/stevenbennett/PhD/Main_Projects/Synthetic_Accessibility_Project/Clean/data/Training_SA_Data_AddHs.json"
-    )
-    model.cross_validate(data)
-    model.plot_figure_5()
+    model.cross_validate(training_data)
+    # model.plot_figure_5()
 
 
 if __name__ == "__main__":
