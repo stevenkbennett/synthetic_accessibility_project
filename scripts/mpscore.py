@@ -20,6 +20,7 @@ from sklearn.metrics import (
     f1_score,
     precision_score,
     recall_score,
+    fbeta_score,
 )
 from sklearn.model_selection import KFold
 import pandas as pd
@@ -28,6 +29,7 @@ from matplotlib import cm
 from matplotlib.collections import LineCollection
 import seaborn as sns
 from rdkit.Chem.MolStandardize import standardize_smiles
+from uuid import uuid4
 
 
 def get_fingerprint_as_bit_counts(
@@ -93,7 +95,7 @@ class MPScore:
         y = data["synthesisable"].to_numpy()
         # Cross-validation is used to approximate the final score of the MPScore.
         # As such, shuffle was used which means the results will not be identical each time.
-        cv = KFold(n_splits=5, shuffle=True)
+        cv = KFold(n_splits=5, shuffle=True, random_state=32)
         # Train 5 models using cross-validation.
         predictions_combined = []
         y_test_combined = []
@@ -112,6 +114,18 @@ class MPScore:
                 precision_score, pos_label=1, zero_division=0
             ),
             "F1": partial(f1_score, pos_label=1),
+            "FBeta (Beta = 4/10)": partial(
+                fbeta_score, beta=0.4, pos_label=1, zero_division=0
+            ),
+            "FBeta (Beta = 3/10)": partial(
+                fbeta_score, beta=0.3, pos_label=1, zero_division=0
+            ),
+            "FBeta (Beta = 2/10)": partial(
+                fbeta_score, beta=0.2, pos_label=1, zero_division=0
+            ),
+            "FBeta (Beta = 1/10)": partial(
+                fbeta_score, beta=0.1, pos_label=1, zero_division=0
+            ),
         }
         results = defaultdict(list)
         for i, (train_ind, test_ind) in enumerate(cv.split(x, y)):
@@ -131,17 +145,19 @@ class MPScore:
         tps = 0
         tns = 0
         fns = 0
-        for i, prediction in enumerate(predictions_combined):
-            if prediction == y_test_combined[i]:
-                if y_test_combined[i] == 1:
+        for i, predicted_y in enumerate(predictions_combined):
+            actual_y = y_test_combined[i]
+            # Positive sample
+            if actual_y == 1:
+                if actual_y == predicted_y:
                     tps += 1
-                if y_test_combined[i] == 0:
-                    tns += 1
-            if prediction != y_test_combined[i]:
-                if y_test_combined[i] == 1:
-                    fps += 1
-                if y_test_combined[i] == 0:
+                elif actual_y != predicted_y:
                     fns += 1
+            elif actual_y == 0:
+                if actual_y == predicted_y:
+                    tns += 1
+                elif actual_y != predicted_y:
+                    fps += 1
         for metric in results:
             av = np.mean(results[metric])
             std = np.std(results[metric])
@@ -154,6 +170,10 @@ class MPScore:
         print(f"Total False Negatives: {fns}")
         print(f"Total True Positives: {tps}")
         print(f"Total True Negatives: {tns}")
+        results["TNs"] = tns
+        results["FPs"] = fps
+        results["FNs"] = fns
+        results["TPs"] = tps
         return results
 
     def train_using_entire_dataset(self, data: pd.DataFrame) -> None:

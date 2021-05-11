@@ -1,4 +1,6 @@
 from ast import literal_eval
+from collections import defaultdict
+from email.policy import default
 import numpy as np
 from mpscore import MPScore, get_fingerprint_as_bit_counts
 from pathlib import Path
@@ -12,6 +14,8 @@ from tqdm import tqdm
 from sklearn.ensemble import RandomForestClassifier
 from joblib import Parallel, delayed
 from functools import partial
+from pymongo import MongoClient
+from uuid import uuid4
 
 
 def perform_coursegrained_search(
@@ -27,10 +31,14 @@ def perform_coursegrained_search(
     training_data: Chemist classification data used to train the model
     params: Hyperparameters for the random forest model and fingerprints
     """
+    run_id = str(uuid4().int & (1 << 64) - 1)
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
     param_names = list(param_steps.keys())
+    param_size = 3
     for i in range(iterations):
-        params = generate_params(param_steps, iteration=i, param_size=10)
+        params = generate_params(
+            param_steps, iteration=i, param_size=param_size
+        )
         test_count = 10
         # Calculate the total number of parameters
         total_params = reduce(
@@ -72,17 +80,40 @@ def perform_coursegrained_search(
         calc_param = [r[0] for r in results]
         calc_score = [r[1] for r in results]
         # Calculate mean precision score across each fold
-        score = [
-            np.mean(r["Precision (Easy-to-synthesise)"]) for r in calc_score
-        ]
+        # score_column = "Precision (Easy-to-synthesise)"
+        score_column = "FBeta (Beta = 2/10)"
+        score = [np.mean(r[score_column]) for r in calc_score]
+        tps = [r["TPs"] for r in calc_score]
+        tns = [r["TNs"] for r in calc_score]
+        fns = [r["FNs"] for r in calc_score]
+        fps = [r["FPs"] for r in calc_score]
         # Get the index of the best performing score
         best_score = max(score)
-        best_score_index = score.index(best_score)
-        best_params = calc_param[best_score_index]
+        best_score_idx = score.index(best_score)
+        best_params = calc_param[best_score_idx]
         print(
-            f"The best performing parameters for this iteration were {best_params} with an average precision score of {best_score}"
+            f"The best performing parameters for this iteration were {best_params} with an average precision score of {best_score}.\n"
+            f"The score used to calculate was {score_column}\n"
+            f"The final values for this score were:\n",
+            f"Total False Positives: {fps[best_score_idx]}\n",
+            f"Total False Negatives: {fns[best_score_idx]}\n",
+            f"Total True Positives: {tps[best_score_idx]}\n",
+            f"Total True Negatives: {tns[best_score_idx]}\n",
         )
-        # Adjust the parameter starting values to the best parameters minus half a step
+        # Store calculated parameters in MongoDB
+        db = MongoClient()
+        collection = db["sa_project"]["hyperparameters"]
+        res_list = []
+        for score_dict in calc_score:
+            d = {}
+            for score_name in score_dict:
+                mean_score = np.mean(score_dict[score_name])
+                d[score_name] = str(mean_score)
+            d["run_id"] = run_id
+            res_list.append(d)
+        insert_res = collection.insert_many(res_list)
+        assert insert_res.inserted_ids
+        # Adjust the parameter starting values to the best parameters minus half a step multiplied by the parameter size difference divided by 2
         for idx, param_name in enumerate(list(param_steps)):
             if i > len(param_steps[param_name]["step"]) - 1:
                 step_size = param_steps[param_name]["step"][-1]
@@ -90,7 +121,8 @@ def perform_coursegrained_search(
                 step_size = param_steps[param_name]["step"][i]
             # Requires str type for generate_params function
             param_steps[param_name]["start"] = str(
-                best_params[idx] - literal_eval(step_size) / 2
+                best_params[idx]
+                - (literal_eval(step_size) * int(param_size / 2))
             )
 
 
@@ -138,10 +170,10 @@ def generate_params(
         else:
             start_num = int(literal_eval(param_steps[param_name]["start"]))
             # Reset start_num to 1 if anything is less than 0
-            if start_num <= 0:
+            if start_num <= 0.0000001:
                 start_num = 1
             d[param_name] = [
-                start_num + literal_eval(step_size) * interval
+                start_num + (literal_eval(step_size) * interval)
                 for interval in range(param_size)
             ]
             # Sanity check that the first and last values for each hyperparameter
@@ -169,12 +201,17 @@ def generate_params(
     for idx, nodes in enumerate(list(d["max_leaf_nodes"])):
         if nodes <= 1:
             d["max_leaf_nodes"][idx] = 2
-
-    # Check 4
-    # Ensure that the minimum sample split size is greater than 1
+    # Check 3
+    # Ensure that the maximum  sample size is less than 1
     for idx, max_samples in enumerate(list(d["max_samples"])):
         if max_samples >= 1.0:
             d["max_samples"][idx] = 0.95
+    # Check 4
+    # Ensure that the minimum sample split size is greater than 1
+    for idx, splits in enumerate(list(d["min_samples_split"])):
+        if splits == 1:
+            d["min_samples_split"][idx] = 2
+
     return d
 
 
