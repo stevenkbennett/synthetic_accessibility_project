@@ -143,7 +143,9 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         )
         for mol in training_mols
     ]
-    mpscore.model = RandomForestClassifier(**params_d, n_jobs=1)
+    mpscore.model = RandomForestClassifier(
+        **params_d, n_jobs=1, class_weight="balanced", criterion="gini",
+    )
     try:
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
