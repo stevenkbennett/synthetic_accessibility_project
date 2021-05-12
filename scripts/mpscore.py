@@ -375,10 +375,11 @@ class MPScore:
         )
         data = defaultdict(list)
         for _, row in loaded_data.iterrows():
+            mol = AllChem.MolFromInchi(row["inchi"])
             data["smiles"].append(
                 standardize_smiles(
                     AllChem.MolToSmiles(
-                        (mol := AllChem.MolFromInchi(row["inchi"]))
+                        (mol)
                     )
                 )
             )

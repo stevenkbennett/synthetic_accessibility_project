@@ -34,12 +34,12 @@ def perform_coursegrained_search(
     run_id = str(uuid4().int & (1 << 64) - 1)
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
     param_names = list(param_steps.keys())
-    param_size = 3
+    param_size = 10
     for i in range(iterations):
         params = generate_params(
             param_steps, iteration=i, param_size=param_size
         )
-        test_count = 10
+        test_count = 1000
         # Calculate the total number of parameters
         total_params = reduce(
             lambda x, y: x * y, map(len, list(params.values()))
@@ -92,7 +92,7 @@ def perform_coursegrained_search(
         best_score_idx = score.index(best_score)
         best_params = calc_param[best_score_idx]
         print(
-            f"The best performing parameters for this iteration were {best_params} with an average precision score of {best_score}.\n"
+            f"The best performing parameters for this iteration were {best_params} with an average score of {best_score}.\n"
             f"The score used to calculate was {score_column}\n"
             f"The final values for this score were:\n",
             f"Total False Positives: {fps[best_score_idx]}\n",
@@ -101,15 +101,18 @@ def perform_coursegrained_search(
             f"Total True Negatives: {tns[best_score_idx]}\n",
         )
         # Store calculated parameters in MongoDB
-        db = MongoClient()
+        db = MongoClient(host="129.31.65.124")
         collection = db["sa_project"]["hyperparameters"]
         res_list = []
-        for score_dict in calc_score:
+        for j, score_dict in enumerate(calc_score):
             d = {}
             for score_name in score_dict:
                 mean_score = np.mean(score_dict[score_name])
                 d[score_name] = str(mean_score)
             d["run_id"] = run_id
+            params = calc_param[j]
+            for param, name in zip(params, param_names):
+                d[name] = param
             res_list.append(d)
         insert_res = collection.insert_many(res_list)
         assert insert_res.inserted_ids
@@ -150,7 +153,9 @@ def cross_validation_models(params, training_mols, training_data, param_names):
 
 
 def generate_params(
-    param_steps: dict, iteration: int, param_size=100,
+    param_steps: dict,
+    iteration: int,
+    param_size=100,
 ):
     d = {}
     requires_float = ["max_samples"]
