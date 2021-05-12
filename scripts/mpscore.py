@@ -30,6 +30,8 @@ from matplotlib.collections import LineCollection
 import seaborn as sns
 from rdkit.Chem.MolStandardize import standardize_smiles
 from uuid import uuid4
+import json
+from rdkit import Chem
 
 
 def get_fingerprint_as_bit_counts(
@@ -65,20 +67,33 @@ class MPScore:
         model: The sklearn classification model.
     """
 
-    def __init__(self, random_state=None, processes=-1):
+    def __init__(self, random_state=None, processes=-1, params=None):
         """Initialise the MPScore.
 
         Args:
             random_state: Seed for random number generator.
             Used during the training procedure and cross-validation process.
         """
-        self.model = RandomForestClassifier(
-            n_jobs=processes,
-            random_state=random_state,
-            class_weight="balanced",
-            n_estimators=100,
-            criterion="gini",
-        )
+        if not params:
+            # Use default parameters
+            self._fp_radius = 2
+            self._fp_bit_size = 1024
+            self.model = RandomForestClassifier(
+                n_jobs=processes,
+                random_state=random_state,
+                class_weight="balanced",
+                criterion="gini",
+            )
+        if params:
+            self._fp_radius = params.pop("fp_radius")
+            self._fp_bit_length = params.pop("fp_bit_length")
+            self.model = RandomForestClassifier(
+                n_jobs=processes,
+                random_state=random_state,
+                **params,
+                class_weight="balanced",
+                criterion="gini",
+            )
 
     def restore(
         self,
@@ -521,7 +536,17 @@ class MPScore:
 def main():
     data_path = Path("../data/chemist_scores.json").resolve()
     training_data = MPScore().load_data(str(data_path))
-    model = MPScore()
+    param_path = Path("hyperparameters/optimal_params.json")
+    with open(str(param_path)) as f:
+        params = dict(json.load(f))
+    model = MPScore(params=params)
+    training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
+    training_data["fingerprint"] = [
+        get_fingerprint_as_bit_counts(
+            mol, radius=model._fp_radius, nbits=model._fp_bit_length
+        )
+        for mol in training_mols
+    ]
     model.cross_validate(training_data)
     # model.plot_figure_5()
 

@@ -1,0 +1,10 @@
+{
+    "n_estimators": 21,
+    "max_depth": 71,
+    "min_samples_split": 2,
+    "max_leaf_nodes": 102,
+    "max_features": 9,
+    "max_samples": 0.4,
+    "fp_bit_length": 3010,
+    "fp_radius": 3
+}

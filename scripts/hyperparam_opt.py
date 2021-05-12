@@ -34,12 +34,12 @@ def perform_coursegrained_search(
     run_id = str(uuid4().int & (1 << 64) - 1)
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
     param_names = list(param_steps.keys())
-    param_size = 3
+    param_size = 10
     for i in range(iterations):
         params = generate_params(
             param_steps, iteration=i, param_size=param_size
         )
-        test_count = 10
+        test_count = 1000
         # Calculate the total number of parameters
         total_params = reduce(
             lambda x, y: x * y, map(len, list(params.values()))
@@ -140,7 +140,9 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         )
         for mol in training_mols
     ]
-    mpscore.model = RandomForestClassifier(**params_d, n_jobs=1)
+    mpscore.model = RandomForestClassifier(
+        **params_d, n_jobs=1, class_weight="balanced", criterion="gini",
+    )
     try:
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
