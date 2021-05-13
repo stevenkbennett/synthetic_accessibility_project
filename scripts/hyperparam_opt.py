@@ -76,12 +76,12 @@ def perform_randomised_grid_search(
     # Get random numbers to select parameters
     param_idxs = sorted(random.sample(range(total_params - 1), k=test_count))
     test_combinations = []
-    print("Sampling parameters")
     # Iterate over all parameter options
     for i, combination in enumerate(
         tqdm(
             get_param_combinations(param_options=param_options),
             total=total_params,
+            desc="Sampling parameters",
         )
     ):
         # As soon as the index of random numbers is exhausted, exit loop
