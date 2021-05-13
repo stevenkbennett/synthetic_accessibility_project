@@ -63,12 +63,13 @@ def perform_randomised_grid_search(
     print(f"Performing run {run_id}")
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
     param_names = list(param_options.keys())
-    test_count = 10
     random.seed(random_seed)
     # Calculate the total number of parameters sampled
     total_params = reduce(
         lambda x, y: x * y, map(len, list(param_options.values()))
     )
+    # By default, sample 5% of parameter space
+    test_count = int(total_params * 5 / 100)
     print(f"The total parameter space size is {total_params}.")
     print(
         f"Testing {test_count} combinations of parameters. This is {test_count/total_params*100:.3f}% of the parameter space sampled."
