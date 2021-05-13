@@ -16,7 +16,7 @@ from joblib import Parallel, delayed
 from functools import partial
 from pymongo import MongoClient
 from uuid import uuid4
-
+import os
 
 import contextlib
 import joblib
@@ -206,7 +206,13 @@ def main():
     training_data = MPScore().load_data(str(data_path))
     with open(param_path) as f:
         param_steps = dict(json.load(f))
-    perform_randomised_grid_search(training_data, param_steps)
+    n_jobs = os.environ.get("NCPUS", None)
+    if n_jobs is None:
+        perform_randomised_grid_search(training_data, param_steps)
+    else:
+        perform_randomised_grid_search(
+            training_data, param_steps, n_jobs=int(n_jobs)
+        )
 
 
 if __name__ == "__main__":
