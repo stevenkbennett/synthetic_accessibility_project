@@ -170,7 +170,6 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         criterion="gini",
     )
     try:
-        print("Here")
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
         print(type(err))
