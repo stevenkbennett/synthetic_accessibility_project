@@ -200,7 +200,7 @@ def get_param_combinations(param_options: dict):
 
 def main():
     data_path = Path("../data/chemist_scores.json").resolve()
-    param_path = Path("hyperparameters/param_stepsizes.json").resolve()
+    param_path = Path("hyperparameters/test_params.json").resolve()
     # Initialise untrained model with data
     training_data = MPScore().load_data(str(data_path))
     with open(param_path) as f:
