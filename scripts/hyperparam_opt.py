@@ -171,7 +171,7 @@ def cross_validation_models(
     d["run_id"] = run_id
     for param, name in zip(params, param_names):
         d[name] = param
-    insert_res = collection.insert(d)
+    insert_res = collection.insert_one(d)
     assert insert_res.inserted_id
     return params, result
 
