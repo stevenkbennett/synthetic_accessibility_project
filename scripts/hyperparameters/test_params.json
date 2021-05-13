@@ -33,7 +33,7 @@
         "25"
     ],
     "max_features": [
-        "auto",
+        "None",
         "sqrt",
         "log2"
     ],
