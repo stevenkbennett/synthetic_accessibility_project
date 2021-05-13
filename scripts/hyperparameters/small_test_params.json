@@ -1,0 +1,49 @@
+{
+    "n_estimators": [
+        "1",
+        "5"
+    ],
+    "max_depth": [
+        "None",
+        "1",
+        "10"
+    ],
+    "min_samples_split": [
+        "2",
+        "5"
+    ],
+    "min_samples_leaf": [
+        "1",
+        "5",
+        "10",
+        "20",
+        "30",
+        "40",
+        "50",
+        "5000"
+    ],
+    "max_leaf_nodes": [
+        "None",
+        "2",
+        "5",
+        "10",
+        "25"
+    ],
+    "max_features": [
+        "auto",
+        "1",
+        "2",
+        "3"
+    ],
+    "max_samples": [
+        "None",
+        "0.1"
+    ],
+    "fp_bit_length": [
+        "256",
+        "512"
+    ],
+    "fp_radius": [
+        "1"
+    ]
+}
