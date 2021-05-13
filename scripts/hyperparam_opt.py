@@ -18,12 +18,40 @@ from pymongo import MongoClient
 from uuid import uuid4
 
 
-def perform_coursegrained_search(
+import contextlib
+import joblib
+from tqdm import tqdm
+from joblib import Parallel, delayed
+
+
+@contextlib.contextmanager
+def tqdm_joblib(tqdm_object):
+    """Context manager to patch joblib to report into tqdm progress bar given as argument.
+    Credit: https://stackoverflow.com/questions/24983493/tracking-progress-of-joblib-parallel-execution
+    """
+
+    class TqdmBatchCompletionCallback(joblib.parallel.BatchCompletionCallBack):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+        def __call__(self, *args, **kwargs):
+            tqdm_object.update(n=self.batch_size)
+            return super().__call__(*args, **kwargs)
+
+    old_batch_callback = joblib.parallel.BatchCompletionCallBack
+    joblib.parallel.BatchCompletionCallBack = TqdmBatchCompletionCallback
+    try:
+        yield tqdm_object
+    finally:
+        joblib.parallel.BatchCompletionCallBack = old_batch_callback
+        tqdm_object.close()
+
+
+def perform_randomised_grid_search(
     training_data: pd.DataFrame,
-    param_steps: dict,
+    param_options: dict,
     random_seed=32,
-    iterations=10,
-    n_jobs=7,
+    n_jobs=10,
 ):
     """
     Performs a parallel grid search for the MPScore.
@@ -32,47 +60,49 @@ def perform_coursegrained_search(
     params: Hyperparameters for the random forest model and fingerprints
     """
     run_id = str(uuid4().int & (1 << 64) - 1)
+    print(f"Performing run {run_id}")
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
-    param_names = list(param_steps.keys())
-    param_size = 10
-    for i in range(iterations):
-        params = generate_params(
-            param_steps, iteration=i, param_size=param_size
+    param_names = list(param_options.keys())
+    test_count = 10
+    random.seed(random_seed)
+    # Calculate the total number of parameters sampled
+    total_params = reduce(
+        lambda x, y: x * y, map(len, list(param_options.values()))
+    )
+    print(f"The total parameter space size is {total_params}.")
+    print(
+        f"Testing {test_count} combinations of parameters. This is {test_count/total_params*100:.3f}% of the parameter space sampled."
+    )
+    # Get random numbers to select parameters
+    param_idxs = sorted(random.sample(range(total_params - 1), k=test_count))
+    test_combinations = []
+    print("Sampling parameters")
+    # Iterate over all parameter options
+    for i, combination in enumerate(
+        tqdm(
+            get_param_combinations(param_options=param_options),
+            total=total_params,
         )
-        test_count = 1000
-        # Calculate the total number of parameters
-        total_params = reduce(
-            lambda x, y: x * y, map(len, list(params.values()))
-        )
-        print(f"The paramter space size for iteration {i} is {total_params}.")
-        random.seed(random_seed)
-        print(
-            f"Testing {test_count} combinations of parameters. This is {test_count/total_params*100:.3f}% of the parameter space sampled."
-        )
-        param_idxs = sorted(
-            random.sample(range(total_params - 1), k=test_count)
-        )
-        param_iterable = it.product(
-            *[params[param_name] for param_name in params]
-        )
-        test_combinations = []
-        print("Sampling parameters")
-        for j, combination in enumerate(tqdm(param_iterable)):
-            if len(param_idxs) == 0:
-                break
-            if j == param_idxs[0]:
-                param_idxs.pop(0)
-                test_combinations.append(combination)
-        print(
-            f"Performing hyperparameter optimisation using {n_jobs} processes"
-        )
-        # Build function with common arguments
-        cross_validation_models_args = partial(
-            cross_validation_models,
-            training_mols=training_mols,
-            training_data=training_data,
-            param_names=param_names,
-        )
+    ):
+        # As soon as the index of random numbers is exhausted, exit loop
+        if len(param_idxs) == 0:
+            break
+        if i == param_idxs[0]:
+            param_idxs.pop(0)
+            # Type conversion performed after selection to speed up loop
+            valid_params = param_type_conversion(combination)
+            test_combinations.append(valid_params)
+    print(f"Performing hyperparameter optimisation using {n_jobs} processes")
+    # Build function with common arguments
+    cross_validation_models_args = partial(
+        cross_validation_models,
+        training_mols=training_mols,
+        training_data=training_data,
+        param_names=param_names,
+    )
+    with tqdm_joblib(
+        tqdm(desc="Random Forest Training", total=test_count)
+    ) as progress_bar:
         results = Parallel(n_jobs=n_jobs)(
             delayed(cross_validation_models_args)(params=p)
             for p in test_combinations
@@ -116,17 +146,7 @@ def perform_coursegrained_search(
             res_list.append(d)
         insert_res = collection.insert_many(res_list)
         assert insert_res.inserted_ids
-        # Adjust the parameter starting values to the best parameters minus half a step multiplied by the parameter size difference divided by 2
-        for idx, param_name in enumerate(list(param_steps)):
-            if i > len(param_steps[param_name]["step"]) - 1:
-                step_size = param_steps[param_name]["step"][-1]
-            else:
-                step_size = param_steps[param_name]["step"][i]
-            # Requires str type for generate_params function
-            param_steps[param_name]["start"] = str(
-                best_params[idx]
-                - (literal_eval(step_size) * int(param_size / 2))
-            )
+        print("Completed hyperparameter optimisation")
 
 
 def cross_validation_models(params, training_mols, training_data, param_names):
@@ -144,92 +164,48 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         for mol in training_mols
     ]
     mpscore.model = RandomForestClassifier(
-        **params_d, n_jobs=1, class_weight="balanced", criterion="gini",
+        **params_d,
+        n_jobs=1,
+        class_weight="balanced",
+        criterion="gini",
     )
     try:
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
+        print(type(err))
         print(err)
         print(f"Failed for params {params} (parameter names {param_names})")
     return params, result
 
 
-def generate_params(
-    param_steps: dict,
-    iteration: int,
-    param_size=100,
-):
-    d = {}
-    requires_float = ["max_samples"]
-    for param_name in param_steps:
-        # Get final step if there are no remaining step sizes
-        if iteration > len(param_steps[param_name]["step"]) - 1:
-            step_size = param_steps[param_name]["step"][-1]
+def param_type_conversion(params):
+    p = []
+    for param in params:
+        if param.replace(".", "", 1).isdigit() or param == "None":
+            p.append(literal_eval(param))
         else:
-            step_size = param_steps[param_name]["step"][iteration]
-        # Some parameters requires integer
-        if param_name in requires_float:
-            d[param_name] = [
-                float(literal_eval(param_steps[param_name]["start"]))
-                + literal_eval(step_size) * interval
-                for interval in range(param_size)
-            ]
-        else:
-            start_num = int(literal_eval(param_steps[param_name]["start"]))
-            # Reset start_num to 1 if anything is less than 0
-            if start_num <= 0.0000001:
-                start_num = 1
-            d[param_name] = [
-                start_num + (literal_eval(step_size) * interval)
-                for interval in range(param_size)
-            ]
-            # Sanity check that the first and last values for each hyperparameter
-            # are greater than the check sizes
-            try:
-                assert (d[param_name][-1] - d[param_name][0]) > literal_eval(
-                    step_size
-                )
-            except AssertionError:
-                print(
-                    "WARNING: The combinations of parameters selected have resulted in a difference smaller than the step size. To counteract this, please ensure the space of parameters sampled exceeds the step size."
-                )
-    # Perform checks on parameters to ensure they are valid, otherwise alter them so they are
+            p.append(param)
+    return p
 
-    # Check 1
-    # Assert the fingerprint bit length is always greater than the maximum number of features used for each tree
-    # otherwise the model cannot be trained
-    maximum_features = max(d["max_features"])
-    for idx, nbits in enumerate(list(d["fp_bit_length"])):
-        if nbits < maximum_features:
-            d["fp_bit_length"][idx] = maximum_features + 1
 
-    # Check 2
-    # Ensure that the maximum number of leaf nodes is greater than 1
-    for idx, nodes in enumerate(list(d["max_leaf_nodes"])):
-        if nodes <= 1:
-            d["max_leaf_nodes"][idx] = 2
-    # Check 3
-    # Ensure that the maximum  sample size is less than 1
-    for idx, max_samples in enumerate(list(d["max_samples"])):
-        if max_samples >= 1.0:
-            d["max_samples"][idx] = 0.95
-    # Check 4
-    # Ensure that the minimum sample split size is greater than 1
-    for idx, splits in enumerate(list(d["min_samples_split"])):
-        if splits == 1:
-            d["min_samples_split"][idx] = 2
-
-    return d
+def get_param_combinations(param_options: dict):
+    param_iterable = it.product(
+        *[param_options[param_name] for param_name in param_options]
+    )
+    for params in param_iterable:
+        # Perform type conversion of str params
+        # print(params)
+        yield params
 
 
 def main():
     data_path = Path("../data/chemist_scores.json").resolve()
-    param_path = Path("hyperparameters/param_stepsizes.json").resolve()
+    param_path = Path("hyperparameters/small_test_params.json").resolve()
     # Initialise untrained model with data
     training_data = MPScore().load_data(str(data_path))
     with open(param_path) as f:
         param_steps = dict(json.load(f))
-    perform_coursegrained_search(training_data, param_steps)
+    perform_randomised_grid_search(training_data, param_steps)
 
 
 if __name__ == "__main__":
