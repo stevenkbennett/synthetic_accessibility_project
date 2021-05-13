@@ -100,6 +100,7 @@ def perform_randomised_grid_search(
         training_mols=training_mols,
         training_data=training_data,
         param_names=param_names,
+        run_id=run_id,
     )
     with tqdm_joblib(
         tqdm(desc="Training models", total=test_count)
@@ -111,7 +112,6 @@ def perform_randomised_grid_search(
         calc_param = [r[0] for r in results]
         calc_score = [r[1] for r in results]
         # Calculate mean precision score across each fold
-        # score_column = "Precision (Easy-to-synthesise)"
         score_column = "FBeta (Beta = 2/10)"
         score = [np.mean(r[score_column]) for r in calc_score]
         tps = [r["TPs"] for r in calc_score]
@@ -123,7 +123,7 @@ def perform_randomised_grid_search(
         best_score_idx = score.index(best_score)
         best_params = calc_param[best_score_idx]
         print(
-            f"The best performing parameters for this iteration were {best_params} with an average score of {best_score}.\n"
+            f"The best performing parameters were {best_params} with an average score of {best_score}.\n"
             f"The score used to calculate was {score_column}\n"
             f"The final values for this score were:\n",
             f"Total False Positives: {fps[best_score_idx]}\n",
@@ -131,26 +131,12 @@ def perform_randomised_grid_search(
             f"Total True Positives: {tps[best_score_idx]}\n",
             f"Total True Negatives: {tns[best_score_idx]}\n",
         )
-        # Store calculated parameters in MongoDB
-        db = MongoClient(host="129.31.65.124")
-        collection = db["sa_project"]["hyperparameters"]
-        res_list = []
-        for j, score_dict in enumerate(calc_score):
-            d = {}
-            for score_name in score_dict:
-                mean_score = np.mean(score_dict[score_name])
-                d[score_name] = str(mean_score)
-            d["run_id"] = run_id
-            params = calc_param[j]
-            for param, name in zip(params, param_names):
-                d[name] = param
-            res_list.append(d)
-        insert_res = collection.insert_many(res_list)
-        assert insert_res.inserted_ids
         print("Completed hyperparameter optimisation")
 
 
-def cross_validation_models(params, training_mols, training_data, param_names):
+def cross_validation_models(
+    params, training_mols, training_data, param_names, run_id
+):
     mpscore = MPScore()
     # Remove fingerprint arguments so only keyword argument for the classifier remain
     params_d = {}
@@ -176,6 +162,17 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         print(type(err))
         print(err)
         print(f"Failed for params {params} (parameter names {param_names})")
+    db = MongoClient(host="129.31.65.124")
+    collection = db["sa_project"]["hyperparameters"]
+    d = {}
+    for score_name in result:
+        mean_score = np.mean(result[score_name])
+        d[score_name] = str(mean_score)
+    d["run_id"] = run_id
+    for param, name in zip(params, param_names):
+        d[name] = param
+    insert_res = collection.insert(d)
+    assert insert_res.inserted_id
     return params, result
 
 
