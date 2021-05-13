@@ -100,53 +100,53 @@ def perform_randomised_grid_search(
         training_data=training_data,
         param_names=param_names,
     )
-    with tqdm_joblib(
-        tqdm(desc="Random Forest Training", total=test_count)
-    ) as progress_bar:
-        results = Parallel(n_jobs=n_jobs)(
-            delayed(cross_validation_models_args)(params=p)
-            for p in test_combinations
-        )
-        calc_param = [r[0] for r in results]
-        calc_score = [r[1] for r in results]
-        # Calculate mean precision score across each fold
-        # score_column = "Precision (Easy-to-synthesise)"
-        score_column = "FBeta (Beta = 2/10)"
-        score = [np.mean(r[score_column]) for r in calc_score]
-        tps = [r["TPs"] for r in calc_score]
-        tns = [r["TNs"] for r in calc_score]
-        fns = [r["FNs"] for r in calc_score]
-        fps = [r["FPs"] for r in calc_score]
-        # Get the index of the best performing score
-        best_score = max(score)
-        best_score_idx = score.index(best_score)
-        best_params = calc_param[best_score_idx]
-        print(
-            f"The best performing parameters for this iteration were {best_params} with an average score of {best_score}.\n"
-            f"The score used to calculate was {score_column}\n"
-            f"The final values for this score were:\n",
-            f"Total False Positives: {fps[best_score_idx]}\n",
-            f"Total False Negatives: {fns[best_score_idx]}\n",
-            f"Total True Positives: {tps[best_score_idx]}\n",
-            f"Total True Negatives: {tns[best_score_idx]}\n",
-        )
-        # Store calculated parameters in MongoDB
-        db = MongoClient(host="129.31.65.124")
-        collection = db["sa_project"]["hyperparameters"]
-        res_list = []
-        for j, score_dict in enumerate(calc_score):
-            d = {}
-            for score_name in score_dict:
-                mean_score = np.mean(score_dict[score_name])
-                d[score_name] = str(mean_score)
-            d["run_id"] = run_id
-            params = calc_param[j]
-            for param, name in zip(params, param_names):
-                d[name] = param
-            res_list.append(d)
-        insert_res = collection.insert_many(res_list)
-        assert insert_res.inserted_ids
-        print("Completed hyperparameter optimisation")
+    # with tqdm_joblib(
+    #     tqdm(desc="Training models", total=test_count)
+    # ) as progress_bar:
+    results = Parallel(n_jobs=n_jobs, verbose=50)(
+        delayed(cross_validation_models_args)(params=p)
+        for p in test_combinations
+    )
+    calc_param = [r[0] for r in results]
+    calc_score = [r[1] for r in results]
+    # Calculate mean precision score across each fold
+    # score_column = "Precision (Easy-to-synthesise)"
+    score_column = "FBeta (Beta = 2/10)"
+    score = [np.mean(r[score_column]) for r in calc_score]
+    tps = [r["TPs"] for r in calc_score]
+    tns = [r["TNs"] for r in calc_score]
+    fns = [r["FNs"] for r in calc_score]
+    fps = [r["FPs"] for r in calc_score]
+    # Get the index of the best performing score
+    best_score = max(score)
+    best_score_idx = score.index(best_score)
+    best_params = calc_param[best_score_idx]
+    print(
+        f"The best performing parameters for this iteration were {best_params} with an average score of {best_score}.\n"
+        f"The score used to calculate was {score_column}\n"
+        f"The final values for this score were:\n",
+        f"Total False Positives: {fps[best_score_idx]}\n",
+        f"Total False Negatives: {fns[best_score_idx]}\n",
+        f"Total True Positives: {tps[best_score_idx]}\n",
+        f"Total True Negatives: {tns[best_score_idx]}\n",
+    )
+    # Store calculated parameters in MongoDB
+    db = MongoClient(host="129.31.65.124")
+    collection = db["sa_project"]["hyperparameters"]
+    res_list = []
+    for j, score_dict in enumerate(calc_score):
+        d = {}
+        for score_name in score_dict:
+            mean_score = np.mean(score_dict[score_name])
+            d[score_name] = str(mean_score)
+        d["run_id"] = run_id
+        params = calc_param[j]
+        for param, name in zip(params, param_names):
+            d[name] = param
+        res_list.append(d)
+    insert_res = collection.insert_many(res_list)
+    assert insert_res.inserted_ids
+    print("Completed hyperparameter optimisation")
 
 
 def cross_validation_models(params, training_mols, training_data, param_names):
@@ -170,6 +170,7 @@ def cross_validation_models(params, training_mols, training_data, param_names):
         criterion="gini",
     )
     try:
+        print("Here")
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
         print(type(err))
