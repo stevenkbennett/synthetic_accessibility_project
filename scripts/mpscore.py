@@ -9,7 +9,7 @@ in addition to the SAScore and SCScore synthetic difficulty scoring functions.
 from collections import defaultdict
 from functools import partial
 from pathlib import Path
-
+from ast import literal_eval
 import joblib
 import numpy as np
 from rdkit.Chem import AllChem
@@ -29,7 +29,6 @@ from matplotlib import cm
 from matplotlib.collections import LineCollection
 import seaborn as sns
 from rdkit.Chem.MolStandardize import standardize_smiles
-from uuid import uuid4
 import json
 from rdkit import Chem
 
@@ -67,7 +66,7 @@ class MPScore:
         model: The sklearn classification model.
     """
 
-    def __init__(self, random_state=None, processes=-1, params=None):
+    def __init__(self, random_state=32, processes=-1, params=None):
         """Initialise the MPScore.
 
         Args:
@@ -392,11 +391,7 @@ class MPScore:
         for _, row in loaded_data.iterrows():
             mol = AllChem.MolFromInchi(row["inchi"])
             data["smiles"].append(
-                standardize_smiles(
-                    AllChem.MolToSmiles(
-                        (mol)
-                    )
-                )
+                standardize_smiles(AllChem.MolToSmiles((mol)))
             )
             data["synthesisable"].append(int(row["synthesisable"]))
             data["fingerprint"].append(get_fingerprint_as_bit_counts(mol))
@@ -550,6 +545,16 @@ def main():
     ]
     model.cross_validate(training_data)
     # model.plot_figure_5()
+
+
+def param_type_conversion(params):
+    p = []
+    for param in params:
+        if param.replace(".", "", 1).isdigit() or param == "None":
+            p.append(literal_eval(param))
+        else:
+            p.append(param)
+    return p
 
 
 if __name__ == "__main__":

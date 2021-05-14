@@ -1,6 +1,4 @@
 from ast import literal_eval
-from collections import defaultdict
-from email.policy import default
 import numpy as np
 from mpscore import MPScore, get_fingerprint_as_bit_counts
 from pathlib import Path
@@ -17,7 +15,6 @@ from functools import partial
 from pymongo import MongoClient
 from uuid import uuid4
 import os
-
 import contextlib
 import joblib
 from tqdm import tqdm
@@ -177,16 +174,6 @@ def cross_validation_models(
     return params, result
 
 
-def param_type_conversion(params):
-    p = []
-    for param in params:
-        if param.replace(".", "", 1).isdigit() or param == "None":
-            p.append(literal_eval(param))
-        else:
-            p.append(param)
-    return p
-
-
 def get_param_combinations(param_options: dict):
     param_iterable = it.product(
         *[param_options[param_name] for param_name in param_options]
@@ -211,6 +198,16 @@ def main():
         perform_randomised_grid_search(
             training_data, param_steps, n_jobs=int(n_jobs)
         )
+
+
+def param_type_conversion(params):
+    p = []
+    for param in params:
+        if param.replace(".", "", 1).isdigit() or param == "None":
+            p.append(literal_eval(param))
+        else:
+            p.append(param)
+    return p
 
 
 if __name__ == "__main__":
