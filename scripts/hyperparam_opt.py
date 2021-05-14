@@ -152,6 +152,7 @@ def cross_validation_models(
     ]
     mpscore.model = RandomForestClassifier(
         **params_d,
+        random_state=32,
         n_jobs=1,
         class_weight="balanced",
         criterion="gini",
