@@ -266,19 +266,17 @@ class MPScore:
         Returns:
             float: Prediction from model.
         """
-        fp = np.array(get_fingerprint_as_bit_counts(mol)).reshape(1, -1)
+        fp = np.array(get_fingerprint_as_bit_counts(mol, nbits=self._fp_bit_size, radius=self._fp_bit_size)).reshape(1, -1)
         return self.model.predict_proba(fp)[0][0]
 
     def get_precision_recall_curve_data(
-        self, data, final_cutoff=None, step=None, swap_classes=False
+        self, data, final_cutoff=None, swap_classes=False
     ):
         results = defaultdict(lambda: [])
-        if not step:
-            step = 100
-        thresholds = np.linspace(0, 1, step)
+        thresholds = np.linspace(0, 1, 100)
         X = np.array([np.array(i) for i in data["fingerprint"].to_list()])
         y = data["synthesisable"].to_numpy()
-        splits = KFold(n_splits=5, shuffle=True, random_state=1)
+        splits = KFold(n_splits=5, shuffle=True, random_state=32)
         for train_idx, test_idx in splits.split(X=X, y=y):
             X_train, X_test = X[train_idx], X[test_idx]
             y_train, y_test = y[train_idx], y[test_idx]
@@ -287,7 +285,7 @@ class MPScore:
             y_probs_train = self.model.predict_proba(X_train)
             y_probs_test = self.model.predict_proba(X_test)
             for i, threshold in enumerate(thresholds):
-                # If probability of y greater than threshold, score a molecule as synthesisable
+                # If probability of y greater than or equal to threshold, score a molecule as synthesisable
                 y_pred_train = [
                     1 if prob[1] >= threshold else 0 for prob in y_probs_train
                 ]
@@ -370,6 +368,7 @@ class MPScore:
         df = pd.DataFrame(results)
         for i in range(len(thresholds)):
             row = df.iloc[i]
+            np.seterr(divide="warn")
             results["p_train"].append(
                 round(row["tp_train"] / (row["tp_train"] + row["fp_train"]), 3)
             )
@@ -384,19 +383,7 @@ class MPScore:
             )
         return pd.DataFrame(results)
 
-    def plot_precision_recall_curve(self, fig, ax):
-        loaded_data = self.load_data(
-            "/Users/stevenbennett/PhD/Main_Projects/Synthetic_Accessibility_Project/Clean/data/Training_SA_Data_AddHs.json"
-        )
-        data = defaultdict(list)
-        for _, row in loaded_data.iterrows():
-            mol = AllChem.MolFromInchi(row["inchi"])
-            data["smiles"].append(
-                standardize_smiles(AllChem.MolToSmiles((mol)))
-            )
-            data["synthesisable"].append(int(row["synthesisable"]))
-            data["fingerprint"].append(get_fingerprint_as_bit_counts(mol))
-        data = pd.DataFrame(data)
+    def plot_precision_recall_curve(self, fig, ax, data):
         pr_data = self.get_precision_recall_curve_data(data)
         X = pr_data["r_test"].to_numpy()
         y = pr_data["p_test"].to_numpy()
@@ -477,12 +464,6 @@ class MPScore:
         return fig, ax
 
     def plot_feature_importances(self, ax):
-        self.load_model(
-            str(
-                Path.home()
-                / "PhD/Main_Projects/Synthetic_Accessibility_Project/synthetic_accessibility_project/stages/Stage1_SyntheticAccesibilityScores/Utilities/RFModel_FullDatasetTrained.joblib"
-            )
-        )
         importances = [[] for _ in range(1024)]
         for tree in self.model.estimators_:
             for i, importance in enumerate(tree.feature_importances_):
@@ -518,15 +499,17 @@ class MPScore:
         ax.set_title("a)", fontsize="large")
         return ax
 
-    def plot_figure_5(self):
+    def plot_figure_5(self, data):
         fig, axes = plt.subplots(1, 2, figsize=(6.43420506434205, 3.3))
-        fig, axes[1] = self.plot_precision_recall_curve(fig, axes[1])
+        fig, axes[1] = self.plot_precision_recall_curve(
+            fig, axes[1], data=data
+        )
         axes[0] = self.plot_feature_importances(axes[0])
         print("Saving figure.")
         fig.savefig(
             Path(__file__)
             .parents[1]
-            .joinpath("images/paper_figures/Figure_5.pdf")
+            .joinpath("images/paper_figures/Figure_5_2.pdf")
         )
 
 
@@ -545,7 +528,10 @@ def main():
         for mol in training_mols
     ]
     model.cross_validate(training_data)
-    # model.plot_figure_5()
+    model.train_using_entire_dataset(training_data)
+    full_model_path = Path("../models/mpscore_hyperparameter_opt.joblib")
+    model.dump(str(full_model_path))
+    model.plot_figure_5(data=training_data)
 
 
 def param_type_conversion(params):
