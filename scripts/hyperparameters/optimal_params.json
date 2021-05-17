@@ -1,11 +1,11 @@
 {
-    "n_estimators": 50,
+    "n_estimators": 80,
     "max_depth": 80,
     "min_samples_split": 2,
     "max_leaf_nodes": null,
     "max_features": "log2",
     "max_samples": 0.1,
-    "fp_bit_length": 4096,
-    "fp_radius": 3,
+    "fp_bit_length": 1024,
+    "fp_radius": 4,
     "min_samples_leaf": 1
 }

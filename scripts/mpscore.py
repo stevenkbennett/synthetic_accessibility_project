@@ -93,6 +93,7 @@ class MPScore:
                 class_weight="balanced",
                 criterion="gini",
             )
+            # print(self.model._params)
 
     def restore(
         self,
