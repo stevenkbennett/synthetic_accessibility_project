@@ -76,7 +76,7 @@ class MPScore:
         if not params:
             # Use default parameters
             self._fp_radius = 2
-            self._fp_bit_size = 1024
+            self._fp_bit_length = 1024
             self.model = RandomForestClassifier(
                 n_jobs=processes,
                 random_state=random_state,
@@ -266,7 +266,11 @@ class MPScore:
         Returns:
             float: Prediction from model.
         """
-        fp = np.array(get_fingerprint_as_bit_counts(mol, nbits=self._fp_bit_size, radius=self._fp_bit_size)).reshape(1, -1)
+        fp = np.array(
+            get_fingerprint_as_bit_counts(
+                mol, nbits=self._fp_bit_length, radius=self._fp_bit_length
+            )
+        ).reshape(1, -1)
         return self.model.predict_proba(fp)[0][0]
 
     def get_precision_recall_curve_data(
