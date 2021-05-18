@@ -8,11 +8,13 @@ in addition to the SAScore and SCScore synthetic difficulty scoring functions.
 
 from collections import defaultdict
 from functools import partial
+from operator import sub
 from pathlib import Path
 from ast import literal_eval
 import joblib
 import numpy as np
 from rdkit.Chem import AllChem
+from scipy.sparse import data
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
@@ -22,7 +24,7 @@ from sklearn.metrics import (
     recall_score,
     fbeta_score,
 )
-from sklearn.model_selection import KFold
+from sklearn.model_selection import KFold, train_test_split
 import pandas as pd
 from matplotlib import pyplot as plt
 from matplotlib import cm
@@ -31,6 +33,8 @@ import seaborn as sns
 from rdkit.Chem.MolStandardize import standardize_smiles
 import json
 from rdkit import Chem
+from tqdm import tqdm
+from sklearn.calibration import CalibratedClassifierCV, calibration_curve
 
 
 def get_fingerprint_as_bit_counts(
@@ -191,13 +195,15 @@ class MPScore:
         results["TPs"] = tps
         return results
 
-    def train_using_entire_dataset(self, data: pd.DataFrame) -> None:
+    def train_using_entire_dataset(
+        self, data: pd.DataFrame, calibrate=True
+    ) -> None:
         """Trains the model on the entire dataset.
 
         Args:
             data: Molecules labelled as synthesisable/unsynthesisable.
         """
-        x = np.array([np.array(fp) for fp in data["fingerprint"]])
+        X = np.array([np.array(fp) for fp in data["fingerprint"]])
         y = data["synthesisable"].to_numpy()
         print(
             f"There are {sum(y)} molecules labelled indeas synthesisable (which has a value of 1)"
@@ -205,8 +211,19 @@ class MPScore:
         print(
             f"There are {len(y)-sum(y)} labelled as unsynthesisable (which has a value of 0)"
         )
-        self.model.fit(x, y)
+        if calibrate:
+            X_train, X_calib, y_train, y_calib = train_test_split(
+                X, y, random_state=32
+            )
+            self.model.fit(X_train, y_train)
+            clf = CalibratedClassifierCV(
+                self.model, cv="prefit", method="sigmoid"
+            )
+            clf.fit(X_calib, y_calib)
+            print("Finished training calibrated model on entire dataset")
+            self.calibrated_model = clf
         print("Finished training model on entire dataset")
+        self.model.fit(X, y)
 
     def load_data(self, data_path):
         """Loads the SA classification dataset.
@@ -231,7 +248,12 @@ class MPScore:
         Args:
             dump_path: Path to dump the model to.
         """
-        joblib.dump(self.model, dump_path)
+        if self.calibrated_model:
+            calibrated_path = dump_path.split(".")
+            calibrated_path += "_calibrated.json"
+            joblib.dump(self.calibrated_model, dump_path)
+        else:
+            joblib.dump(self.model, dump_path)
 
     def predict(self, mol):
         """Predict SA of molecule using RF model.
@@ -272,6 +294,81 @@ class MPScore:
             )
         ).reshape(1, -1)
         return self.model.predict_proba(fp)[0][0]
+
+    def plot_calibration_curve(self, data):
+        fig, ax = plt.subplots()
+
+        X_train, X_test, y_train, y_test = train_test_split(
+            [np.array(i) for i in data["fingerprint"].to_numpy()],
+            [np.array(i) for i in data["synthesisable"].to_numpy()],
+            random_state=32,
+        )
+        X_model_train, X_valid, y_model_train, y_valid = train_test_split(
+            X_train, y_train, random_state=32
+        )
+        # Fit the uncalibrated random forest model
+        self.model.fit(X_model_train, y_model_train)
+        predicted_probs = [
+            self.model.predict_proba(np.array(fp).reshape(1, -1))[0][1]
+            for fp in tqdm(
+                X_test, desc="Uncalibrated random forest predictions"
+            )
+        ]
+        prob_true, prob_pred = calibration_curve(
+            y_prob=predicted_probs, y_true=y_test, n_bins=10, normalize=False,
+        )
+        sns.lineplot(
+            y=prob_pred, x=prob_true, ci=None, ax=ax, label="Random Forest"
+        )
+
+        # Sigmoid calibration
+        sigmoid_clf = CalibratedClassifierCV(
+            self.model, cv="prefit", method="sigmoid",
+        )
+        # Fit calibrated model on validation set
+        sigmoid_clf.fit(X_valid, y_valid)
+        sigmoid_pred = [
+            sigmoid_clf.predict_proba(i.reshape(1, -1))[0][1]
+            for i in tqdm(X_test, desc="Sigmoid random forest predictions")
+        ]
+        prob_true, prob_pred = calibration_curve(
+            y_prob=sigmoid_pred, y_true=y_test, n_bins=10, normalize=False,
+        )
+        sns.lineplot(
+            y=prob_pred,
+            x=prob_true,
+            ci=None,
+            ax=ax,
+            label="Random Forest + Sigmoid",
+        )
+
+        # Isotonic calibration
+        isotonic_clf = CalibratedClassifierCV(
+            self.model, cv="prefit", method="isotonic"
+        )
+        # Fit calibrated model on validation set
+        isotonic_clf.fit(X_valid, y_valid)
+        isotonic_pred = [
+            isotonic_clf.predict_proba(np.array(fp).reshape(1, -1))[0][1]
+            for fp in tqdm(X_test, desc="Isotonic random forest predictions")
+        ]
+        prob_true, prob_pred = calibration_curve(
+            y_prob=isotonic_pred, y_true=y_test, n_bins=10, normalize=False,
+        )
+        sns.lineplot(
+            y=prob_pred,
+            x=prob_true,
+            ci=None,
+            ax=ax,
+            label="Random Forest + Isotonic",
+        )
+
+        sns.lineplot(
+            y=[0, 1], x=[0, 1], label="Perfect Classifier", color="black"
+        )
+        ax.lines[3].set_linestyle("--")
+        sns.despine()
+        fig.savefig(str(Path("../images/Calibration_Curve.pdf")))
 
     def get_precision_recall_curve_data(
         self, data, final_cutoff=None, swap_classes=False
@@ -531,11 +628,14 @@ def main():
         )
         for mol in training_mols
     ]
-    model.cross_validate(training_data)
+    # model.cross_validate(training_data)
     model.train_using_entire_dataset(training_data)
-    full_model_path = Path("../models/mpscore_hyperparameter_opt.joblib")
+    full_model_path = Path(
+        "../models/mpscore_hyperparameter_opt_calibrated.joblib"
+    )
     model.dump(str(full_model_path))
-    model.plot_figure_5(data=training_data)
+    # model.plot_figure_5(data=training_data)
+    model.plot_calibration_curve(data=training_data)
 
 
 def param_type_conversion(params):
