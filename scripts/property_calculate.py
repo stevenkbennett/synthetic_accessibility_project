@@ -16,16 +16,12 @@ import argparse
 import pandas as pd
 from tqdm import tqdm
 from functools import partial
+import os
 from multiprocessing import cpu_count
 from pathos.pools import _ProcessPool as ProcessPool
 
 
-def collapsed(
-    mol: rdkit.Mol,
-    max_diameter: float,
-    window_diff: float,
-    cavity_size: float,
-) -> bool:
+def collapsed(mol, max_diameter, window_diff, cavity_size):
     """Determines whether a molecule is collapsed or not using the below criteria.
 
     Args:
@@ -43,7 +39,7 @@ def collapsed(
         return
 
 
-def get_window_difference(windows: List[float]) -> float:
+def get_window_difference(windows):
     """Calculates the average window difference for all windows detected with
     pyWindow.
 
@@ -67,7 +63,7 @@ def get_window_difference(windows: List[float]) -> float:
     return np.mean(diff_sums)
 
 
-def cavity_size(mol: rdkit.Mol) -> float:
+def cavity_size(mol):
     """Calculates cavity size of a molecule.
 
     Args:
@@ -79,7 +75,7 @@ def cavity_size(mol: rdkit.Mol) -> float:
     return cavity if cavity > 0 else 0.0
 
 
-def make_entry(cage, output_collection, database):
+def make_entry(cage, output_collection, db_url, database):
     """Gets geometrically properties of the cage.
 
     Args:
@@ -88,9 +84,7 @@ def make_entry(cage, output_collection, database):
         (dict): Dictionary containing geometrical properties of the cage.
     """
     # Check if entry already inserted.
-    client = MongoClient(
-        # Enter Mongo details
-    )
+    client = MongoClient(db_url)
     db = client[database]
     if db[output_collection].count_documents({"_id": str(cage)}) != 0:
         return
@@ -122,8 +116,9 @@ def make_entry(cage, output_collection, database):
             }
             try:
                 result = db[output_collection].insert_one(record)
-                print(f"Succesfully inserted {result.inserted_id}.",
-                      flush=True)
+                print(
+                    f"Succesfully inserted {result.inserted_id}.", flush=True
+                )
             except DuplicateKeyError as err:
                 print(err)
             return
@@ -147,14 +142,8 @@ def make_entry(cage, output_collection, database):
     return
 
 
-def get_stk_dicts(input_collection, database):
-    client = MongoClient(
-        "ch-sb2518.ch.ic.ac.uk",
-        27017,
-        connect=False,
-        connectTimeoutMS=600000,
-        serverSelectionTimeoutMS=600000,
-    )
+def get_stk_dicts(input_collection, database, db_url):
+    client = MongoClient(db_url)
     df = pd.DataFrame(list(client[database][input_collection].find({})))
     d = {}
     for row in df.itertuples():
@@ -172,29 +161,33 @@ def load_cage(stk_dict):
     return cage
 
 
-def make_database(processes, input_collection, output_collection, database,
-                  chunksize):
+def make_database(
+    processes, input_collection, output_collection, database, chunksize, db_url
+):
     print(f"Using {processes} processes for the calculation.")
     with ProcessPool(processes) as pool:
-        stk_dicts = get_stk_dicts(input_collection=input_collection,
-                                  database=database)
+        stk_dicts = get_stk_dicts(
+            input_collection=input_collection, database=database, db_url=db_url
+        )
         l = list(stk_dicts.items())
         random.shuffle(l)
         stk_dicts = dict(l)
         chunksize = calculate_chunksize(stk_dicts, processes)
         print(f"Splitting cages into chunks of size {chunksize}.")
-        print("Loading cages.", flush=True)
+        print("Loading cages", flush=True)
         pop = []
         for cage in tqdm(
-                pool.imap_unordered(load_cage,
-                                    stk_dicts.items(),
-                                    chunksize=chunksize)):
+            pool.imap_unordered(
+                load_cage, stk_dicts.items(), chunksize=chunksize
+            ),
+            desc="Performing property calculations",
+        ):
             if cage is not None:
                 pop.append(cage)
         print("Finished loading cages. Performing database calculations.")
-        _make_entry = partial(make_entry,
-                              database=database,
-                              output_collection=output_collection)
+        _make_entry = partial(
+            make_entry, database=database, output_collection=output_collection
+        )
         cages = pool.imap(_make_entry, pop, chunksize=chunksize)
         for _ in tqdm(cages):
             print(
@@ -215,9 +208,9 @@ if __name__ == "__main__":
     # CPU count for local calculations.
     processes = cpu_count()
     parser = argparse.ArgumentParser()
-    parser.add_argument("-i",
-                        type=str,
-                        help="Name of the collection containing stk cages.")
+    parser.add_argument(
+        "-i", type=str, help="Name of the collection containing stk cages."
+    )
     database = "sa_project_optimisations"
     parser.add_argument(
         "-o",
@@ -230,6 +223,9 @@ if __name__ == "__main__":
         help="Chunksize to split the cage iterable into.",
         default=None,
     )
+    parser.add_argument(
+        "-u", type=str, help="URL of the MongoDB client to connect to"
+    )
     args = parser.parse_args()
     make_database(
         processes=processes,
@@ -237,4 +233,5 @@ if __name__ == "__main__":
         output_collection=args.o,
         database=database,
         chunksize=args.c,
+        db_url=args.u,
     )

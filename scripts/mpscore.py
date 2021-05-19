@@ -52,7 +52,10 @@ def get_fingerprint_as_bit_counts(
     # Ensure molecules has hydrogens added for consistency.
     mol = AllChem.AddHs(mol)
     fp = AllChem.GetMorganFingerprintAsBitVect(
-        mol=mol, radius=radius, nBits=nbits, bitInfo=info,
+        mol=mol,
+        radius=radius,
+        nBits=nbits,
+        bitInfo=info,
     )
     fp = list(fp)
     for bit, activators in info.items():
@@ -266,7 +269,7 @@ class MPScore:
         fp = np.array(get_fingerprint_as_bit_counts(mol)).reshape(1, -1)
         return int(self.model.predict(fp))
 
-    def get_score_from_smiles(self, smiles):
+    def get_score_from_smiles(self, smiles, return_probability=True):
         """Gets MPScore from SMILES string of molecule.
 
         Args:
@@ -315,7 +318,10 @@ class MPScore:
             )
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=predicted_probs, y_true=y_test, n_bins=10, normalize=False,
+            y_prob=predicted_probs,
+            y_true=y_test,
+            n_bins=10,
+            normalize=False,
         )
         sns.lineplot(
             y=prob_pred, x=prob_true, ci=None, ax=ax, label="Random Forest"
@@ -323,7 +329,9 @@ class MPScore:
 
         # Sigmoid calibration
         sigmoid_clf = CalibratedClassifierCV(
-            self.model, cv="prefit", method="sigmoid",
+            self.model,
+            cv="prefit",
+            method="sigmoid",
         )
         # Fit calibrated model on validation set
         sigmoid_clf.fit(X_valid, y_valid)
@@ -332,7 +340,10 @@ class MPScore:
             for i in tqdm(X_test, desc="Sigmoid random forest predictions")
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=sigmoid_pred, y_true=y_test, n_bins=10, normalize=False,
+            y_prob=sigmoid_pred,
+            y_true=y_test,
+            n_bins=10,
+            normalize=False,
         )
         sns.lineplot(
             y=prob_pred,
@@ -353,7 +364,10 @@ class MPScore:
             for fp in tqdm(X_test, desc="Isotonic random forest predictions")
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=isotonic_pred, y_true=y_test, n_bins=10, normalize=False,
+            y_prob=isotonic_pred,
+            y_true=y_test,
+            n_bins=10,
+            normalize=False,
         )
         sns.lineplot(
             y=prob_pred,

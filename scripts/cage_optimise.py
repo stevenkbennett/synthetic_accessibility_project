@@ -28,6 +28,7 @@ from pathos.pools import _ProcessPool as ProcessPool
 import argparse
 from uuid import uuid4
 import os
+from tqdm import tqdm
 from functools import partial
 from pathlib import Path
 from pymongo import MongoClient
@@ -41,9 +42,6 @@ macromodel_path = "/rds/general/user/sb2518/home/opt/schrodinger2018-1"
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
-# Only display errors from MolVS.
-molvs_logger = logging.getLogger("molvs")
-molvs_logger.setLevel(logging.ERROR)
 
 # Define the formatter for logging messages.
 try:
@@ -64,18 +62,12 @@ streamhandler.setFormatter(formatter)
 logger.addHandler(streamhandler)
 
 
-def get_key(aldehyde_smiles: str, amine_smiles: str) -> str:
-    """Returns key based on aldehydes SMILES + ',' + amine SMILES.
-    """
+def get_key(aldehyde_smiles, amine_smiles):
+    """Returns key based on aldehydes SMILES + ',' + amine SMILES."""
     return aldehyde_smiles + "," + amine_smiles
 
 
-def store_mol(
-    key: str,
-    mol: stk.ConstructedMolecule,
-    db: MongoClient,
-    collection_name: str,
-):
+def store_mol(key, mol, db, collection_name):
     mol_dict = {
         "_id": key,
         "stk_obj": mol.to_dict(),
@@ -83,7 +75,7 @@ def store_mol(
     db[collection_name].insert_one(mol_dict)
 
 
-def load_precursors(path: str) -> List[List[str]]:
+def load_precursors(path):
     """Loads precursors from file containing SMILES.
 
     Precursors must be in a `.csv` file, with the aldehyde in column 1 and the
@@ -102,13 +94,8 @@ def load_precursors(path: str) -> List[List[str]]:
 
 
 def optimise_parallel(
-    path: str,
-    temp_dir: str,
-    processes: int,
-    chunksize: int,
-    collection_name: str,
-    db_name: str,
-) -> None:
+    path, temp_dir, processes, chunksize, collection_name, db_name, db_url
+):
     """Creates cage from a database of precursor SMILES and optimises them.
 
     Args:
@@ -146,13 +133,17 @@ def optimise_parallel(
         optimiser=optimiser_sequence,
         collection_name=collection_name,
         db_name=db_name,
+        db_url=db_url,
     )
     # Perform parallel optimisation.
-    logger.info("Performing optimisations.")
+    logger.info("Performing optimisations")
     try:
-        for optimised_cage in pool.imap_unordered(optimiser_func,
-                                                  precursors,
-                                                  chunksize=chunksize):
+        for optimised_cage in tqdm(
+            pool.imap_unordered(
+                optimiser_func, precursors, chunksize=chunksize
+            ),
+            desc="Performing optimisation on cages",
+        ):
             continue
     except Exception as err:
         # Ensure the pool is closed.
@@ -161,12 +152,8 @@ def optimise_parallel(
 
 
 def macromodel_optimisation(
-    precursors: List[str],
-    optimiser: stk.Sequence,
-    temp_dir: str,
-    collection_name: str,
-    db_name: str,
-) -> None:
+    precursors, optimiser, temp_dir, collection_name, db_name, db_url
+):
     """
     Optimises cages and returns the modified cage.
 
@@ -187,9 +174,7 @@ def macromodel_optimisation(
         topology_graph=stk.cage.FourPlusSix(),
     )
     # Establishing connection to MongoDB must be done in each child process.
-    client = MongoClient(
-        # Enter Mongo details
-    )
+    client = MongoClient(db_url)
     db = client[db_name]
     run_name = str(uuid4().int)
     workdir = os.getcwd()
@@ -232,10 +217,9 @@ def macromodel_optimisation(
     cage.dump(f"opt_{run_name}.json")
     cage.write(f"opt_{run_name}.mol")
     # If dumped, update the molecule identifier.
-    db[collection_name].update_one({"_id": key},
-                                   {"$set": {
-                                       "identifier": run_name
-                                   }})
+    db[collection_name].update_one(
+        {"_id": key}, {"$set": {"identifier": run_name}}
+    )
     logger.info(f"Finished optimisation for {cage}.")
 
 
@@ -243,9 +227,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Optimise cages.")
     parser.add_argument(
         "-p",
-        help=("Path to set of precursors. Precursors must"
-              "be given as SMILES in a csv file, with the aldehyde in column 1"
-              " and the amine in column 2."),
+        help=(
+            "Path to set of precursors. Precursors must"
+            "be given as SMILES in a csv file, with the aldehyde in column 1"
+            " and the amine in column 2."
+        ),
         type=str,
     )
     parser.add_argument(
@@ -270,6 +256,9 @@ if __name__ == "__main__":
         type=int,
         default=1,
     )
+    parser.add_argument(
+        "-u", type=str, help="URL of the MongoDB client to connect to"
+    )
     # Check number of processes to create.
     args = parser.parse_args()
     processes = int(os.environ.get("NCPUS", 1))
@@ -285,5 +274,6 @@ if __name__ == "__main__":
             chunksize=args.c,
             collection_name=args.o,
             db_name=args.d,
+            db_url=args.u,
         )
         logger.info("Finished dumping optimised cages.")
