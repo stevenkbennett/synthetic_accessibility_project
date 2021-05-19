@@ -116,7 +116,6 @@ class MPScore:
         x = np.array([np.array(fp) for fp in data["fingerprint"]])
         y = data["synthesisable"].to_numpy()
         # Cross-validation is used to approximate the final score of the MPScore.
-        # As such, shuffle was used which means the results will not be identical each time.
         cv = KFold(n_splits=5, shuffle=True, random_state=32)
         # Train 5 models using cross-validation.
         predictions_combined = []
