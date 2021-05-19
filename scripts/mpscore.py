@@ -274,22 +274,22 @@ class MPScore:
 
         Args:
             smiles: SMILES string of molecule
+            return_probability: Probability the molecule belongs to the difficult-to-synthesise class.
         Returns:
-            int: Prediction from model - 0 if easy-to-synthesise, 1 if not/
+            int or float: Prediction from model - 1 if easy-to-synthesise, 0 if not.
+            If return_probability, returns probability molecule belongs to the difficult-to-synthesise class. This can then be interpreted as a synthetic difficulty score.
         """
         mol = AllChem.MolFromSmiles(smiles)
+        if return_probability:
+            return self.predict_proba(mol)
         return self.predict(mol)
 
     def predict_proba(self, mol):
         """Predict SA of molecule as a probability.
-
-        Notes:
-            Molecules labelled 1 are synthesisable and those marked as 0 are unsynthesisable.
-
         Args:
             mol: Molecule to have SA calculated.
         Returns:
-            float: Prediction from model.
+            float: Probability that molecule belongs to the difficult-to-synthesise class. Interpretted as a measure of synthetic accessibility.
         """
         fp = np.array(
             get_fingerprint_as_bit_counts(
