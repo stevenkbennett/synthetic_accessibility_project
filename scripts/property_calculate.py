@@ -186,7 +186,10 @@ def make_database(
                 pop.append(cage)
         print("Finished loading cages. Performing database calculations.")
         _make_entry = partial(
-            make_entry, database=database, output_collection=output_collection
+            make_entry,
+            database=database,
+            output_collection=output_collection,
+            db_url=db_url,
         )
         cages = pool.imap(_make_entry, pop, chunksize=chunksize)
         for _ in tqdm(cages):
@@ -206,12 +209,11 @@ def calculate_chunksize(iterable, processes):
 
 if __name__ == "__main__":
     # CPU count for local calculations.
-    processes = cpu_count()
+    processes = int(os.environ.get("NCPUS"))
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-i", type=str, help="Name of the collection containing stk cages."
     )
-    database = "sa_project_optimisations"
     parser.add_argument(
         "-o",
         type=str,
@@ -226,12 +228,15 @@ if __name__ == "__main__":
     parser.add_argument(
         "-u", type=str, help="URL of the MongoDB client to connect to"
     )
+    parser.add_argument(
+        "-d", type=str, help="Name of the MongoDB database containing cages"
+    )
     args = parser.parse_args()
     make_database(
         processes=processes,
         input_collection=args.i,
         output_collection=args.o,
-        database=database,
+        database=args.d,
         chunksize=args.c,
         db_url=args.u,
     )
