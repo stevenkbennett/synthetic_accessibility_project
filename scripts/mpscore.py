@@ -70,14 +70,19 @@ class MPScore:
         model: The sklearn classification model.
     """
 
-    def __init__(self, random_state=32, processes=-1, params=None):
+    def __init__(
+        self,
+        random_state=32,
+        processes=-1,
+        param_path="hyperparameters/optimal_params.json",
+    ):
         """Initialise the MPScore.
 
         Args:
             random_state: Seed for random number generator.
             Used during the training procedure and cross-validation process.
         """
-        if not params:
+        if not param_path:
             # Use default parameters
             self._fp_radius = 2
             self._fp_bit_length = 1024
@@ -87,7 +92,11 @@ class MPScore:
                 class_weight="balanced",
                 criterion="gini",
             )
-        if params:
+        if param_path:
+            param_path = Path("hyperparameters/optimal_params.json")
+            with open(str(param_path)) as f:
+                params = dict(json.load(f))
+            print(f"Intialising model using params from {param_path}")
             self._fp_radius = params.pop("fp_radius")
             self._fp_bit_length = params.pop("fp_bit_length")
             self.model = RandomForestClassifier(
