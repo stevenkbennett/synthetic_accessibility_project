@@ -297,7 +297,7 @@ class MPScore:
                 mol, nbits=self._fp_bit_length, radius=self._fp_bit_length
             )
         ).reshape(1, -1)
-        return self.model.predict_proba(fp)[0][1]
+        return self.model.predict_proba(fp)[0][0]
 
     def plot_calibration_curve(self, data):
         fig, ax = plt.subplots()
