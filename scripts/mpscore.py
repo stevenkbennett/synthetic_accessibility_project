@@ -121,9 +121,7 @@ class MPScore:
     def restore(
         self,
         model_path=str(
-            Path("..")
-            .resolve()
-            .joinpath("models/mpscore_hyperparameter_opt_calibrated.joblib")
+            Path("..").resolve().joinpath("models/mpscore_calibrated.joblib")
         ),
     ):
         print(f"Restoring parameters from {model_path}")
