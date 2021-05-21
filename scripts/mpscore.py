@@ -52,10 +52,7 @@ def get_fingerprint_as_bit_counts(
     # Ensure molecules has hydrogens added for consistency.
     mol = AllChem.AddHs(mol)
     fp = AllChem.GetMorganFingerprintAsBitVect(
-        mol=mol,
-        radius=radius,
-        nBits=nbits,
-        bitInfo=info,
+        mol=mol, radius=radius, nBits=nbits, bitInfo=info,
     )
     fp = list(fp)
     for bit, activators in info.items():
@@ -104,8 +101,13 @@ class MPScore:
 
     def restore(
         self,
-        model_path=str(Path("..").resolve().joinpath("models/mpscore.joblib")),
+        model_path=str(
+            Path("..")
+            .resolve()
+            .joinpath("models/mpscore_hyperparameter_opt_calibrated.joblib")
+        ),
     ):
+        print(f"Restoring parameters from {model_path}")
         self.model = joblib.load(model_path)
 
     def cross_validate(self, data):
@@ -317,10 +319,7 @@ class MPScore:
             )
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=predicted_probs,
-            y_true=y_test,
-            n_bins=10,
-            normalize=False,
+            y_prob=predicted_probs, y_true=y_test, n_bins=10, normalize=False,
         )
         sns.lineplot(
             y=prob_pred, x=prob_true, ci=None, ax=ax, label="Random Forest"
@@ -328,9 +327,7 @@ class MPScore:
 
         # Sigmoid calibration
         sigmoid_clf = CalibratedClassifierCV(
-            self.model,
-            cv="prefit",
-            method="sigmoid",
+            self.model, cv="prefit", method="sigmoid",
         )
         # Fit calibrated model on validation set
         sigmoid_clf.fit(X_valid, y_valid)
@@ -339,10 +336,7 @@ class MPScore:
             for i in tqdm(X_test, desc="Sigmoid random forest predictions")
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=sigmoid_pred,
-            y_true=y_test,
-            n_bins=10,
-            normalize=False,
+            y_prob=sigmoid_pred, y_true=y_test, n_bins=10, normalize=False,
         )
         sns.lineplot(
             y=prob_pred,
@@ -363,10 +357,7 @@ class MPScore:
             for fp in tqdm(X_test, desc="Isotonic random forest predictions")
         ]
         prob_true, prob_pred = calibration_curve(
-            y_prob=isotonic_pred,
-            y_true=y_test,
-            n_bins=10,
-            normalize=False,
+            y_prob=isotonic_pred, y_true=y_test, n_bins=10, normalize=False,
         )
         sns.lineplot(
             y=prob_pred,
