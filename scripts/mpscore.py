@@ -255,14 +255,6 @@ class MPScore:
         if data_path.endswith(".json"):
             return pd.read_json(data_path)
 
-    def load_model(self, model_path):
-        """Loads the model from file.
-
-        Args:
-            model_path: Path to the model file.
-        """
-        self.model = joblib.load(model_path)
-
     def dump(self, dump_path):
         """Dumps the model to a file.
 
