@@ -2,8 +2,19 @@
 Materials Precursor Score
 =========================
 
-Contains functions for calculating the Materials Precursor Score (MPScore),
-in addition to the SAScore and SCScore synthetic difficulty scoring functions.
+Contains functions for calculating the Materials Precursor Score (MPScore).
+
+Usage
+=====
+
+Firstly, initialise the MPScore score. Optimal parameters are provided
+by default to initalise the correct fingerprint respentation.
+Then call the restore function to load the trained model.
+The calibrated model is available in `models/mpscore_calibrated.joblib`,
+which is provided to the restore function by default.
+The `get_score_from_smiles` function can then be used to return a synthetic accessibility score
+(lower is more accessible)
+This returns the probability that a molecules belongs to the difficult-to-synthesise class.
 """
 
 from collections import defaultdict
