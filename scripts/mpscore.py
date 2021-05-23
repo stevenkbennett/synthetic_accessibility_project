@@ -26,6 +26,7 @@ import joblib
 import numpy as np
 from rdkit.Chem import AllChem
 from scipy.sparse import data
+from scipy.special import logit
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     accuracy_score,
@@ -46,6 +47,8 @@ import json
 from rdkit import Chem
 from tqdm import tqdm
 from sklearn.calibration import CalibratedClassifierCV, calibration_curve
+from copy import copy
+from math import log
 
 
 def get_fingerprint_as_bit_counts(
@@ -169,13 +172,13 @@ class MPScore:
         }
         results = defaultdict(list)
         for i, (train_ind, test_ind) in enumerate(cv.split(x, y)):
-            x_train = x[train_ind]
-            x_test = x[test_ind]
-            y_train = y[train_ind]
-            y_test = y[test_ind]
-            self.model.fit(X=x_train, y=y_train)
+            x_train, x_test = x[train_ind], x[test_ind]
+            y_train, y_test = y[train_ind], y[test_ind]
+            # Make a copy of the model to avoid re-training after calibration
+            model = copy(self.model)
+            model.fit(X=x_train, y=y_train)
             # Keep probabilities for the positive outcomes.
-            test_predictions = [i for i in self.model.predict(x_test)]
+            test_predictions = [i for i in model.predict(x_test)]
             for metric in metrics:
                 score = metrics[metric](y_test, test_predictions)
                 results[metric].append(score)
@@ -243,8 +246,9 @@ class MPScore:
             clf.fit(X_calib, y_calib)
             print("Finished training calibrated model on entire dataset")
             self.calibrated_model = clf
-        print("Finished training model on entire dataset")
-        self.model.fit(X, y)
+        else:
+            self.model.fit(X, y)
+            print("Finished training model on entire dataset")
 
     def load_data(self, data_path):
         """Loads the SA classification dataset.
@@ -381,11 +385,11 @@ class MPScore:
         )
         ax.lines[3].set_linestyle("--")
         sns.despine()
+        ax.set_xlabel("Mean Predicted Value")
+        ax.set_ylabel("Fraction of Positives")
         fig.savefig(str(Path("../images/Calibration_Curve.pdf")))
 
-    def get_precision_recall_curve_data(
-        self, data, final_cutoff=None, swap_classes=False
-    ):
+    def get_precision_recall_curve_data(self, data):
         results = defaultdict(lambda: [])
         thresholds = np.linspace(0, 1, 100)
         X = np.array([np.array(i) for i in data["fingerprint"].to_list()])
@@ -394,103 +398,39 @@ class MPScore:
         for train_idx, test_idx in splits.split(X=X, y=y):
             X_train, X_test = X[train_idx], X[test_idx]
             y_train, y_test = y[train_idx], y[test_idx]
-            # Re-train the model across every fold.
-            self.model.fit(X_train, y_train)
-            y_probs_train = self.model.predict_proba(X_train)
-            y_probs_test = self.model.predict_proba(X_test)
-            for i, threshold in enumerate(thresholds):
+            model = copy(self.model)
+            model.fit(X_train, y_train)
+            y_probs_test = model.predict_proba(X_test)
+            for threshold in thresholds:
                 # If probability of y greater than or equal to threshold, score a molecule as synthesisable
-                y_pred_train = [
-                    1 if prob[1] >= threshold else 0 for prob in y_probs_train
-                ]
                 y_pred_test = [
-                    1 if prob[1] >= threshold else 0 for prob in y_probs_test
+                    1 if prob[1] > threshold else 0 for prob in y_probs_test
                 ]
                 metrics = [
-                    "tp_train",
                     "tp_test",
-                    "fp_train",
                     "fp_test",
-                    "tn_train",
                     "tn_test",
-                    "fn_train",
                     "fn_test",
                 ]
-                tp_train = sum(
-                    1
-                    for i, pred in enumerate(y_pred_train)
-                    if (y_train[i] == pred) and (y_train[i] == 1)
-                )
-                tp_test = sum(
-                    1
-                    for i, pred in enumerate(y_pred_test)
-                    if (y_test[i] == pred) and (y_test[i] == 1)
-                )
-                fp_train = sum(
-                    1
-                    for i, pred in enumerate(y_pred_train)
-                    if (y_train[i] != pred) and (y_train[i] == 1)
-                )
-                fp_test = sum(
-                    1
-                    for i, pred in enumerate(y_pred_test)
-                    if (y_test[i] != pred) and (y_test[i] == 1)
-                )
-                tn_train = sum(
-                    1
-                    for i, pred in enumerate(y_pred_train)
-                    if (y_train[i] == pred) and (y_train[i] == 0)
-                )
-                tn_test = sum(
-                    1
-                    for i, pred in enumerate(y_pred_test)
-                    if (y_test[i] == pred) and (y_test[i] == 0)
-                )
-                fn_train = sum(
-                    1
-                    for i, pred in enumerate(y_pred_train)
-                    if (y_train[i] != pred) and (y_train[i] == 0)
-                )
-                fn_test = sum(
-                    1
-                    for i, pred in enumerate(y_pred_test)
-                    if (y_test[i] != pred) and (y_test[i] == 0)
-                )
-                if swap_classes:
-                    tn_train, tp_train = tp_train, tn_train
-                    tn_test, tp_test = tp_test, tn_test
-                    fp_train, fn_train = fn_train, fp_train
-                    fp_test, fn_test = fn_test, fp_test
+                cm = confusion_matrix(y_test, y_pred_test,)
+                tp_test = cm[1, 1]
+                fp_test = cm[0, 1]
+                tn_test = cm[0, 0]
+                fn_test = cm[1, 0]
+
                 if threshold not in results["thresholds"]:
                     results["thresholds"].append(threshold)
-                for i, val in enumerate(
-                    [
-                        tp_train,
-                        tp_test,
-                        fp_train,
-                        fp_test,
-                        tn_train,
-                        tn_test,
-                        fn_train,
-                        fn_test,
-                    ]
-                ):
+                for j, val in enumerate([tp_test, fp_test, tn_test, fn_test]):
                     pos = results["thresholds"].index(threshold)
-                    if results[metrics[i]] == []:
-                        results[metrics[i]] = [0] * len(thresholds)
-                    results[metrics[i]][pos] += val
+                    if results[metrics[j]] == []:
+                        results[metrics[j]] = [0] * len(thresholds)
+                    results[metrics[j]][pos] += val
         df = pd.DataFrame(results)
         for i in range(len(thresholds)):
             row = df.iloc[i]
             np.seterr(divide="warn")
-            results["p_train"].append(
-                round(row["tp_train"] / (row["tp_train"] + row["fp_train"]), 3)
-            )
             results["p_test"].append(
                 round(row["tp_test"] / (row["tp_test"] + row["fp_test"]), 3)
-            )
-            results["r_train"].append(
-                round(row["tp_train"] / (row["tp_train"] + row["fn_train"]), 3)
             )
             results["r_test"].append(
                 round(row["tp_test"] / (row["tp_test"] + (row["fn_test"])), 3)
@@ -513,11 +453,23 @@ class MPScore:
         # together easily to get the segments. The segments array for line collection
         # needs to be (numlines) x (points per line) x 2 (for x and y)
         # from multicolored lines example
+        # Converts calibrated probability from MPScore to a probability from the original random forest model
+        mpscore_orig_prob = round(
+            invert_calibrated_prob(
+                1 - 0.21, calibrated_model=self.calibrated_model
+            ),
+            2,
+        )
         mpscore_thresh_idx = [
             round(i, 2) for i in pr_data["thresholds"].to_list()
-        ].index(0.12)
+        ].index(mpscore_orig_prob)
         mpscore_pr = y[mpscore_thresh_idx]
         mpscore_re = X[mpscore_thresh_idx]
+        print(f"MPScore precision is {mpscore_pr}")
+        print(f"MPScore recall is {mpscore_re}")
+        print(
+            f"MPScore precision and recall calculated for probability threshold of {mpscore_orig_prob}"
+        )
         ls = LineCollection(segments=Xy, linewidth=2, colors=threshold_colors)
         ax.add_collection(ls)
         ax.set_ylim(-0, 1.01)
@@ -558,7 +510,7 @@ class MPScore:
             mpscore_re + 0.3,
             mpscore_pr - 0.08,
             fontsize="medium",
-            s="0.12",
+            s=f"{mpscore_orig_prob}",
             color="black",
             alpha=0.8,
         )
@@ -620,11 +572,7 @@ class MPScore:
         )
         axes[0] = self.plot_feature_importances(axes[0])
         print("Saving figure.")
-        fig.savefig(
-            Path(__file__)
-            .parents[1]
-            .joinpath("images/paper_figures/Figure_5_2.pdf")
-        )
+        fig.savefig(Path(__file__).parents[1].joinpath("images/Figure_5.pdf"))
 
 
 def main():
@@ -633,7 +581,7 @@ def main():
     param_path = Path("hyperparameters/optimal_params.json")
     with open(str(param_path)) as f:
         params = dict(json.load(f))
-    model = MPScore(params=params)
+    model = MPScore(param_path=param_path)
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
     training_data["fingerprint"] = [
         get_fingerprint_as_bit_counts(
@@ -641,14 +589,21 @@ def main():
         )
         for mol in training_mols
     ]
-    # model.cross_validate(training_data)
     model.train_using_entire_dataset(training_data)
-    full_model_path = Path(
-        "../models/mpscore_hyperparameter_opt_calibrated.joblib"
-    )
-    model.dump(str(full_model_path))
-    # model.plot_figure_5(data=training_data)
-    model.plot_calibration_curve(data=training_data)
+    full_model_path = Path("../models/mpscore_calibrated.joblib")
+    # model.dump(str(full_model_path))
+    model.cross_validate(training_data)
+    model.plot_figure_5(data=training_data)
+    # model.plot_calibration_curve(data=training_data)
+
+
+def invert_calibrated_prob(prob, calibrated_model):
+    sigmoid_classifier = calibrated_model.calibrated_classifiers_[
+        0
+    ].calibrators[0]
+    a = sigmoid_classifier.a_
+    b = sigmoid_classifier.b_
+    return (log((1 - prob) / prob) - b) / a
 
 
 def param_type_conversion(params):
