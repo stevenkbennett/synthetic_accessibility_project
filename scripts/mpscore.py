@@ -22,6 +22,8 @@ from functools import partial
 from operator import sub
 from pathlib import Path
 from ast import literal_eval
+from random import random
+from unittest import result
 import joblib
 import numpy as np
 from rdkit.Chem import AllChem
@@ -42,13 +44,15 @@ from matplotlib import pyplot as plt
 from matplotlib import cm
 from matplotlib.collections import LineCollection
 import seaborn as sns
-from rdkit.Chem.MolStandardize import standardize_smiles
 import json
 from rdkit import Chem
 from tqdm import tqdm
 from sklearn.calibration import CalibratedClassifierCV, calibration_curve
 from copy import copy
 from math import log
+from sklearn.dummy import DummyClassifier
+import random
+from sklearn.linear_model import LogisticRegression
 
 
 def get_fingerprint_as_bit_counts(
@@ -107,7 +111,6 @@ class MPScore:
                 criterion="gini",
             )
         if param_path:
-            param_path = Path("hyperparameters/optimal_params.json")
             with open(str(param_path)) as f:
                 params = dict(json.load(f))
             print(f"Intialising model using params from {param_path}")
@@ -389,20 +392,19 @@ class MPScore:
         ax.set_ylabel("Fraction of Positives")
         fig.savefig(str(Path("../images/Calibration_Curve.pdf")))
 
-    def get_precision_recall_curve_data(self, data):
+    def get_precision_recall_curve_data(self, data, model):
         results = defaultdict(lambda: [])
-        thresholds = np.linspace(0, 1, 100)
+        thresholds = np.linspace(0, 0.99, 100)
         X = np.array([np.array(i) for i in data["fingerprint"].to_list()])
         y = data["synthesisable"].to_numpy()
         splits = KFold(n_splits=5, shuffle=True, random_state=32)
         for train_idx, test_idx in splits.split(X=X, y=y):
             X_train, X_test = X[train_idx], X[test_idx]
             y_train, y_test = y[train_idx], y[test_idx]
-            model = copy(self.model)
             model.fit(X_train, y_train)
             y_probs_test = model.predict_proba(X_test)
             for threshold in thresholds:
-                # If probability of y greater than or equal to threshold, score a molecule as synthesisable
+                # If probability of y greater than or equal to threshold, score a molecule as synthesisablex
                 y_pred_test = [
                     1 if prob[1] > threshold else 0 for prob in y_probs_test
                 ]
@@ -417,33 +419,105 @@ class MPScore:
                 fp_test = cm[0, 1]
                 tn_test = cm[0, 0]
                 fn_test = cm[1, 0]
-
                 if threshold not in results["thresholds"]:
                     results["thresholds"].append(threshold)
                 for j, val in enumerate([tp_test, fp_test, tn_test, fn_test]):
                     pos = results["thresholds"].index(threshold)
                     if results[metrics[j]] == []:
-                        results[metrics[j]] = [0] * len(thresholds)
-                    results[metrics[j]][pos] += val
+                        results[metrics[j]] = [
+                            [] for _ in range(len(thresholds))
+                        ]
+                    results[metrics[j]][pos].append(val)
         df = pd.DataFrame(results)
         for i in range(len(thresholds)):
             row = df.iloc[i]
             np.seterr(divide="warn")
-            results["p_test"].append(
-                round(row["tp_test"] / (row["tp_test"] + row["fp_test"]), 3)
+            tp_test = sum(row["tp_test"])
+            fp_test = sum(row["fp_test"])
+            fn_test = sum(row["fn_test"])
+            tp_rel_error = np.std(row["tp_test"]) / np.mean(row["tp_test"])
+            fp_rel_error = np.std(row["fp_test"]) / np.mean(row["fp_test"])
+            fn_rel_error = np.std(row["fn_test"]) / np.mean(row["fn_test"])
+            p_test = round(tp_test / (tp_test + fp_test), 3)
+            r_test = round(tp_test / (tp_test + fn_test), 3)
+            prec_error = np.nan_to_num(
+                (2 * tp_rel_error + fp_rel_error) * p_test
             )
-            results["r_test"].append(
-                round(row["tp_test"] / (row["tp_test"] + (row["fn_test"])), 3)
+            rec_error = np.nan_to_num(
+                (2 * tp_rel_error + fn_rel_error) * r_test
             )
+            results["p_error"].append(prec_error)
+            results["r_error"].append(rec_error)
+            results["p_test"].append(p_test)
+            results["r_test"].append(r_test)
         return pd.DataFrame(results)
 
     def plot_precision_recall_curve(self, fig, ax, data):
-        pr_data = self.get_precision_recall_curve_data(data)
+        pr_data = self.get_precision_recall_curve_data(
+            data, model=copy(self.model)
+        )
+        dummy = ProbabilityDummyClassifier(strategy="random_prob")
+        log_model = LogisticRegression(random_state=32)
+        dummy_pr_data = self.get_precision_recall_curve_data(data, model=dummy)
+        log_pr_data = self.get_precision_recall_curve_data(
+            data, model=log_model
+        )
+        X_log = np.nan_to_num(log_pr_data["r_test"].to_numpy())
+        y_log = np.nan_to_num(log_pr_data["p_test"].to_numpy())
+        X_dummy = np.nan_to_num(dummy_pr_data["r_test"].to_numpy())
+        y_dummy = np.nan_to_num(dummy_pr_data["p_test"].to_numpy())
         X = pr_data["r_test"].to_numpy()
         y = pr_data["p_test"].to_numpy()
         Xy = np.array(
             [[(X[i], y[i]), (X[i + 1], y[i + 1])] for i in range(len(X) - 1)]
         )
+        Xy_dummy = np.array(
+            [
+                [(X_dummy[i], y_dummy[i]), (X_dummy[i + 1], y_dummy[i + 1])]
+                for i in range(len(X_dummy) - 1)
+            ]
+        )
+        Xy_log = np.array(
+            [
+                [(X_log[i], y_log[i]), (X_log[i + 1], y_log[i + 1])]
+                for i in range(len(X_log) - 1)
+            ]
+        )
+        # Plot the error bars for each
+        ax.errorbar(
+            x=X,
+            y=y,
+            yerr=pr_data["p_error"],
+            xerr=pr_data["r_error"],
+            fmt="None",
+            ecolor="black",
+            elinewidth=0.01,
+            errorevery=10,
+            zorder=10,
+        )
+        ax.errorbar(
+            x=X_dummy,
+            y=y_dummy,
+            yerr=dummy_pr_data["p_error"],
+            xerr=dummy_pr_data["r_error"],
+            fmt="None",
+            ecolor="black",
+            elinewidth=0.01,
+            errorevery=10,
+            zorder=10,
+        )
+        ax.errorbar(
+            x=X_log,
+            y=y_log,
+            yerr=log_pr_data["p_error"],
+            xerr=log_pr_data["r_error"],
+            fmt="None",
+            ecolor="black",
+            elinewidth=0.01,
+            errorevery=10,
+            zorder=10,
+        )
+
         viridis = cm.get_cmap("viridis", len(Xy))
         threshold_colors = [
             viridis(i) for i in pr_data["thresholds"].to_list()
@@ -471,7 +545,15 @@ class MPScore:
             f"MPScore precision and recall calculated for probability threshold of {mpscore_orig_prob}"
         )
         ls = LineCollection(segments=Xy, linewidth=2, colors=threshold_colors)
+        ls_dummy = LineCollection(
+            segments=Xy_dummy, linewidth=2, colors=threshold_colors
+        )
+        ls_log = LineCollection(
+            segments=Xy_log, linewidth=2, colors=threshold_colors
+        )
+        ax.add_collection(ls_dummy)
         ax.add_collection(ls)
+        ax.add_collection(ls_log)
         ax.set_ylim(-0, 1.01)
         cbar = fig.colorbar(
             mappable=cm.ScalarMappable(cmap=viridis, norm=None)
@@ -479,17 +561,6 @@ class MPScore:
         cbar.minorticks_on()
         cbar.set_label("Threshold", fontsize="medium")
         cbar.ax.tick_params(labelsize="medium")
-        baseline_y = len(
-            data["synthesisable"][data["synthesisable"] == 1]
-        ) / len(data["synthesisable"])
-        ax.plot(
-            [0, 1],
-            [baseline_y, baseline_y],
-            "--",
-            lw=2,
-            alpha=0.5,
-            color="grey",
-        )
         ax.set_xlim(0, 1)
         circ = plt.Circle(
             (mpscore_re, mpscore_pr),
@@ -497,9 +568,10 @@ class MPScore:
             color="black",
             fill=False,
             linewidth=1,
+            zorder=10,
         )
         ax.text(
-            mpscore_re + 0.025,
+            mpscore_re + 0.085,
             mpscore_pr - 0.01,
             fontsize="medium",
             s="MPScore Threshold",
@@ -514,18 +586,28 @@ class MPScore:
             color="black",
             alpha=0.8,
         )
+        ax.text(
+            0.35,
+            0.3,
+            fontsize="medium",
+            alpha=1,
+            s="Logistic",
+            color="grey",
+            zorder=20,
+        )
+        ax.text(
+            0.25,
+            0.16 - 0.09,
+            fontsize="medium",
+            alpha=1,
+            s="Baseline",
+            color="grey",
+            zorder=20,
+        )
         ax.add_artist(circ)
         ax.set_xlabel("Recall", labelpad=20, fontsize="medium")
         ax.set_ylabel("Precision", fontsize="medium")
         ax.tick_params("both", labelsize="medium")
-        ax.text(
-            0.01,
-            baseline_y - 0.06,
-            fontsize="medium",
-            alpha=0.6,
-            s="Baseline",
-            color="grey",
-        )
         ax.set_title("b)", fontsize="medium")
         return fig, ax
 
@@ -614,6 +696,19 @@ def param_type_conversion(params):
         else:
             p.append(param)
     return p
+
+
+class ProbabilityDummyClassifier:
+    def __init__(self, strategy):
+        self.strategy = strategy
+
+    def fit(*args, **kwargs):
+        return None
+
+    def predict_proba(self, X):
+        if self.strategy == "random_prob":
+            random.seed(32)
+            return [[0, float(random.uniform(0, 1))] for i in range(len(X))]
 
 
 if __name__ == "__main__":
