@@ -26,6 +26,7 @@ from random import random
 from unittest import result
 import joblib
 import numpy as np
+from sklearn.metrics import auc
 from rdkit.Chem import AllChem
 from scipy.sparse import data
 from scipy.special import logit
@@ -37,6 +38,11 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     fbeta_score,
+    precision_recall_curve,
+)
+from sklearn.dummy import DummyClassifier
+from sklearn.metrics._plot.precision_recall_curve import (
+    plot_precision_recall_curve,
 )
 from sklearn.model_selection import KFold, train_test_split
 import pandas as pd
@@ -50,6 +56,7 @@ from tqdm import tqdm
 from sklearn.calibration import CalibratedClassifierCV, calibration_curve
 from copy import copy
 from math import log
+from scipy.stats import sem
 from sklearn.dummy import DummyClassifier
 import random
 from sklearn.linear_model import LogisticRegression
@@ -393,222 +400,137 @@ class MPScore:
         fig.savefig(str(Path("../images/Calibration_Curve.pdf")))
 
     def get_precision_recall_curve_data(self, data, model):
-        results = defaultdict(lambda: [])
-        thresholds = np.linspace(0, 0.99, 100)
         X = np.array([np.array(i) for i in data["fingerprint"].to_list()])
         y = data["synthesisable"].to_numpy()
+        sampled_thresholds = np.linspace(-0.1, 1.0, 100)
+        curves = []
         splits = KFold(n_splits=5, shuffle=True, random_state=32)
         for train_idx, test_idx in splits.split(X=X, y=y):
             X_train, X_test = X[train_idx], X[test_idx]
             y_train, y_test = y[train_idx], y[test_idx]
             model.fit(X_train, y_train)
-            y_probs_test = model.predict_proba(X_test)
-            for threshold in thresholds:
-                # If probability of y greater than or equal to threshold, score a molecule as synthesisablex
-                y_pred_test = [
-                    1 if prob[1] > threshold else 0 for prob in y_probs_test
-                ]
-                metrics = [
-                    "tp_test",
-                    "fp_test",
-                    "tn_test",
-                    "fn_test",
-                ]
-                cm = confusion_matrix(y_test, y_pred_test,)
-                tp_test = cm[1, 1]
-                fp_test = cm[0, 1]
-                tn_test = cm[0, 0]
-                fn_test = cm[1, 0]
-                if threshold not in results["thresholds"]:
-                    results["thresholds"].append(threshold)
-                for j, val in enumerate([tp_test, fp_test, tn_test, fn_test]):
-                    pos = results["thresholds"].index(threshold)
-                    if results[metrics[j]] == []:
-                        results[metrics[j]] = [
-                            [] for _ in range(len(thresholds))
-                        ]
-                    results[metrics[j]][pos].append(val)
-        df = pd.DataFrame(results)
-        for i in range(len(thresholds)):
-            row = df.iloc[i]
-            np.seterr(divide="warn")
-            tp_test = sum(row["tp_test"])
-            fp_test = sum(row["fp_test"])
-            fn_test = sum(row["fn_test"])
-            tp_rel_error = np.std(row["tp_test"]) / np.mean(row["tp_test"])
-            fp_rel_error = np.std(row["fp_test"]) / np.mean(row["fp_test"])
-            fn_rel_error = np.std(row["fn_test"]) / np.mean(row["fn_test"])
-            p_test = round(tp_test / (tp_test + fp_test), 3)
-            r_test = round(tp_test / (tp_test + fn_test), 3)
-            prec_error = np.nan_to_num(
-                (2 * tp_rel_error + fp_rel_error) * p_test
+            y_probs_test = [_[1] for _ in model.predict_proba(X_test)]
+            curves.append(precision_recall_curve(y_test, y_probs_test))
+        sampled_precisions = []
+        sampled_recalls = []
+        if isinstance(model, DummyClassifier):
+            for precision, recall, threshold in curves:
+                sampled_precisions.append(precision)
+                sampled_recalls.append(recall)
+            return {"Precision": sampled_precisions, "Recall": sampled_recalls}
+        for precision, recall, threshold in curves:
+            sampled_precisions.append(
+                np.interp(sampled_thresholds, threshold, precision[:-1])
             )
-            rec_error = np.nan_to_num(
-                (2 * tp_rel_error + fn_rel_error) * r_test
+            sampled_recalls.append(
+                np.interp(sampled_thresholds, threshold, recall[:-1])
             )
-            results["p_error"].append(prec_error)
-            results["r_error"].append(rec_error)
-            results["p_test"].append(p_test)
-            results["r_test"].append(r_test)
-        return pd.DataFrame(results)
+        return {
+            "Precision": sampled_precisions,
+            "Recall": sampled_recalls,
+            "Threshold": [round(i, 2) for i in sampled_thresholds],
+        }
 
     def plot_precision_recall_curve(self, fig, ax, data):
+        # MPScore precision-recall data
         pr_data = self.get_precision_recall_curve_data(
             data, model=copy(self.model)
         )
-        dummy = ProbabilityDummyClassifier(strategy="random_prob")
-        log_model = LogisticRegression(random_state=32)
-        dummy_pr_data = self.get_precision_recall_curve_data(data, model=dummy)
-        log_pr_data = self.get_precision_recall_curve_data(
-            data, model=log_model
-        )
-        X_log = np.nan_to_num(log_pr_data["r_test"].to_numpy())
-        y_log = np.nan_to_num(log_pr_data["p_test"].to_numpy())
-        X_dummy = np.nan_to_num(dummy_pr_data["r_test"].to_numpy())
-        y_dummy = np.nan_to_num(dummy_pr_data["p_test"].to_numpy())
-        X = pr_data["r_test"].to_numpy()
-        y = pr_data["p_test"].to_numpy()
-        Xy = np.array(
-            [[(X[i], y[i]), (X[i + 1], y[i + 1])] for i in range(len(X) - 1)]
-        )
-        Xy_dummy = np.array(
-            [
-                [(X_dummy[i], y_dummy[i]), (X_dummy[i + 1], y_dummy[i + 1])]
-                for i in range(len(X_dummy) - 1)
-            ]
-        )
-        Xy_log = np.array(
-            [
-                [(X_log[i], y_log[i]), (X_log[i + 1], y_log[i + 1])]
-                for i in range(len(X_log) - 1)
-            ]
-        )
-        # Plot the error bars for each
+        mpscore_color = list(sns.color_palette())[3]
         ax.errorbar(
-            x=X,
-            y=y,
-            yerr=pr_data["p_error"],
-            xerr=pr_data["r_error"],
-            fmt="None",
+            np.mean(pr_data["Recall"], axis=0),
+            np.mean(pr_data["Precision"], axis=0),
+            sem(pr_data["Recall"], axis=0),
+            sem(pr_data["Precision"], axis=0),
+            color=mpscore_color,
+            errorevery=5,
             ecolor="black",
-            elinewidth=0.01,
-            errorevery=10,
-            zorder=10,
+            lw=1.5,
+            barsabove=True,
+            elinewidth=1,
+            label="MPScore",
         )
-        ax.errorbar(
-            x=X_dummy,
-            y=y_dummy,
-            yerr=dummy_pr_data["p_error"],
-            xerr=dummy_pr_data["r_error"],
-            fmt="None",
-            ecolor="black",
-            elinewidth=0.01,
-            errorevery=10,
-            zorder=10,
-        )
-        ax.errorbar(
-            x=X_log,
-            y=y_log,
-            yerr=log_pr_data["p_error"],
-            xerr=log_pr_data["r_error"],
-            fmt="None",
-            ecolor="black",
-            elinewidth=0.01,
-            errorevery=10,
-            zorder=10,
-        )
+        # Dummy classifier
+        dummy = DummyClassifier(strategy="prior", random_state=32)
+        pr_data_dummy = self.get_precision_recall_curve_data(data, model=dummy)
 
-        viridis = cm.get_cmap("viridis", len(Xy))
-        threshold_colors = [
-            viridis(i) for i in pr_data["thresholds"].to_list()
-        ]
-        # Create a set of line segments so that we can color them individually
-        # This creates the points as a N x 1 x 2 array so that we can stack points
-        # together easily to get the segments. The segments array for line collection
-        # needs to be (numlines) x (points per line) x 2 (for x and y)
-        # from multicolored lines example
-        # Converts calibrated probability from MPScore to a probability from the original random forest model
-        mpscore_orig_prob = round(
-            invert_calibrated_prob(
-                1 - 0.21, calibrated_model=self.calibrated_model
-            ),
-            2,
+        logisitic = LogisticRegression(random_state=32)
+        log_pr_data = self.get_precision_recall_curve_data(data, logisitic)
+        ax.errorbar(
+            np.mean(log_pr_data["Recall"], axis=0),
+            np.mean(log_pr_data["Precision"], axis=0),
+            sem(log_pr_data["Recall"], axis=0),
+            sem(log_pr_data["Precision"], axis=0),
+            color="green",
+            errorevery=5,
+            ecolor="black",
+            lw=1.5,
+            barsabove=True,
+            elinewidth=1,
+            label="Logistic",
         )
-        mpscore_thresh_idx = [
-            round(i, 2) for i in pr_data["thresholds"].to_list()
-        ].index(mpscore_orig_prob)
-        mpscore_pr = y[mpscore_thresh_idx]
-        mpscore_re = X[mpscore_thresh_idx]
-        print(f"MPScore precision is {mpscore_pr}")
-        print(f"MPScore recall is {mpscore_re}")
+        ax.errorbar(
+            np.mean(pr_data_dummy["Recall"], axis=0),
+            np.mean(pr_data_dummy["Precision"], axis=0),
+            sem(pr_data_dummy["Recall"], axis=0),
+            sem(pr_data_dummy["Precision"], axis=0),
+            color="grey",
+            linestyle="--",
+            errorevery=1,
+            ecolor="black",
+            lw=1.5,
+            barsabove=True,
+            elinewidth=1,
+            label="Baseline",
+        )
+        ax.set_ylim(-0, 1)
+        ax.set_xlim(0, 1.01)
         print(
-            f"MPScore precision and recall calculated for probability threshold of {mpscore_orig_prob}"
+            f'AUC for RF is {auc(np.mean(pr_data["Recall"], axis=0), np.mean(pr_data["Precision"], axis=0))}'
         )
-        ls = LineCollection(segments=Xy, linewidth=2, colors=threshold_colors)
-        ls_dummy = LineCollection(
-            segments=Xy_dummy, linewidth=2, colors=threshold_colors
+        print(
+            f'AUC for dummy is {auc(np.mean(pr_data_dummy["Recall"], axis=0), np.mean(pr_data_dummy["Precision"], axis=0))}'
         )
-        ls_log = LineCollection(
-            segments=Xy_log, linewidth=2, colors=threshold_colors
+        print(
+            f'AUC for logistic is {auc(np.mean(log_pr_data["Recall"], axis=0), np.mean(log_pr_data["Precision"], axis=0))}'
         )
-        ax.add_collection(ls_dummy)
-        ax.add_collection(ls)
-        ax.add_collection(ls_log)
-        ax.set_ylim(-0, 1.01)
-        cbar = fig.colorbar(
-            mappable=cm.ScalarMappable(cmap=viridis, norm=None)
+        mpscore_thresh = round(
+            invert_calibrated_prob(1 - 0.21, self.calibrated_model), 2
         )
-        cbar.minorticks_on()
-        cbar.set_label("Threshold", fontsize="medium")
-        cbar.ax.tick_params(labelsize="medium")
-        ax.set_xlim(0, 1)
+        threshold_ind = list(pr_data["Threshold"]).index(mpscore_thresh)
+
+        mpscore_pr = list(np.mean(pr_data["Precision"], axis=0))[threshold_ind]
+        mpscore_re = list(np.mean(pr_data["Recall"], axis=0))[threshold_ind]
+        print(mpscore_thresh)
+        print(mpscore_pr)
+        print(mpscore_re)
         circ = plt.Circle(
             (mpscore_re, mpscore_pr),
-            0.01,
+            0.03,
             color="black",
             fill=False,
             linewidth=1,
             zorder=10,
         )
-        ax.text(
-            mpscore_re + 0.085,
-            mpscore_pr - 0.01,
-            fontsize="medium",
-            s="MPScore Threshold",
-            color="black",
-            alpha=0.8,
-        )
-        ax.text(
-            mpscore_re + 0.3,
-            mpscore_pr - 0.08,
-            fontsize="medium",
-            s=f"{mpscore_orig_prob}",
-            color="black",
-            alpha=0.8,
-        )
-        ax.text(
-            0.35,
-            0.3,
-            fontsize="medium",
-            alpha=1,
-            s="Logistic",
-            color="grey",
-            zorder=20,
-        )
-        ax.text(
-            0.25,
-            0.16 - 0.09,
-            fontsize="medium",
-            alpha=1,
-            s="Baseline",
-            color="grey",
-            zorder=20,
+        # ax.text(
+        #     mpscore_re + 15,
+        #     mpscore_pr - 0.01,
+        #     fontsize="small",
+        #     s="MPScore Threshold",
+        #     color="black",
+        #     alpha=0.8,
+        # )
+        handles, labels = ax.get_legend_handles_labels()
+        # Remove the errorbars
+        handles = [h[0] for h in handles]
+        ax.legend(
+            handles, labels, loc="lower left",
         )
         ax.add_artist(circ)
         ax.set_xlabel("Recall", labelpad=20, fontsize="medium")
         ax.set_ylabel("Precision", fontsize="medium")
         ax.tick_params("both", labelsize="medium")
-        ax.set_title("b)", fontsize="medium")
+        ax.set_title("b)", fontsize="large")
         return fig, ax
 
     def plot_feature_importances(self, ax):
@@ -636,7 +558,14 @@ class MPScore:
         palette = list(sns.color_palette("viridis", 20))[13]
         x = list(fp_importances.keys())[:20]
         height = list(fp_importances.values())[:20]
-        ax.bar(x, height, width=0.75, color=palette, yerr=fp_stdevs[:20])
+        ax.bar(
+            x,
+            height,
+            width=0.6,
+            color=palette,
+            yerr=fp_stdevs[:20],
+            error_kw={"elinewidth": 1},
+        )
         ax.set_ylim([0, 0.06])
         sns.despine()
         ax.set_xlabel("Bit Number", labelpad=10, fontsize="medium")
@@ -672,11 +601,12 @@ def main():
         for mol in training_mols
     ]
     model.train_using_entire_dataset(training_data)
-    full_model_path = Path("../models/mpscore_calibrated.joblib")
+    # full_model_path = Path("../models/mpscore_calibrated.joblib")
     # model.dump(str(full_model_path))
-    model.cross_validate(training_data)
+    # model.cross_validate(training_data)
     model.plot_figure_5(data=training_data)
     # model.plot_calibration_curve(data=training_data)
+    # model.get_precision_recall_curve_data(training_data, model=model.model)
 
 
 def invert_calibrated_prob(prob, calibrated_model):
@@ -696,19 +626,6 @@ def param_type_conversion(params):
         else:
             p.append(param)
     return p
-
-
-class ProbabilityDummyClassifier:
-    def __init__(self, strategy):
-        self.strategy = strategy
-
-    def fit(*args, **kwargs):
-        return None
-
-    def predict_proba(self, X):
-        if self.strategy == "random_prob":
-            random.seed(32)
-            return [[0, float(random.uniform(0, 1))] for i in range(len(X))]
 
 
 if __name__ == "__main__":

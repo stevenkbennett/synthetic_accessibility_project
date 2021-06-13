@@ -15,6 +15,7 @@ from functools import partial
 from pymongo import MongoClient
 from uuid import uuid4
 import os
+from scipy.stats import sem
 import contextlib
 import joblib
 from tqdm import tqdm
@@ -157,15 +158,15 @@ def cross_validation_models(
     try:
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
-        print(type(err))
-        print(err)
         print(f"Failed for params {params} (parameter names {param_names})")
     db = MongoClient(host="129.31.65.124")
     collection = db["sa_project"]["hyperparameters"]
     d = {}
     for score_name in result:
         mean_score = np.mean(result[score_name])
-        d[score_name] = str(mean_score)
+        standard_error = sem(result[score_name])
+        d[score_name + "_Mean"] = str(mean_score)
+        d[score_name + "_Standard_Error"] = str(standard_error)
     d["run_id"] = run_id
     for param, name in zip(params, param_names):
         d[name] = param
