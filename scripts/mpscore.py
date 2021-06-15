@@ -138,7 +138,9 @@ class MPScore:
     def restore(
         self,
         model_path=str(
-            Path("..").resolve().joinpath("models/mpscore_calibrated.joblib")
+            Path(__file__)
+            .parents[1]
+            .joinpath("models/mpscore_calibrated.joblib")
         ),
     ):
         print(f"Restoring parameters from {model_path}")
