@@ -123,7 +123,7 @@ def optimise_parallel(
             conformers=50,
             time_step=1,
             eq_time=100,
-            simulation_time=100,
+            simulation_time=2000,
         ),
     )
     # Create partial function with the optimiser callable.
