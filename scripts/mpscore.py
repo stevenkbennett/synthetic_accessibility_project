@@ -100,7 +100,9 @@ class MPScore:
         random_state=32,
         processes=-1,
         param_path=str(
-            Path(__file__).joinpath("hyperparameters/optimal_params.json")
+            Path(__file__)
+            .parents[0]
+            .joinpath("hyperparameters/optimal_params.json")
         ),
     ):
         """Initialise the MPScore.
@@ -593,8 +595,10 @@ def main():
         Path(__file__).joinpath(Path("../data/chemist_scores.json")).resolve()
     )
     training_data = MPScore().load_data(str(data_path))
-    param_path = Path(__file__).joinpath(
-        Path("hyperparameters/optimal_params.json")
+    param_path = (
+        Path(__file__)
+        .parents[0]
+        .joinpath(Path("hyperparameters/optimal_params.json"))
     )
     model = MPScore(param_path=param_path)
     training_mols = [Chem.MolFromInchi(i) for i in training_data["inchi"]]
