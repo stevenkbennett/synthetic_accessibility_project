@@ -1,0 +1,15 @@
+# Script for running cage optimisations.
+#PBS -j oe
+#PBS -lwalltime=24:00:00
+#PBS -lselect=1:ncpus=48:mem=120gb
+#PBS -v SCHRODINGER_LICENSE_RETRY=1m:99999999999999999999999999999999999999
+
+cd $PBS_O_WORKDIR
+
+module load anaconda3/personal
+source activate mpscore
+# Identify number of CPUs.
+export NCPUS=$(wc -l $PBS_NODEFILE | awk '{print $1}')
+JOB_NUMBER=$( basename $PBS_JOBID .pbs )
+
+python cage_optimise.py -p $(realpath ../precursor_smiles/all_smiles.smi) -d "synthetic_accessibility_project" -o "optimised_cages_2ns" -u "mongodb://129.31.65.124:27017"> Cage_Opt_"$JOB_NUMBER".log
