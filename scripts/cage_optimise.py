@@ -37,7 +37,7 @@ import logging
 from pymongo.errors import ServerSelectionTimeoutError
 import random
 
-macromodel_path = "/rds/general/user/sb2518/home/opt/schrodinger2018-1"
+macromodel_path = "/opt/schrodinger2018-1"
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -197,6 +197,8 @@ def macromodel_optimisation(
         # Catch exceptions from optimising.
         except Exception as err:
             logger.error(err)
+            os.chdir(err)
+            return
 
     # Return to original directory.
     os.chdir(workdir)
@@ -211,6 +213,7 @@ def macromodel_optimisation(
     except Exception as err:
         logger.error(err)
         logger.error("An error occurred. Exiting the optimisations.")
+        return
     # Dump the cages, even if they can't be
     # added to the database.
     logger.debug(f"Dumping {cage}.")
