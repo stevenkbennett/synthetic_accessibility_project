@@ -197,7 +197,7 @@ def macromodel_optimisation(
         # Catch exceptions from optimising.
         except Exception as err:
             logger.error(err)
-            os.chdir(err)
+            os.chdir(workdir)
             return
 
     # Return to original directory.
