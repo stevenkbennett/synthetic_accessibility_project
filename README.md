@@ -61,7 +61,7 @@ The repository is organised in the following way:
     Optimised cages and their properties are written to a database in `cage_optimise.py` and `property_calculate.py`.
 
 - `models`
-    - `mpscore.joblib`: The stored MPScore model. Can be loaded using the `joblib` Python library.
+    - `mpscore_calibrated.joblib`: The stored MPScore model. Can be loaded using the `joblib` Python library.
 
 - `site`
     Contains the code for the website provided to experimental chemists to label molecules as easy- and difficult-to-synthesise.
