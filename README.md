@@ -48,7 +48,6 @@ The repository is organised in the following way:
     This makes extensive use of `RDKit` and `pyWindow` to perform optimisations, which can be easily installed using the given `env.yml` file. This file makes extensive use of `rdkit_tools.py` for useful functions.
     - `hyperparam_opt.py`: Contains code to perform hyperparameter optimisation using a randomised grid-search approach.
     - `hyperparameters`: Contains hyperparameter files and scores for the hyperparameter optimisation process.
-    - `pbs_scripts`: Contains input scripts for PBS clusters.
 
 
 - `notebooks`
