@@ -159,7 +159,7 @@ def cross_validation_models(
         result = mpscore.cross_validate(data=training_data)
     except Exception as err:
         print(f"Failed for params {params} (parameter names {param_names})")
-    db = MongoClient(host="129.31.65.124")
+    db = MongoClient(host=None)  # Fill in host here
     collection = db["sa_project"]["hyperparameters"]
     d = {}
     for score_name in result:
