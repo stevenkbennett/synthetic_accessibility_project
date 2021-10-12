@@ -56,7 +56,7 @@ The repository is organised in the following way:
     Additionally, reproduces Figure 7 from the main text, which shows the distributions of cavity sizes for shape persistent cages.
     In this notebook cages are loaded directly from JSON and filtered for their properties.
     To fully utilise this notebook, additional files corresponding to the optimised cages for this work are required.
-    These files are accessible [here](https://doi.org/10.14469/hpc/8045).
+    These files are accessible [here](https://doi.org/10.14469/hpc/8395).
     Optimised cages and their properties are written to a database in `cage_optimise.py` and `property_calculate.py`.
 
 - `models`
