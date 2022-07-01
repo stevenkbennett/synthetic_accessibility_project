@@ -25,6 +25,8 @@ Requirements
 ------------
 
 `scikit-learn` (0.24.1) - Required to re-train model and run predictions
+
+
 `rdkit` (2021.09.4) - Required to perform fingerprinting.
 
 
