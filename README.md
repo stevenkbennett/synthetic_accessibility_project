@@ -64,3 +64,9 @@ The repository is organised in the following way:
 
 - `site`
     Contains the code for the website provided to experimental chemists to label molecules as easy- and difficult-to-synthesise.
+
+Requirements
+------------
+
+`scikit-learn` (0.24.1) - Required to re-train model and run predictions
+`rdkit` (2021.09.4) - Required to perform fingerprinting.
